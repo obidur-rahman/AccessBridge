@@ -5,7 +5,7 @@ Use one repository for the web application and its database migrations. Keep fil
 ## 1. Suggested repository layout
 
 ```text
-shubidha-map/
+accessbridge/
 ├── app/
 │   ├── page.tsx                     # Home and search
 │   ├── places/[id]/page.tsx         # Place details

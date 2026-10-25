@@ -8,7 +8,7 @@ Design a calm, practical service that helps a visitor answer one question: “Ca
 
 ### Home and search
 
-- Shubidha Map name and language switch.
+- AccessBridge name and language switch.
 - One clear search field.
 - Small category filters.
 - Area filter.

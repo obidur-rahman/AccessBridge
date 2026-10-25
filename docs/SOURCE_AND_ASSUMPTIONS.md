@@ -63,6 +63,6 @@ The following source-plan features are outside the compact MVP: AI search, AI so
 
 ## 7. Accuracy and claim limits
 
-Do not claim that Shubidha Map is the first accessibility directory. Do not claim that the pilot covers all venues in Chattogram. Do not claim that a public observation is current indefinitely. Show the observation date, source label, and limits.
+Do not claim that AccessBridge is the first accessibility directory. Do not claim that the pilot covers all venues in Chattogram. Do not claim that a public observation is current indefinitely. Show the observation date, source label, and limits.
 
 The writing follows ASD-STE100-style principles, such as short sentences and consistent terms. This is not a formal ASD-STE100 compliance certification.

@@ -1,13 +1,13 @@
-# Shubidha Map — Specification Pack
+# AccessBridge — Specification Pack
 
-**Product:** Shubidha Map  
+**Product:** AccessBridge  
 **Pilot:** Chattogram city, Bangladesh  
 **Version:** Compact accessibility-first MVP, 25 October 2026  
 **Writing style:** ASD-STE100-style Simplified Technical English
 
 ## Purpose
 
-Shubidha Map helps people check accessibility information before they visit a place or use a service. The main use case is a person who visits a restaurant, finds that its toilet is not accessible, and submits a dated report. After review, other visitors can search for the restaurant and see its accessibility information, source label, and last checked date.
+AccessBridge helps people check accessibility information before they visit a place or use a service. The main use case is a person who visits a restaurant, finds that its toilet is not accessible, and submits a dated report. After review, other visitors can search for the restaurant and see its accessibility information, source label, and last checked date.
 
 The first release must stay small. It must deliver reliable venue information and a safe way to update it. It must not become a broad benefits application portal.
 
@@ -24,6 +24,7 @@ The first release must stay small. It must deliver reliable venue information an
 | `07_FILES_AND_DOCUMENTATION.md` | Suggested repository structure and file responsibilities |
 | `08_MATH_IMPLEMENTATION.md` | Small set of calculations and deferred algorithms |
 | `SOURCE_AND_ASSUMPTIONS.md` | Approved decisions, source basis, proposals, and open checks |
+| `RUNBOOK.md` | Environment, database setup, reviewer accounts, imports, backup, retention, and pilot measures |
 
 ## Status labels in this pack
 

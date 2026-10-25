@@ -3,7 +3,7 @@
 ## 1. Main visitor journey
 
 ```text
-Open Shubidha Map
+Open AccessBridge
        ↓
 Search by place name or keyword
        ↓

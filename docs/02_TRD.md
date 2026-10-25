@@ -1,6 +1,6 @@
 # 02 — Technical Requirements Document
 
-**Product:** Shubidha Map  
+**Product:** AccessBridge  
 **Stack direction:** Next.js, TypeScript, Tailwind CSS, Supabase, and Vercel  
 **Budget:** $0 for the pilot, within free-tier limits and provider terms
 

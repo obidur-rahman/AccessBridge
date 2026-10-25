@@ -1,13 +1,13 @@
 # 01 — Product Requirements Document
 
-**Product:** Shubidha Map  
+**Product:** AccessBridge  
 **Pilot:** Chattogram city, Bangladesh  
 **Release:** Compact MVP  
 **Status:** Requirements draft based on user decisions
 
 ## 1. Product summary
 
-Shubidha Map is a free, mobile-friendly website. It helps people check accessibility information about places and services before they visit. A visitor can search for a restaurant, clinic, government office, transport point, NGO, or other useful place. The visitor can see details such as step-free entry, ramps, lifts, and toilet access.
+AccessBridge is a free, mobile-friendly website. It helps people check accessibility information about places and services before they visit. A visitor can search for a restaurant, clinic, government office, transport point, NGO, or other useful place. The visitor can see details such as step-free entry, ramps, lifts, and toilet access.
 
 A visitor can submit a report after a visit. For example, the visitor can report that a restaurant's toilet is not accessible. A reviewer checks the report. The reviewer can accept it, reject it, or request more information. An accepted report updates the public accessibility information. The page shows the source label and the date of the observation.
 
