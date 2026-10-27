@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Hind_Siliguri, Instrument_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Archivo, Hind_Siliguri, IBM_Plex_Mono } from "next/font/google";
 import { PageTransition } from "@/components/PageTransition";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -8,10 +8,10 @@ import { t } from "@/lib/i18n/core";
 import { getLang } from "@/lib/i18n/server";
 import "./globals.css";
 
-const instrumentSans = Instrument_Sans({
+const archivo = Archivo({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-instrument-sans",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-archivo",
   display: "swap",
 });
 
@@ -64,6 +64,17 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+function websiteJsonLd(lang: "en" | "bn") {
+  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "AccessBridge",
+    url: base,
+    inLanguage: lang,
+  };
+}
+
 export default async function RootLayout({
   children,
 }: {
@@ -72,7 +83,13 @@ export default async function RootLayout({
   const [lang, reviewer] = await Promise.all([getLang(), getReviewer()]);
 
   return (
-    <html lang={lang} className={`${instrumentSans.variable} ${hindSiliguri.variable} ${plexMono.variable} h-full`}>
+    <html lang={lang} className={`${archivo.variable} ${hindSiliguri.variable} ${plexMono.variable} h-full`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd(lang)) }}
+        />
+      </head>
       <body className="flex min-h-full flex-col">
         <a
           href="#main"

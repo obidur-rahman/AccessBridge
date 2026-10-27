@@ -6,7 +6,11 @@ import { getLang } from "@/lib/i18n/server";
 
 export async function generateMetadata(): Promise<Metadata> {
   const lang = await getLang();
-  return { title: `${t(lang, "report.title")} — ${t(lang, "app.name")}` };
+  return {
+    title: `${t(lang, "report.title")} — ${t(lang, "app.name")}`,
+    alternates: { canonical: "/report" },
+    robots: { index: false },
+  };
 }
 
 export default async function ReportPage({
@@ -29,7 +33,11 @@ export default async function ReportPage({
   return (
     <div>
       <header className="relative overflow-hidden border-b border-line">
-        <div className="relative mx-auto w-full max-w-6xl px-4 pb-10 pt-10 sm:px-6 sm:pb-12 sm:pt-14">
+        <div
+          aria-hidden="true"
+          className="tick-rail pointer-events-none absolute inset-x-0 bottom-0 h-2.5 opacity-80"
+        />
+        <div className="relative w-full px-4 pb-10 pt-10 sm:px-6 sm:pb-12 sm:pt-14 lg:px-8">
           <p className="pill pill-plain">
             <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-accent" />
             {t(lang, "nav.report")}
@@ -43,7 +51,7 @@ export default async function ReportPage({
 
           <ol className="mt-9 grid max-w-3xl list-none gap-3 sm:grid-cols-3">
             {steps.map((step, index) => (
-              <li key={step.title} className="rounded-card border border-line bg-surface/70 p-4">
+              <li key={step.title} className="card bg-surface/80 p-4">
                 <span className="tag tabular text-accent">{String(index + 1).padStart(2, "0")}</span>
                 <p className="mt-2 text-sm font-medium text-ink">{step.title}</p>
                 <p className="mt-1 text-sm leading-relaxed text-ink-faint">{step.body}</p>

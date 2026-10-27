@@ -12,7 +12,10 @@ import type { FeatureState } from "@/lib/types";
 
 export async function generateMetadata(): Promise<Metadata> {
   const lang = await getLang();
-  return { title: `${t(lang, "review.title")} — ${t(lang, "app.name")}` };
+  return {
+    title: `${t(lang, "review.title")} — ${t(lang, "app.name")}`,
+    robots: { index: false },
+  };
 }
 
 export default async function ReviewQueuePage() {
@@ -41,7 +44,7 @@ export default async function ReviewQueuePage() {
   return (
     <div>
       <header className="relative overflow-hidden border-b border-line">
-        <div className="relative mx-auto w-full max-w-5xl px-4 pb-8 pt-10 sm:px-6 sm:pb-10 sm:pt-12">
+        <div className="relative w-full px-4 pb-8 pt-10 sm:px-6 sm:pb-10 sm:pt-12 lg:px-8">
           <div className="flex flex-wrap items-start justify-between gap-6">
             <div>
               <p className="tag text-ink-faint">{t(lang, "nav.review")}</p>
@@ -59,7 +62,7 @@ export default async function ReviewQueuePage() {
         </div>
       </header>
 
-      <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
+      <div className="w-full px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
         {reviewer.demo ? (
           <div className="flex flex-wrap items-center gap-x-3 gap-y-2 rounded-control border border-signal/60 bg-signal-soft px-4 py-2.5 text-sm leading-relaxed text-partial">                <span className="pill shrink-0 bg-signal text-ink">{t(lang, "common.demoLabel")}</span>
             <span className="min-w-0">{t(lang, "review.demoNotice")}</span>

@@ -1,126 +1,112 @@
-# AccessBridge — Design system
+# AccessBridge — Design System
 
-## Concept card
+## Brief (Phase 0)
+
+- **Subject:** AccessBridge, a bilingual (bn/en) public directory of per-feature accessibility
+  observations for Chattogram, Bangladesh. Community reports pass one reviewer desk before
+  anything public changes.
+- **Audience:** disabled people and caregivers checking a venue before they travel; reviewers
+  working a queue.
+- **Job:** answer "can I use this place?" in three seconds with evidence, and make contributing
+  one observation feel safe and quick.
+- **Constraints:** light mode only, proper webapp (not a showreel), AA contrast, works on a
+  390 px phone, Bengali parity, demo data must stay labelled.
+
+## Concepts (Phase 1)
+
+1. **The reading bench (material: measurement instruments).** Every access feature is a reading
+   taken with an instrument: a needle, a tick scale, a date stamp. The site is a bench of
+   calibrated panels. *Anchor:* AccessBridge's core rule — each feature carries its own result,
+   source and date, never one score for the place. O4 / F5 / Fe4 / P3.
+2. **Enamel signboards of Chattogram (place & culture).** The site is a hand-painted enamel
+   signboard: heavy color fields, Bengali display lettering, rickshaw-shaw energy. O4 / F3 /
+   Fe3 / P2 — webapp fit is shaky, and heavy local color fights the light-mode brief.
+3. **The docket (process).** Every report is a docket sheet that slides across one reviewer
+   desk: in-tray, stamp, out-tray. O3 / F5 / Fe5 / P2 — strongest feasibility, but it covers
+   only the review half of the product.
+
+**Pick: 1, the reading bench.** It is the only concept whose anchor is the product's own rule
+(a reading per feature, no verdicts), and it covers both halves: the public panels read like
+instruments, and the reviewer desk is the bench everything passes over. Runner-up 3 lends its
+one detail: the receipt code stamps itself onto a slip after submit.
+
+### Concept card
 
 ```
-Idea:        A drawing set for the city's public buildings: plain drafting
-             paper where every access fact is annotated, measured, ticked
-             and dated.
-Metaphor:    The architect's drawing. Access is something you read off a
-             plan before you enter a building, so the interface is built
-             from plans, dimension lines, annotations and a title block.
-Signature:   The coverage graphic is a dimension line: end ticks span all
-             five key features, and the drawn segment is the part actually
-             reviewed. It fills on paint while the arch beside it drifts.
-Emotion:     Precise and quiet. You trust it because it looks measured.
-Screenshot:  White sheet, hairline arch in drafting blue, dimension-line
-             coverage card, small technical labels.
-Motion verb: Draw in. Lines extend, annotations settle, panels lift.
+Idea:        Every access feature is a calibrated reading — needle, ticks, date, source —
+             on a light instrument bench. No score for the whole place, ever.
+Metaphor:    A metrology bench: panels, dials, tick rails, stamped slips.
+Signature:   Needles sweep from rest and settle with one small overshoot when a reading
+             scrolls into view; at rest every needle drifts a degree and comes back.
+Emotion:     Precise and calm — "this was measured, here is by whom and when."
+Motion verb: settle like a needle (one damped sweep, then still).
+Screenshot:  The full-width instrument strip under the hero: four readings, edge to edge.
 ```
 
-## Why this direction
+## Art direction system (Phase 2)
 
-Three passes came before: warm paper with a serif display (generic editorial),
-black-and-amber signage (loud, harsher than the subject), and a soft sage
-wayfinding system (calm but anonymous). This pass takes the subject literally:
-access information *is* a drawing of a building you have not entered yet. The
-blueprint is a form nobody can move to another brand, because Chattogram's
-public buildings are the thing being drawn.
+### Palette (6 roles + data bands)
 
-## Palette
-
-Light drafting paper. No background pattern, no gradients, no glow.
-
-| Role | Hex | Use |
+| Role | Hex | Source |
 |---|---|---|
-| canvas | `#f7f7f5` | Page ground: plain paper |
-| surface | `#ffffff` | Panels, cards, header bar, footer |
-| surface-muted | `#f1f2ef` | Nested panels, hover fills |
-| surface-sunk | `#f4f5f2` | Input wells, skeletons |
-| ink | `#16191c` | Headings and body text |
-| ink-soft | `#4a5157` | Secondary copy |
-| ink-faint | `#5e666d` | Labels and metadata (5.3:1 on canvas) |
-| line | `#e4e6e1` | Hairlines and card borders |
-| line-strong | `#c6cbc4` | Input borders, dimension ticks |
-| accent | `#14539a` | The pen: primary action, links, measurement, focus |
-| accent-hover | `#0f4178` | Hover state of the pen |
-| accent-ink | `#10406f` | Type on accent-tinted chips |
-| accent-soft | `#e3edfa` | Selected chips and tints |
-| signal | `#b98a2f` | Demo data and stale observations only |
-| signal-soft | `#f7efdc` | Taped notices: demo banner, map notice |
+| ground (paper) | `#f5f6f4` | bench paper, cool-white not cream |
+| surface (panel face) | `#ffffff` | instrument faceplate |
+| ink | `#0e1319` | blue-black drafting ink |
+| muted | `#56606b` | stamped secondary ink (AA on ground) |
+| line | `#d9dcd8` | hairline = ink at ~13% |
+| accent | `#14539a` | signal blue (existing brand; the needle) |
+| curtain | `#0e1319` | page-transition veil, used once |
 
-White on accent is 7.7:1. Evidence chips stay light on light: dark type on
-pale tints with a hairline border, like labels pinned to a drawing. Every
-small-text pair clears 4.5:1 on its own background.
+Data bands (state colors) are data, not decoration, and only ever appear inside a reading:
+`yes #1f7a5c`, `partial #9a6b14`, `no #b3372f`, `not-checked #6b7580`.
 
-| State | Text | Tape |
-|---|---|---|
-| Yes | `#2a6a5a` | `#e6f0ec` |
-| No | `#a04a3c` | `#f8ebe8` |
-| Partial / stale | `#7f6128` | `#f7efdd` |
-| Not checked / not applicable | `#5e6660` | `#eef0ec` |
+### Type
 
-## Type
+- **Display + UI:** Archivo (Google, variable) — a civic grotesk with signage bones; weights
+  500/600/700. Display tracking −0.03em, leading 0.92. Not Inter, not Instrument Serif.
+- **Data + labels:** IBM Plex Mono 400/500 for readings, ticks, dates, receipt codes.
+- **Bangla:** Hind Siliguri 400/500/600 (unchanged, the standard).
+- Fluid scale `clamp()`; body 16–17px at 1.55; small UI 12–14px, tabular numerals everywhere
+  numbers are compared.
 
-| Role | English | Bangla |
-|---|---|---|
-| Display | Instrument Sans 600, tracking `-0.025em`, leading `1.05–1.1` | Hind Siliguri 600, no tracking, leading `1.3` |
-| Text, buttons, chips | Instrument Sans 400/500/600 | Hind Siliguri 400/500/600 |
-| Label lettering (`.tag`, `.tabular`) | IBM Plex Mono 400/500, tracking `0.04em` | Hind Siliguri, no tracking |
+### Grid, rhythm, shape
 
-Technical lettering is used the way a drawing uses it: small labels, counts
-and dates only. Headings, body, buttons and chips are the normal typeface;
-nothing is uppercased. Bengali never inherits Latin tracking or the mono
-stack; `html[lang="bn"]` reassigns `--font-annotate` to Hind Siliguri.
+- Full-bleed: every section runs edge to edge with 1/1.5/2rem gutters; only prose keeps a
+  measure (46 to 58ch). Stat strips and step rows are gap-px hairline grids on line color.
+- Navbar: wordmark is home; Directory and How it works anchor the page; reviewer link,
+  language toggle, then the report CTA. Links draw their underline; the header wears a
+  tick-rail edge.
+- **One radius rule:** drawings have corners — 4px controls, 6px cards. No pills except
+  state badges and the language toggle.
+- **Motion:** one easing family (cubic-bezier(0.22, 1, 0.36, 1) for settles,
+  0.2s for hovers). Reveals wipe along a tick rail; buttons lean −1px and flood; arrows travel;
+  nav links draw their underline. No GSAP/Lenis: this is a webapp — native scroll,
+  IntersectionObserver reveals, CSS needle drift, all disabled under reduced motion.
+- **Idle, recorded:** the bench is deliberately still under a resting pointer. Needles drift
+  1.5° over 4s as a small pulse of life, but the page does not perform while you read.
+  Stillness is the decision for a utility webapp, written down here on purpose.
+- **Idle state:** needles drift ±0.4° over 6s while the pointer is still (bench is alive).
 
-## Sheet and rhythm
+### Signature moment
 
-- The body is the sheet: plain `#f7f7f5` paper. No background grid, no
-  gradient wash, no glow; the drawing does the talking.
-- `max-w-6xl` (1152px) shell, 16/24px gutters. Reading columns cap at 58–62ch.
-- Cards: 2px radius, 1px `line` border, no shadow at rest. Corners are square
-  because drawings have corners. Controls are 4px radius, 44px tall minimum.
-- A page header is paper with the arch drawn in hairline strokes; sections
-  separate with space and hairline rules. Form pages (sign in, report,
-  review) carry no arch at all: they are working surfaces.
-- The footer closes with a **title block**: four bordered cells carrying
-  project, pilot area, language and access, as every drawing sheet does.
+The **index gauge** in the hero and the per-feature dial rows: needle sweeps from a parked
+position and settles on the reading as the row enters view. One overshoot, then still.
 
-## Motion
+### Explainer figure
 
-- `cubic-bezier(0.2, 0.6, 0.2, 1)`, 180–420ms. The movements that exist:
-  panel lift (`translateY(-2px)` + hairline turns cyan), dimension-line fill
-  (`scaleX 0 → 1`), a 420ms rise-and-fade on first paint, and the same rise
-  replayed when the route changes, so one sheet settles into the next.
-- Every primary target answers with the lift: buttons and the header action
-  rise two pixels, chips, language segments and coverage rows rise one.
-  Hover and keyboard focus produce the same lift; focus adds a 2px cyan ring
-  with 2px offset. Footer utility links may answer with colour alone.
-- **Idle state.** The drawn arch drifts fourteen pixels over twenty seconds,
-  like the shadow of a doorway moving through the day. Transform only, one
-  slow clock, paused off screen and off under reduced motion. The paper never
-  moves; form pages hold no arch and stay still at rest.
-- `prefers-reduced-motion: reduce` removes the fill, the entrance, the route
-  transition, the arch drift and smooth scrolling. The sheet is complete
-  and static at rest.
+Cut by decision: an isometric figure was built and removed in review. The three-step
+process story lives as a full-width hairline band instead; the gauges carry the craft.
 
-## The data graphic
+### Genericness test
 
-The coverage card and the ledger on each place page are the only figures, and
-both are real. The coverage card draws a **dimension line**: end ticks mark the
-full span of five key features, the cyan segment is the reviewed part, and the
-fraction sits at the end of the line. Screen readers get the sentence form,
-"3 of 5 key features reviewed". On the place page every row is the actual
-evidence: feature, state, source and date.
+"If a generic model designed this site, would it land here?" — replaced: soft SaaS cards →
+ticked instrument strips; centered gradient hero → asymmetric bench composition with a real
+gauge; Inter → Archivo; evenly spaced feature columns → ruled ledger rows with readings;
+generic "How it works 01/02/03" cards → one full-width hairline band; centered 72rem
+column → edge-to-edge sections with real measures on prose only.
 
-## Rules that come from the product
+### Copy rules (humanize pass)
 
-- A state is a word first. The dot repeats the word; it never replaces it.
-- `Not checked` is never styled like `No`.
-- Every public fact carries its source and date on the same line.
-- Amber marks thresholds only — demo data and stale observations. It is never
-  a background for body text, and cyan is never decorative.
-- One primary action per screen. Links are underlined; buttons are filled or
-  outlined, never both.
-- Bangla and English share the same layout and the same measures; only the
-  type, the line-height and the annotation stack change.
+Sentence case, no em dashes in visible text, no filler verbs (seamless, empower, elevate,
+cutting-edge), no repeated sentences across sections, numbers only when true, contractions
+where a person would use them. Both languages get the same pass.

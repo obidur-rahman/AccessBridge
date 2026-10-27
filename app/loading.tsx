@@ -2,7 +2,7 @@ export default function Loading() {
   return (
     <div
       aria-busy="true"
-      className="mx-auto w-full max-w-6xl animate-pulse px-4 py-16 sm:px-6"
+      className="w-full animate-pulse px-4 py-16 sm:px-6 lg:px-8"
     >
       <p className="sr-only">Loading</p>
       <div className="h-2.5 w-28 rounded-control bg-surface-sunk" />

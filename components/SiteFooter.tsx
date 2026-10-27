@@ -11,10 +11,10 @@ export function SiteFooter({ lang, isReviewer }: { lang: Lang; isReviewer: boole
 
   return (
     <footer className="mt-24 border-t border-line bg-surface">
-      <div className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6">
+      <div className="w-full px-4 py-14 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-[1fr_1.6fr]">
           <div>
-            <p className="text-[1.4rem] font-semibold tracking-[-0.025em]">{t(lang, "app.name")}</p>
+            <p className="text-[clamp(1.6rem,3vw,2.2rem)] font-semibold tracking-[-0.03em]">{t(lang, "app.name")}</p>
             {lang === "en" ? (
               <p className="mt-1 text-[0.95rem] text-ink-faint" lang="bn">
                 প্রবেশগম্যতার সেতু
@@ -35,8 +35,10 @@ export function SiteFooter({ lang, isReviewer }: { lang: Lang; isReviewer: boole
           </dl>
         </div>
 
+        <div className="tick-rail mt-12 h-2.5 opacity-80" aria-hidden="true" />
+
         {/* Title block, as every drawing sheet carries: four cells of fact. */}
-        <div className="mt-12 grid grid-cols-2 border-l border-t border-line lg:grid-cols-4">
+        <div className="mt-6 grid grid-cols-2 border-l border-t border-line lg:grid-cols-4">
           <div className="border-b border-r border-line px-4 py-4">
             <p className="tag text-ink-faint">{t(lang, "footer.blockProject")}</p>
             <p className="mt-1.5 text-sm text-ink">{t(lang, "app.name")}</p>
@@ -59,7 +61,7 @@ export function SiteFooter({ lang, isReviewer }: { lang: Lang; isReviewer: boole
             <p className="tag text-ink-faint">{t(lang, "footer.blockAccess")}</p>
             <Link
               href={isReviewer ? "/review" : "/login"}
-              className="mt-1.5 inline-flex min-h-6 items-center text-sm font-medium text-accent underline decoration-accent/40 decoration-1 underline-offset-4 transition-colors hover:text-ink hover:decoration-accent"
+              className="mt-1.5 inline-flex min-h-6 items-center text-sm font-medium text-accent underline decoration-accent/40 decoration-1 underline-offset-4 transition-[color,transform] duration-200 hover:-translate-y-px hover:text-ink hover:decoration-accent"
             >
               {isReviewer ? t(lang, "nav.review") : t(lang, "nav.signIn")}
             </Link>

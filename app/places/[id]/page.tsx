@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Gauge } from "@/components/accessibility/Gauge";
 import { StateBadge } from "@/components/accessibility/StateBadge";
 import { PlaceMap } from "@/components/map/PlaceMap";
 import { FEATURE_KEYS, featureLabel } from "@/lib/access-features";
@@ -25,7 +26,10 @@ export async function generateMetadata({
     result.place.listing.name_bn ??
     "";
 
-  return { title: name };
+  return {
+    title: name,
+    alternates: { canonical: `/places/${id}` },
+  };
 }
 
 function evidenceText(feature: CurrentFeature, lang: Lang): string {
@@ -100,16 +104,39 @@ export default async function PlacePage({
       href: listing.website_url,
     });
 
+  const placeJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Place",
+    name,
+    ...(summary ? { description: summary } : {}),
+    ...(address ? { address } : {}),
+    ...(listing.latitude !== null && listing.longitude !== null
+      ? {
+          geo: {
+            "@type": "GeoCoordinates",
+            latitude: listing.latitude,
+            longitude: listing.longitude,
+          },
+        }
+      : {}),
+    accessibilityFeature: features
+      .filter((feature) => feature.state !== "not_checked")
+      .map((feature) => `${featureLabel(feature.feature_key, lang)}: ${feature.state.replace("_", " ")}`),
+    ...(latest ? { dateModified: latest } : {}),
+  };
+
   return (
     <article>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(placeJsonLd) }}
+      />
       <header className="relative overflow-hidden border-b border-line">
         <div
           aria-hidden="true"
-          className="arch-drift pointer-events-none absolute -right-10 -top-16 hidden h-[24rem] w-[24rem] rounded-t-full border border-accent/30 lg:block"
-        >
-          <div className="absolute inset-10 rounded-t-full border border-accent/22" />
-        </div>
-        <div className="relative mx-auto w-full max-w-6xl px-4 pb-10 pt-7 sm:px-6 sm:pb-14 sm:pt-10">
+          className="tick-rail pointer-events-none absolute inset-x-0 bottom-0 h-2.5 opacity-80"
+        />
+        <div className="relative w-full px-4 pb-10 pt-7 sm:px-6 sm:pb-14 sm:pt-10 lg:px-8">
           <Link
             href="/"
             className="-mx-2 inline-flex items-center gap-1.5 rounded-control px-2 py-1 text-sm text-ink-faint transition-[background-color,transform,box-shadow] duration-200 hover:-translate-y-px hover:bg-surface-muted hover:text-ink hover:shadow-soft"
@@ -170,7 +197,7 @@ export default async function PlacePage({
         </div>
       </header>
 
-      <div className="mx-auto w-full max-w-6xl px-4 pb-20 pt-10 sm:px-6 sm:pt-12">
+      <div className="w-full px-4 pb-20 pt-10 sm:px-6 sm:pt-12 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[1fr_19rem] lg:items-start lg:gap-10">
           <section aria-labelledby="features-heading" className="min-w-0">
             <h2 id="features-heading" className="text-[clamp(1.5rem,3vw,1.9rem)]">
@@ -193,7 +220,7 @@ export default async function PlacePage({
                   return (
                     <div
                       key={key}
-                      className="grid gap-x-6 gap-y-2 px-4 py-4 transition-colors hover:bg-surface-muted/60 sm:grid-cols-[1.25fr_9rem_1fr] sm:items-start sm:px-5 sm:py-5"
+                      className="grid gap-x-6 gap-y-2 px-4 py-4 transition-colors hover:bg-surface-muted/60 sm:grid-cols-[1.25fr_11rem_1fr] sm:items-start sm:px-5 sm:py-5"
                     >
                       <dt>
                         <span className="text-[1rem] font-medium leading-snug">
@@ -205,7 +232,8 @@ export default async function PlacePage({
                           </span>
                         ) : null}
                       </dt>
-                      <dd>
+                      <dd className="flex items-center gap-3">
+                        <Gauge state={feature?.state ?? "not_checked"} size={40} idle />
                         <StateBadge
                           state={feature?.state ?? "not_checked"}
                           lang={lang}
@@ -246,9 +274,11 @@ export default async function PlacePage({
                 className="btn btn-primary mt-4 w-full"
               >
                 {t(lang, "place.reportUpdate")}
-                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" aria-hidden="true">
-                  <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+                <span className="travel" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none">
+                    <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </span>
               </Link>
             </div>
 

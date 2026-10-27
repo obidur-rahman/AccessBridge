@@ -11,7 +11,7 @@ export default function ErrorPage({
   reset: () => void;
 }) {
   return (
-    <div className="mx-auto w-full max-w-3xl px-4 py-20 sm:px-6 sm:py-28">
+    <div className="w-full px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
       <div role="alert" className="card card-pad">
         {/* The boundary may render before the language cookie is readable on the
             client, so it states the failure in both interface languages. */}

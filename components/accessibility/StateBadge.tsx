@@ -37,7 +37,7 @@ export function StateBadge({
         {t(lang, LABEL_KEYS[state])}
       </span>
       {needsRecheck ? (
-        <span className="pill bg-signal-soft text-signal">
+        <span className="pill bg-signal-soft text-partial">
           {t(lang, "state.needsRecheck")}
         </span>
       ) : null}

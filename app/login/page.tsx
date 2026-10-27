@@ -8,7 +8,11 @@ import { getLang } from "@/lib/i18n/server";
 
 export async function generateMetadata(): Promise<Metadata> {
   const lang = await getLang();
-  return { title: `${t(lang, "login.title")} — ${t(lang, "app.name")}` };
+  return {
+    title: `${t(lang, "login.title")} — ${t(lang, "app.name")}`,
+    alternates: { canonical: "/login" },
+    robots: { index: false },
+  };
 }
 
 export default async function LoginPage({
@@ -28,7 +32,8 @@ export default async function LoginPage({
 
   return (
     <div className="mx-auto w-full max-w-lg px-4 py-14 sm:px-6 sm:py-20">
-      <div className="soft-in card p-6 shadow-soft sm:p-8">
+      <div className="soft-in card overflow-hidden p-6 shadow-soft sm:p-8">
+        <div aria-hidden="true" className="tick-rail -mx-6 -mt-6 mb-6 h-2.5 opacity-80 sm:-mx-8 sm:-mt-8" />
         <p className="tag text-ink-faint">{t(lang, "nav.signIn")}</p>
         <h1 className="mt-2 text-[clamp(1.6rem,4vw,2.1rem)]">{t(lang, "login.title")}</h1>
         <p className="mt-3 text-sm leading-relaxed text-ink-soft">{t(lang, "login.intro")}</p>

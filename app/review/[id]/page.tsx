@@ -62,7 +62,7 @@ export default async function ReviewDetailPage({
   return (
     <div>
       <header className="border-b border-line">
-        <div className="mx-auto w-full max-w-5xl px-4 pb-8 pt-7 sm:px-6 sm:pb-10">
+        <div className="w-full px-4 pb-8 pt-7 sm:px-6 sm:pb-10 lg:px-8">
           <Link
             href="/review"
             className="inline-flex items-center gap-1.5 rounded-control py-1 text-sm text-ink-faint transition-colors hover:text-ink"
@@ -90,7 +90,7 @@ export default async function ReviewDetailPage({
         </div>
       </header>
 
-      <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
+      <div className="w-full px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
           <div className="min-w-0">
             <h2 className="text-[1.25rem]">{t(lang, "review.features")}</h2>

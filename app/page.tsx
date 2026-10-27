@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Gauge } from "@/components/accessibility/Gauge";
 import { CoverageBoard } from "@/components/listing/CoverageBoard";
 import { SearchDirectory } from "@/components/search/SearchDirectory";
 import { getDirectory } from "@/lib/data/places";
@@ -9,39 +10,49 @@ function figure(value: number, lang: "en" | "bn") {
   return lang === "bn" ? toBengaliDigits(value) : String(value);
 }
 
+const STEP_TITLES = ["report.step1Title", "report.step2Title", "report.step3Title"] as const;
+const STEP_BODIES = ["report.step1Body", "report.step2Body", "report.step3Body"] as const;
+
 export default async function HomePage() {
   const [lang, directory] = await Promise.all([getLang(), getDirectory()]);
   const listings = directory.ok ? directory.listings : [];
   const reviewed = listings.filter((listing) => listing.checked_features.length > 0).length;
+  const areas = new Set(listings.map((listing) => listing.area_name).filter(Boolean)).size;
+  const categories = new Set(listings.map((listing) => listing.category)).size;
+  const coverage = listings.length > 0 ? reviewed / listings.length : 0;
+
+  const stats: { label: string; value: number; gauge?: boolean }[] = [
+    { label: t(lang, "home.statPlaces"), value: listings.length },
+    { label: t(lang, "home.statChecked"), value: reviewed, gauge: true },
+    { label: t(lang, "home.statAreas"), value: areas },
+    { label: t(lang, "home.statCategories"), value: categories },
+  ];
 
   return (
     <div>
-      <section className="relative overflow-hidden border-b border-line">
+      <section className="relative border-b border-line">
         <div
           aria-hidden="true"
-          className="arch-drift pointer-events-none absolute -right-16 -top-10 hidden h-[30rem] w-[30rem] rounded-t-full border border-accent/30 lg:block"
-        >
-          <div className="absolute inset-10 rounded-t-full border border-accent/22" />
-          <div className="absolute inset-24 rounded-t-full border border-accent/16" />
-        </div>
+          className="tick-rail pointer-events-none absolute inset-x-0 bottom-0 h-2.5 opacity-80"
+        />
 
-        <div className="relative mx-auto w-full max-w-6xl px-4 pb-16 pt-14 sm:px-6 sm:pb-20 sm:pt-20">
-          <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center lg:gap-16">
+        <div className="relative w-full px-4 pb-14 pt-12 sm:px-6 sm:pt-16 lg:px-8">
+          <div className="grid gap-10 lg:grid-cols-[1.3fr_1fr] lg:gap-14">
             <div className="soft-in min-w-0">
               <p className="pill pill-plain">
                 <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-accent" />
                 {t(lang, "app.pilot")}
               </p>
 
-              <h1 className="mt-6 max-w-[17ch] text-[clamp(2.5rem,6.4vw,4.25rem)] font-semibold leading-[1.04] tracking-[-0.035em]">
+              <h1 className="mt-7 max-w-[13ch] text-[clamp(2.7rem,7vw,5.25rem)] font-semibold leading-[1.0] tracking-[-0.04em]">
                 {t(lang, "home.title")}
               </h1>
 
-              <p className="mt-6 max-w-[48ch] text-[1.0625rem] leading-relaxed text-ink-soft sm:text-lg">
+              <p className="mt-7 max-w-[54ch] text-[1.0625rem] leading-relaxed text-ink-soft sm:text-xl">
                 {t(lang, "home.intro")}
               </p>
 
-              <div className="mt-8 flex flex-wrap items-center gap-3">
+              <div className="mt-9 flex flex-wrap items-center gap-3">
                 <a href="#directory" className="btn btn-primary px-5">
                   {t(lang, "home.searchLabel")}
                   <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" aria-hidden="true">
@@ -52,36 +63,36 @@ export default async function HomePage() {
                   {t(lang, "nav.report")}
                 </Link>
               </div>
-
-              <dl className="mt-12 grid max-w-lg grid-cols-2 gap-x-8 gap-y-6 border-t border-line pt-6">
-                <div>
-                  <dt className="tag text-ink-faint">{t(lang, "home.statPlaces")}</dt>
-                  <dd className="tabular mt-1 text-2xl font-semibold tracking-tight">
-                    {figure(listings.length, lang)}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="tag text-ink-faint">{t(lang, "home.statChecked")}</dt>
-                  <dd className="tabular mt-1 text-2xl font-semibold tracking-tight">
-                    {figure(reviewed, lang)}
-                  </dd>
-                </div>
-              </dl>
             </div>
 
             {directory.ok ? (
               <div className="soft-in min-w-0">
                 <CoverageBoard listings={listings} lang={lang} />
-                <p className="mt-4 max-w-[42ch] px-1 text-xs leading-relaxed text-ink-faint">
+                <p className="mt-4 max-w-[46ch] px-1 text-xs leading-relaxed text-ink-faint">
                   {t(lang, "home.statNote")}
                 </p>
               </div>
             ) : null}
           </div>
         </div>
+
+        {/* The instrument strip: four readings across the full width. */}
+        <dl className="relative grid grid-cols-2 gap-px border-t border-line bg-line lg:grid-cols-4">
+          {stats.map((stat) => (
+            <div key={stat.label} className="bg-canvas px-4 py-5 sm:px-6 lg:px-8">
+              <dt className="tag text-ink-faint">{stat.label}</dt>
+              <dd className="mt-1.5 flex items-center gap-3">
+                <span className="tabular text-3xl font-semibold tracking-tight">
+                  {figure(stat.value, lang)}
+                </span>
+                {stat.gauge ? <Gauge value={coverage} size={56} idle /> : null}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </section>
 
-      <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         {!directory.ok ? (
           <div role="alert" className="card card-pad mt-10 border-no/30 bg-no-soft">
             <p className="text-base font-semibold text-no">{t(lang, "common.errorTitle")}</p>
@@ -102,34 +113,54 @@ export default async function HomePage() {
               </div>
             ) : null}
 
-            <div className="py-14 sm:py-16">
+            <div id="directory" className="scroll-mt-24 py-14 sm:py-16">
               <SearchDirectory listings={listings} lang={lang} />
             </div>
           </>
         )}
+      </div>
 
-        <section className="mb-20 rounded-card border border-line bg-surface px-6 py-10 sm:px-10 sm:py-12">
-          <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
-            <div>
-              <p className="tag text-ink-faint">{t(lang, "nav.report")}</p>
-              <h2 className="mt-3 max-w-[18ch] text-[clamp(1.75rem,3.4vw,2.5rem)]">
-                {t(lang, "report.title")}
-              </h2>
-            </div>
-            <div className="lg:pt-1">
-              <p className="max-w-prose text-base leading-relaxed text-ink-soft">
-                {t(lang, "report.intro")}
+      {/* How a report is checked: three stations, one row. */}
+      <section id="how" aria-label={t(lang, "home.howTitle")} className="border-y border-line bg-surface">
+        <p className="tag px-4 pt-6 text-ink-faint sm:px-6 lg:px-8">
+          {t(lang, "home.howTitle")}
+        </p>
+        <ol className="mt-4 grid list-none gap-px border-t border-line bg-line sm:grid-cols-3">
+          {STEP_TITLES.map((titleKey, i) => (
+            <li key={titleKey} className="bg-surface px-4 py-6 sm:px-6 lg:px-8">
+              <span className="tag tabular text-accent">{String(i + 1).padStart(2, "0")}</span>
+              <p className="mt-2 text-base font-semibold text-ink">{t(lang, titleKey)}</p>
+              <p className="mt-1 max-w-[46ch] text-sm leading-relaxed text-ink-soft">
+                {t(lang, STEP_BODIES[i])}
               </p>
-              <Link href="/report" className="btn btn-primary mt-6 px-5">
-                {t(lang, "nav.report")}
-                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" aria-hidden="true">
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className="border-b border-line bg-surface">
+        <div className="grid gap-8 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:gap-14 lg:px-8 lg:py-14">
+          <div>
+            <p className="tag text-ink-faint">{t(lang, "nav.report")}</p>
+            <h2 className="mt-3 max-w-[18ch] text-[clamp(1.75rem,3.4vw,2.75rem)]">
+              {t(lang, "report.title")}
+            </h2>
+          </div>
+          <div className="lg:pt-1">
+            <p className="max-w-prose text-base leading-relaxed text-ink-soft">
+              {t(lang, "report.intro")}
+            </p>
+            <Link href="/report" className="btn btn-primary mt-6 px-5">
+              {t(lang, "nav.report")}
+              <span className="travel" aria-hidden="true">
+                <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none">
                   <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-              </Link>
-            </div>
+              </span>
+            </Link>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
     </div>
   );
 }

@@ -9,6 +9,8 @@ export const en = {
   "app.skipToContent": "Skip to main content",
 
   "nav.home": "Home",
+  "nav.directory": "Directory",
+  "nav.how": "How it works",
   "nav.report": "Report an update",
   "nav.review": "Review queue",
   "nav.signIn": "Reviewer sign in",
@@ -17,9 +19,9 @@ export const en = {
   "nav.english": "English",
   "nav.bangla": "বাংলা",
 
-  "home.title": "Find accessibility details for a place",
+  "home.title": "Check a place, feature by feature",
   "home.intro":
-    "Search for a restaurant, clinic, office, transport point, or organisation. Each access feature shows its own result, source, and date.",
+    "Search for a restaurant, clinic, office, transport stop or organisation. Every feature shows its own result, source and date.",
   "home.searchLabel": "Search by place name or keyword",
   "home.searchPlaceholder": "Restaurant, clinic, or place name",
   "home.searchHelp": "Your search stays in this browser. It is not sent to the server.",
@@ -34,7 +36,7 @@ export const en = {
   "home.reset": "Clear filters",
   "home.resultsCount": "{{count}} places",
   "home.resultsCountOne": "1 place",
-  "home.noResults": "No matching place found.",
+  "home.noResults": "No place matched your search.",
   "home.noResultsHelp":
     "Try a shorter search, another spelling, or clear the filters. You can also suggest a new place.",
   "home.suggestPlace": "Suggest a new place",
@@ -52,6 +54,9 @@ export const en = {
   "home.statNote": "A checked feature is not a verdict on the whole place.",
   "home.sortNote":
     "Order does not mean one place is more accessible than another. Check each feature you need.",
+  "home.howTitle": "How a report is checked",
+  "home.statAreas": "Areas",
+  "home.statCategories": "Categories",
 
   "category.benefits": "Benefits",
   "category.government": "Government services",
@@ -88,7 +93,7 @@ export const en = {
   "place.featuresTitle": "Accessibility features",
   "place.featureColumn": "Feature",
   "place.mapTitle": "Map",
-  "place.featuresIntro": "Each feature has its own result. A yes for one feature does not mean the place is accessible overall.",
+  "place.featuresIntro": "Each feature is checked on its own. One yes does not make a place accessible.",
   "place.state": "State",
   "place.evidence": "Source and date",
   "place.noObservation": "No accepted observation",
@@ -244,6 +249,8 @@ export const bn: Record<keyof typeof en, string> = {
   "app.skipToContent": "মূল বিষয়বস্তুতে যান",
 
   "nav.home": "প্রথম পাতা",
+  "nav.directory": "তালিকা",
+  "nav.how": "কীভাবে কাজ করে",
   "nav.report": "হালনাগাদ জানান",
   "nav.review": "পর্যালোচনা তালিকা",
   "nav.signIn": "পর্যালোচক প্রবেশ",
@@ -252,9 +259,9 @@ export const bn: Record<keyof typeof en, string> = {
   "nav.english": "English",
   "nav.bangla": "বাংলা",
 
-  "home.title": "কোনো স্থানের প্রবেশগম্যতার তথ্য খুঁজুন",
+  "home.title": "প্রতিটি সুবিধা দেখে স্থান যাচাই করুন",
   "home.intro":
-    "রেস্তোরাঁ, ক্লিনিক, অফিস, পরিবহন কেন্দ্র বা সংস্থা খুঁজুন। প্রতিটি সুবিধার ফলাফল, সূত্র ও তারিখ আলাদা করে দেখানো হয়।",
+    "রেস্তোরাঁ, ক্লিনিক, অফিস, পরিবহন স্টপ বা সংস্থা খুঁজুন। প্রতিটি সুবিধার ফলাফল, সূত্র ও তারিখ আলাদা করে দেখানো হয়।",
   "home.searchLabel": "স্থানের নাম বা কীওয়ার্ড দিয়ে খুঁজুন",
   "home.searchPlaceholder": "রেস্তোরাঁ, ক্লিনিক বা স্থানের নাম",
   "home.searchHelp": "আপনার অনুসন্ধান এই ব্রাউজারেই থাকে। সার্ভারে পাঠানো হয় না।",
@@ -287,6 +294,9 @@ export const bn: Record<keyof typeof en, string> = {
   "home.statNote": "একটি সুবিধা যাচাই মানে পুরো স্থান সম্পর্কে রায় নয়।",
   "home.sortNote":
     "ক্রমের অর্থ এই নয় যে এক স্থান অন্য স্থানের চেয়ে বেশি প্রবেশগম্য। আপনার প্রয়োজনীয় প্রতিটি সুবিধা দেখুন।",
+  "home.howTitle": "রিপোর্ট যাচাইয়ের নিয়ম",
+  "home.statAreas": "এলাকা",
+  "home.statCategories": "বিভাগ",
 
   "category.benefits": "সুবিধা",
   "category.government": "সরকারি সেবা",
@@ -323,7 +333,7 @@ export const bn: Record<keyof typeof en, string> = {
   "place.featuresTitle": "প্রবেশগম্যতার সুবিধা",
   "place.featureColumn": "সুবিধা",
   "place.mapTitle": "মানচিত্র",
-  "place.featuresIntro": "প্রতিটি সুবিধার ফলাফল আলাদা। একটি সুবিধায় হ্যাঁ মানে স্থানটি পুরোপুরি প্রবেশগম্য নয়।",
+  "place.featuresIntro": "প্রতিটি সুবিধা আলাদা করে যাচাই হয়। একটি হ্যাঁ মানে স্থানটি পুরোপুরি প্রবেশগম্য নয়।",
   "place.state": "অবস্থা",
   "place.evidence": "সূত্র ও তারিখ",
   "place.noObservation": "কোনো গৃহীত পর্যবেক্ষণ নেই",

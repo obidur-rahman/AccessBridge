@@ -1,24 +1,24 @@
 @import "tailwindcss";
 
 /*
-  AccessBridge design system: Blueprint, drawn on paper.
-  The site is a drawing set for the city's public buildings: plain drafting
-  paper, hairline rules, square corners, a measured dimension line for the
-  data, and small technical lettering for labels and numerals. No background
-  pattern, no gradients, no glow. Evidence arrives as a light label chip with
-  a hairline border. The blue accent is the draughtsman's pen: it marks
-  action, measurement and confirmation, nothing else.
+  AccessBridge design system: the reading bench.
+  Every access feature is a calibrated reading: a needle, a tick scale, a date
+  and a source, printed on bench paper. Ground is cool paper, panels are white
+  faceplates, hairlines are pencil grey, and the blue accent is the needle:
+  it marks action, measurement and confirmation, nothing else. State colors are
+  data and only ever appear inside a reading. Square corners, because drawings
+  have corners.
 */
 @theme {
-  --color-canvas: #f7f7f5;
+  --color-canvas: #f5f6f4;
   --color-surface: #ffffff;
-  --color-surface-muted: #f1f2ef;
-  --color-surface-sunk: #f4f5f2;
-  --color-ink: #16191c;
-  --color-ink-soft: #4a5157;
-  --color-ink-faint: #5e666d;
-  --color-line: #e4e6e1;
-  --color-line-strong: #c6cbc4;
+  --color-surface-muted: #f0f1ee;
+  --color-surface-sunk: #f3f4f1;
+  --color-ink: #0e1319;
+  --color-ink-soft: #4d565f;
+  --color-ink-faint: #5b646d;
+  --color-line: #dcdeda;
+  --color-line-strong: #c3c8c2;
   --color-accent: #14539a;
   --color-accent-hover: #0f4178;
   --color-accent-ink: #10406f;
@@ -26,28 +26,30 @@
   --color-signal: #b98a2f;
   --color-signal-soft: #f7efdc;
 
-  --color-yes: #2a6a5a;
-  --color-yes-soft: #e6f0ec;
-  --color-no: #a04a3c;
-  --color-no-soft: #f8ebe8;
+  --color-yes: #1f7a5c;
+  --color-yes-soft: #e5f1ec;
+  --color-no: #b3372f;
+  --color-no-soft: #f9eae8;
   --color-partial: #7f6128;
   --color-partial-soft: #f7efdd;
-  --color-unknown: #5e6660;
-  --color-unknown-soft: #eef0ec;
+  --color-unknown: #5e6771;
+  --color-unknown-soft: #eef0f1;
 
   /* One radius rule: drawings have corners. */
-  --radius-card: 0.125rem;
+  --radius-card: 0.375rem;
   --radius-control: 0.25rem;
 
-  --shadow-soft: 0 1px 2px rgba(20, 25, 30, 0.05);
-  --shadow-lift: 0 2px 4px rgba(20, 25, 30, 0.06), 0 14px 28px -20px rgba(20, 25, 30, 0.4);
+  --shadow-soft: 0 1px 2px rgba(14, 19, 25, 0.05);
+  --shadow-lift: 0 2px 4px rgba(14, 19, 25, 0.06), 0 14px 28px -20px rgba(14, 19, 25, 0.4);
 }
 
 @layer base {
   :root {
-    --font-body: var(--font-instrument-sans), system-ui, sans-serif;
-    --font-display: var(--font-instrument-sans), system-ui, sans-serif;
+    --font-body: var(--font-archivo), system-ui, sans-serif;
+    --font-display: var(--font-archivo), system-ui, sans-serif;
     --font-annotate: var(--font-plex-mono), ui-monospace, monospace;
+    /* One easing family: the settle. */
+    --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   html[lang="bn"] {
@@ -61,13 +63,13 @@
     scroll-behavior: smooth;
   }
 
-  /* The sheet: plain drafting paper, no pattern. */
+  /* The sheet: bench paper, no pattern. */
   body {
     background-color: var(--color-canvas);
     color: var(--color-ink);
     font-family: var(--font-body);
-    font-size: 1rem;
-    line-height: 1.6;
+    font-size: 1.0625rem;
+    line-height: 1.55;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -77,8 +79,9 @@
   h3 {
     font-family: var(--font-display);
     font-weight: 600;
-    letter-spacing: -0.025em;
-    line-height: 1.1;
+    letter-spacing: -0.03em;
+    line-height: 1.06;
+    text-wrap: balance;
   }
 
   html[lang="bn"] h1,
@@ -155,14 +158,14 @@ html[lang="bn"] .tabular {
 
   @media (min-width: 640px) {
     .card-pad {
-      padding: 1.5rem;
+      padding: 1.75rem;
     }
   }
 
   .lift {
     transition:
-      transform 200ms cubic-bezier(0.2, 0.6, 0.2, 1),
-      box-shadow 200ms cubic-bezier(0.2, 0.6, 0.2, 1),
+      transform 200ms var(--ease-settle),
+      box-shadow 200ms var(--ease-settle),
       border-color 200ms ease;
   }
 
@@ -183,25 +186,31 @@ html[lang="bn"] .tabular {
     padding: 0 1.15rem;
     font-family: var(--font-body);
     font-size: 0.9375rem;
-    font-weight: 500;
+    font-weight: 600;
     letter-spacing: 0;
     transition:
       background-color 180ms ease,
       color 180ms ease,
       border-color 180ms ease,
-      transform 180ms cubic-bezier(0.2, 0.6, 0.2, 1),
+      transform 180ms var(--ease-settle),
       box-shadow 180ms ease;
   }
 
-  html[lang="bn"] .btn {
-    font-size: 0.9375rem;
-  }
-
-  /* Every button answers with the site's lift, not a colour swap alone. */
+  /* Every button answers with the site's settle, not a colour swap alone. */
   .btn:hover,
   .btn:focus-visible {
     transform: translateY(-2px);
     box-shadow: var(--shadow-lift);
+  }
+
+  /* Arrows travel in the direction of travel on hover. */
+  .btn .travel {
+    transition: transform 200ms var(--ease-settle);
+  }
+
+  .btn:hover .travel,
+  .btn:focus-visible .travel {
+    transform: translateX(3px);
   }
 
   .btn-primary {
@@ -251,13 +260,13 @@ html[lang="bn"] .tabular {
     outline: none;
   }
 
-  /* Evidence chip: a small light tag with a hairline, like a drawing label. */
+  /* Evidence chip: a small light tag with a hairline, like a stamped label. */
   .pill {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
     border-radius: 3px;
-    border: 1px solid rgba(23, 25, 27, 0.14);
+    border: 1px solid rgba(14, 19, 25, 0.14);
     padding: 0.15rem 0.5rem;
     font-family: var(--font-body);
     font-size: 0.8125rem;
@@ -281,24 +290,33 @@ html[lang="bn"] .tabular {
     height: 1px;
     background-color: var(--color-line);
   }
+
+  /* Nav links: the underline draws itself in the settle. */
+  .nav-link {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    transition: background-size 220ms var(--ease-settle), color 160ms ease;
+  }
+
+  .nav-link:hover,
+  .nav-link:focus-visible,
+  .nav-link[aria-current="page"] {
+    background-size: 100% 1px;
+  }
 }
 
 /*
-  Idle state of the concept: the drawn arch drifts a few pixels, like the
-  shadow of a doorway moving through the day. Transform only, one slow clock,
-  paused off screen and off under reduced motion. The sheet itself never moves.
+  A tick rail: the bench's measuring edge. Decorative strip of ticks used to
+  separate sections and edge headers. Static, transform-free.
 */
-@keyframes arch-drift {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-14px, 9px, 0);
-  }
-}
-
-.arch-drift {
-  animation: arch-drift 20s cubic-bezier(0.4, 0, 0.5, 1) infinite alternate;
+.tick-rail {
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--color-line-strong) 0 1px,
+    transparent 1px 12px
+  );
 }
 
 /* Quiet entrance for section content. Removed under reduced motion. */
@@ -314,7 +332,54 @@ html[lang="bn"] .tabular {
 }
 
 .soft-in {
-  animation: soft-in 420ms cubic-bezier(0.2, 0.6, 0.2, 1) both;
+  animation: soft-in 420ms var(--ease-settle) both;
+}
+
+/*
+  The signature: a needle parks off-scale, sweeps past the reading once and
+  settles. Applied by the Reveal wrapper when a row enters view; without JS
+  the needle simply rests at its reading.
+*/
+@keyframes needle-settle {
+  from {
+    transform: rotate(var(--needle-park, -46deg));
+  }
+  60% {
+    transform: rotate(calc(var(--needle) + 5deg));
+  }
+  to {
+    transform: rotate(var(--needle, 0deg));
+  }
+}
+
+/* The needle rests at its reading without JS; the sweep only enhances. */
+.needle {
+  transform: rotate(var(--needle, 0deg));
+  transform-origin: 32px 32px;
+  transform-box: view-box;
+}
+
+.swept .needle {
+  animation: needle-settle 900ms var(--ease-settle) both;
+}
+
+/*
+  Idle state of the concept: while the pointer is still, the bench breathes.
+  The hero gauge's needle drifts half a degree, one slow clock, paused off
+  screen and off under reduced motion.
+*/
+@keyframes bench-idle {
+  from {
+    transform: rotate(-1.5deg);
+  }
+  to {
+    transform: rotate(1.5deg);
+  }
+}
+
+.bench-idle {
+  animation: bench-idle 4s ease-in-out infinite alternate;
+  transform-origin: center;
 }
 
 /*
@@ -345,7 +410,7 @@ html[lang="bn"] .tabular {
   border-radius: 1px;
   background-color: var(--color-accent);
   transform-origin: left center;
-  animation: grow-bar 620ms cubic-bezier(0.2, 0.6, 0.2, 1) both;
+  animation: grow-bar 620ms var(--ease-settle) both;
 }
 
 @keyframes grow-bar {

@@ -1,18 +1,27 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { LanguageSwitch } from "@/components/LanguageSwitch";
 import { t } from "@/lib/i18n/core";
 import type { Lang } from "@/lib/types";
 
 export function SiteHeader({ lang, isReviewer }: { lang: Lang; isReviewer: boolean }) {
+  const pathname = usePathname();
+  const onHome = pathname === "/";
+
+  const current = (href: string) => (pathname === href ? "page" : undefined);
+
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-canvas/80 backdrop-blur-md">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
+    <header className="sticky top-0 z-40 border-b border-line bg-canvas/85 backdrop-blur-md">
+      <div className="flex w-full items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <Link
           href="/"
+          aria-current={onHome ? "page" : undefined}
           className="flex items-center gap-2.5 rounded-control py-1 transition-transform duration-200 hover:-translate-y-px"
         >
-          {/* The wordmark beside it names the link, so the logo itself stays decorative. */}
+          {/* The wordmark is the home link, so the nav carries the other destinations. */}
           <Image
             src="/logo.png"
             alt=""
@@ -26,19 +35,33 @@ export function SiteHeader({ lang, isReviewer }: { lang: Lang; isReviewer: boole
           </span>
         </Link>
 
-        <nav aria-label={t(lang, "nav.home")} className="flex items-center gap-1 sm:gap-1.5">
-          {/* The wordmark is the home link, so the nav carries only the other destinations. */}
+        <nav aria-label={t(lang, "nav.home")} className="flex items-center gap-0.5 sm:gap-1">
+          <Link
+            href="/#directory"
+            className="nav-link hidden rounded-control px-3 py-2 text-sm font-medium text-ink-soft hover:text-ink sm:inline-flex"
+          >
+            {t(lang, "nav.directory")}
+          </Link>
+          <Link
+            href="/#how"
+            className="nav-link hidden rounded-control px-3 py-2 text-sm font-medium text-ink-soft hover:text-ink sm:inline-flex"
+          >
+            {t(lang, "nav.how")}
+          </Link>
+
           {isReviewer ? (
             <Link
               href="/review"
-              className="hidden rounded-control px-3 py-2 text-sm text-ink-soft transition-colors hover:bg-surface-muted hover:text-ink sm:inline-flex"
+              aria-current={current("/review")}
+              className="nav-link rounded-control px-3 py-2 text-sm font-medium text-ink-soft hover:text-ink"
             >
               {t(lang, "nav.review")}
             </Link>
           ) : (
             <Link
               href="/login"
-              className="hidden rounded-control px-3 py-2 text-sm text-ink-soft transition-colors hover:bg-surface-muted hover:text-ink md:inline-flex"
+              aria-current={current("/login")}
+              className="nav-link hidden rounded-control px-3 py-2 text-sm font-medium text-ink-soft hover:text-ink md:inline-flex"
             >
               {t(lang, "nav.signIn")}
             </Link>
@@ -49,6 +72,7 @@ export function SiteHeader({ lang, isReviewer }: { lang: Lang; isReviewer: boole
           <Link
             href="/report"
             aria-label={t(lang, "nav.report")}
+            aria-current={current("/report")}
             className="ml-1 inline-flex h-10 w-10 shrink-0 items-center justify-center gap-1.5 rounded-control bg-accent text-sm font-medium text-white transition-[background-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:bg-accent-hover hover:shadow-lift active:translate-y-0 sm:w-auto sm:px-3.5"
           >
             <span className="hidden sm:inline">{t(lang, "nav.report")}</span>
@@ -58,6 +82,9 @@ export function SiteHeader({ lang, isReviewer }: { lang: Lang; isReviewer: boole
           </Link>
         </nav>
       </div>
+
+      {/* The header's own measuring edge. */}
+      <div aria-hidden="true" className="tick-rail h-1.5 opacity-70" />
     </header>
   );
 }
