@@ -51,10 +51,10 @@ export function CoverageBoard({
             <li key={listing.id}>
               <Link
                 href={`/places/${listing.id}`}
-                className="group -mx-2 block rounded-lg px-2 py-1 transition-colors hover:bg-surface-muted"
+                className="group -mx-2 block rounded-control px-2 py-1 transition-[background-color,transform,box-shadow] duration-200 hover:-translate-y-px hover:bg-surface-muted hover:shadow-soft"
               >
                 <span className="flex items-baseline justify-between gap-3">
-                  <span className="min-w-0 truncate text-sm font-medium text-ink group-hover:text-accent-ink">
+                  <span className="min-w-0 truncate text-sm font-medium text-ink group-hover:text-accent">
                     {name}
                   </span>
                   <span

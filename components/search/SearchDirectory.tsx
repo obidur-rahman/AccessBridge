@@ -78,7 +78,7 @@ export function SearchDirectory({
             placeholder={t(lang, "home.searchPlaceholder")}
             aria-describedby={`${uid}-help`}
             autoComplete="off"
-            className="field h-14 rounded-[1rem] pl-11 pr-4 text-base shadow-soft sm:text-[1.0625rem]"
+            className="field h-14 rounded-control pl-11 pr-4 text-base shadow-soft sm:text-[1.0625rem]"
           />
         </div>
         <p id={`${uid}-help`} className="mt-2 px-1 text-xs text-ink-faint">
@@ -94,10 +94,10 @@ export function SearchDirectory({
             return (
               <label
                 key={item}
-                className={`cursor-pointer rounded-full border px-3.5 py-1.5 text-sm transition-colors has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
+                className={`cursor-pointer rounded-control border px-3.5 py-1.5 text-sm transition-[background-color,border-color,color,transform] duration-200 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
                   active
-                    ? "border-ink bg-ink text-white"
-                    : "border-line-strong bg-surface text-ink-soft hover:border-ink-faint hover:text-ink"
+                    ? "border-accent bg-accent text-white"
+                    : "border-line-strong bg-surface text-ink-soft hover:-translate-y-px hover:border-ink-faint hover:text-ink"
                 }`}
               >
                 <input
@@ -121,7 +121,7 @@ export function SearchDirectory({
           aria-expanded={showMoreFilters}
           aria-controls={`${uid}-more`}
           onClick={() => setShowMoreFilters((open) => !open)}
-          className="inline-flex min-h-9 items-center gap-1.5 text-sm text-ink-soft transition-colors hover:text-ink"
+          className="inline-flex min-h-9 items-center gap-1.5 rounded-control px-2 text-sm text-ink-soft transition-[background-color,transform,box-shadow] duration-200 hover:-translate-y-px hover:bg-surface-muted hover:text-ink hover:shadow-soft"
         >
           {showMoreFilters ? t(lang, "home.fewerFilters") : t(lang, "home.moreFilters")}
           <span aria-hidden="true" className="text-ink-faint">

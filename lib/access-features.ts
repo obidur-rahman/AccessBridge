@@ -102,3 +102,17 @@ export function orderedFeatures<T extends { feature_key: string }>(rows: T[]): T
     (a, b) => (order.get(a.feature_key) ?? 999) - (order.get(b.feature_key) ?? 999),
   );
 }
+
+/**
+ * A correction is urgent when it removes a facility the public page shows as
+ * available today: state `yes` now, reported `no`. The queue stays oldest
+ * first; this only adds the reviewer flag (implementation plan, section 6).
+ */
+export function urgentCorrections(
+  current: Partial<Record<string, FeatureState>>,
+  submitted: Partial<Record<string, FeatureState>>,
+): FeatureKey[] {
+  return FEATURE_KEYS.filter(
+    (key) => current[key] === "yes" && submitted[key] === "no",
+  );
+}

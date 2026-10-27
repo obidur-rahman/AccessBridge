@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="AccessBridge">
-  <rect width="64" height="64" rx="15" fill="#2c6e5e"/>
+  <rect width="64" height="64" rx="15" fill="#14539a"/>
   <path d="M16 47v-9a16 16 0 0 1 32 0v9" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
   <path d="M26 47v-8a6 6 0 0 1 12 0v8" fill="none" stroke="#ffffff" stroke-width="5" stroke-linecap="round"/>
 </svg>

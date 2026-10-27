@@ -1,24 +1,28 @@
 @import "tailwindcss";
 
 /*
-  AccessBridge design system.
-  A quiet, soft civic interface: warm off-white ground, sage accent, rounded
-  surfaces and generous space. States are tinted pills with a dot and a word.
-  Nothing decorative competes with the accessibility evidence.
+  AccessBridge design system: Blueprint, drawn on paper.
+  The site is a drawing set for the city's public buildings: plain drafting
+  paper, hairline rules, square corners, a measured dimension line for the
+  data, and small technical lettering for labels and numerals. No background
+  pattern, no gradients, no glow. Evidence arrives as a light label chip with
+  a hairline border. The blue accent is the draughtsman's pen: it marks
+  action, measurement and confirmation, nothing else.
 */
 @theme {
-  --color-canvas: #f7f7f4;
+  --color-canvas: #f7f7f5;
   --color-surface: #ffffff;
-  --color-surface-muted: #f1f2ee;
-  --color-surface-sunk: #ebeee8;
-  --color-ink: #181a19;
-  --color-ink-soft: #4e5451;
-  --color-ink-faint: #636964;
-  --color-line: #e5e6e1;
-  --color-line-strong: #ccd1c9;
-  --color-accent: #2c6e5e;
-  --color-accent-ink: #1e5145;
-  --color-accent-soft: #e6f0ec;
+  --color-surface-muted: #f1f2ef;
+  --color-surface-sunk: #f4f5f2;
+  --color-ink: #16191c;
+  --color-ink-soft: #4a5157;
+  --color-ink-faint: #5e666d;
+  --color-line: #e4e6e1;
+  --color-line-strong: #c6cbc4;
+  --color-accent: #14539a;
+  --color-accent-hover: #0f4178;
+  --color-accent-ink: #10406f;
+  --color-accent-soft: #e3edfa;
   --color-signal: #b98a2f;
   --color-signal-soft: #f7efdc;
 
@@ -30,25 +34,26 @@
   --color-partial-soft: #f7efdd;
   --color-unknown: #5e6660;
   --color-unknown-soft: #eef0ec;
-  --color-warn: #7f6128;
-  --color-warn-soft: #f7efdd;
 
-  --radius-card: 1rem;
-  --radius-control: 0.75rem;
+  /* One radius rule: drawings have corners. */
+  --radius-card: 0.125rem;
+  --radius-control: 0.25rem;
 
-  --shadow-soft: 0 1px 2px rgba(24, 26, 25, 0.04), 0 8px 24px -16px rgba(24, 26, 25, 0.18);
-  --shadow-lift: 0 2px 4px rgba(24, 26, 25, 0.05), 0 18px 36px -24px rgba(24, 26, 25, 0.28);
+  --shadow-soft: 0 1px 2px rgba(20, 25, 30, 0.05);
+  --shadow-lift: 0 2px 4px rgba(20, 25, 30, 0.06), 0 14px 28px -20px rgba(20, 25, 30, 0.4);
 }
 
 @layer base {
   :root {
     --font-body: var(--font-instrument-sans), system-ui, sans-serif;
     --font-display: var(--font-instrument-sans), system-ui, sans-serif;
+    --font-annotate: var(--font-plex-mono), ui-monospace, monospace;
   }
 
   html[lang="bn"] {
     --font-body: var(--font-hind-siliguri), "Nirmala UI", system-ui, sans-serif;
     --font-display: var(--font-hind-siliguri), "Nirmala UI", system-ui, sans-serif;
+    --font-annotate: var(--font-hind-siliguri), "Nirmala UI", system-ui, sans-serif;
   }
 
   html {
@@ -56,6 +61,7 @@
     scroll-behavior: smooth;
   }
 
+  /* The sheet: plain drafting paper, no pattern. */
   body {
     background-color: var(--color-canvas);
     color: var(--color-ink);
@@ -95,7 +101,7 @@
   :focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;
-    border-radius: 4px;
+    border-radius: 2px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -113,11 +119,13 @@
   }
 }
 
+/* Annotations: mono, tabular, sentence case. Never uppercased in Bangla. */
 @utility tag {
+  font-family: var(--font-annotate);
   font-size: 0.75rem;
   font-weight: 500;
-  letter-spacing: 0.02em;
-  line-height: 1.3;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
 }
 
 html[lang="bn"] .tag {
@@ -126,7 +134,12 @@ html[lang="bn"] .tag {
 }
 
 @utility tabular {
+  font-family: var(--font-annotate);
   font-variant-numeric: tabular-nums;
+}
+
+html[lang="bn"] .tabular {
+  font-family: var(--font-body);
 }
 
 @layer components {
@@ -157,7 +170,7 @@ html[lang="bn"] .tag {
   .lift:focus-within {
     transform: translateY(-2px);
     box-shadow: var(--shadow-lift);
-    border-color: var(--color-line-strong);
+    border-color: var(--color-accent);
   }
 
   .btn {
@@ -168,13 +181,27 @@ html[lang="bn"] .tag {
     min-height: 2.75rem;
     border-radius: var(--radius-control);
     padding: 0 1.15rem;
+    font-family: var(--font-body);
     font-size: 0.9375rem;
     font-weight: 500;
+    letter-spacing: 0;
     transition:
       background-color 180ms ease,
       color 180ms ease,
       border-color 180ms ease,
-      transform 180ms ease;
+      transform 180ms cubic-bezier(0.2, 0.6, 0.2, 1),
+      box-shadow 180ms ease;
+  }
+
+  html[lang="bn"] .btn {
+    font-size: 0.9375rem;
+  }
+
+  /* Every button answers with the site's lift, not a colour swap alone. */
+  .btn:hover,
+  .btn:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lift);
   }
 
   .btn-primary {
@@ -183,11 +210,12 @@ html[lang="bn"] .tag {
   }
 
   .btn-primary:hover {
-    background-color: var(--color-accent-ink);
+    background-color: var(--color-accent-hover);
   }
 
   .btn-primary:active {
     transform: translateY(1px);
+    box-shadow: none;
   }
 
   .btn-secondary {
@@ -197,7 +225,7 @@ html[lang="bn"] .tag {
   }
 
   .btn-secondary:hover {
-    border-color: var(--color-ink-faint);
+    border-color: var(--color-accent);
     background-color: var(--color-surface-muted);
   }
 
@@ -206,7 +234,7 @@ html[lang="bn"] .tag {
     min-height: 2.75rem;
     border-radius: var(--radius-control);
     border: 1px solid var(--color-line-strong);
-    background-color: var(--color-surface);
+    background-color: var(--color-surface-sunk);
     padding: 0.6rem 0.85rem;
     font-size: 1rem;
     color: var(--color-ink);
@@ -219,25 +247,58 @@ html[lang="bn"] .tag {
 
   .field:focus {
     border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px var(--color-accent-soft);
+    box-shadow: 0 0 0 3px rgba(20, 83, 154, 0.18);
     outline: none;
   }
 
+  /* Evidence chip: a small light tag with a hairline, like a drawing label. */
   .pill {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    border-radius: 999px;
-    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+    border: 1px solid rgba(23, 25, 27, 0.14);
+    padding: 0.15rem 0.5rem;
+    font-family: var(--font-body);
     font-size: 0.8125rem;
     font-weight: 500;
-    line-height: 1.4;
+    letter-spacing: 0;
+    line-height: 1.5;
+  }
+
+  html[lang="bn"] .pill {
+    font-size: 0.8125rem;
+  }
+
+  /* Chips that sit on the sheet without their own tint. */
+  .pill-plain {
+    background-color: var(--color-surface);
+    color: var(--color-ink-soft);
+    border-color: var(--color-line-strong);
   }
 
   .rule {
     height: 1px;
     background-color: var(--color-line);
   }
+}
+
+/*
+  Idle state of the concept: the drawn arch drifts a few pixels, like the
+  shadow of a doorway moving through the day. Transform only, one slow clock,
+  paused off screen and off under reduced motion. The sheet itself never moves.
+*/
+@keyframes arch-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-14px, 9px, 0);
+  }
+}
+
+.arch-drift {
+  animation: arch-drift 20s cubic-bezier(0.4, 0, 0.5, 1) infinite alternate;
 }
 
 /* Quiet entrance for section content. Removed under reduced motion. */
@@ -256,17 +317,32 @@ html[lang="bn"] .tag {
   animation: soft-in 420ms cubic-bezier(0.2, 0.6, 0.2, 1) both;
 }
 
-/* Coverage bar: soft proportion fill, no stripes or slabs. */
+/*
+  Coverage as a dimension line: end ticks span the full five features, the
+  drawn segment is the part actually reviewed. The bar is the count.
+*/
 .coverage-track {
-  height: 0.375rem;
-  border-radius: 999px;
-  background-color: var(--color-surface-sunk);
-  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 0.625rem;
+  border-left: 1px solid var(--color-line-strong);
+  border-right: 1px solid var(--color-line-strong);
+}
+
+.coverage-track::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 50%;
+  height: 1px;
+  background-color: var(--color-line);
 }
 
 .coverage-fill {
-  height: 100%;
-  border-radius: 999px;
+  position: relative;
+  height: 3px;
+  border-radius: 1px;
   background-color: var(--color-accent);
   transform-origin: left center;
   animation: grow-bar 620ms cubic-bezier(0.2, 0.6, 0.2, 1) both;

@@ -29,12 +29,8 @@ export default async function ReportPage({
   return (
     <div>
       <header className="relative overflow-hidden border-b border-line">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(90%_80%_at_10%_-20%,var(--color-accent-soft)_0%,transparent_65%)]"
-        />
         <div className="relative mx-auto w-full max-w-6xl px-4 pb-10 pt-10 sm:px-6 sm:pb-12 sm:pt-14">
-          <p className="pill bg-surface text-ink-soft shadow-soft">
+          <p className="pill pill-plain">
             <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-accent" />
             {t(lang, "nav.report")}
           </p>

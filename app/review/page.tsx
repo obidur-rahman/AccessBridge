@@ -3,9 +3,12 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { signOutAction } from "@/app/login/actions";
 import { getReviewer } from "@/lib/auth";
+import { urgentCorrections, type FeatureKey } from "@/lib/access-features";
 import { listReviewQueue } from "@/lib/data/reports";
+import { getPlace } from "@/lib/data/places";
 import { formatDate, t } from "@/lib/i18n/core";
 import { getLang } from "@/lib/i18n/server";
+import type { FeatureState } from "@/lib/types";
 
 export async function generateMetadata(): Promise<Metadata> {
   const lang = await getLang();
@@ -19,13 +22,25 @@ export default async function ReviewQueuePage() {
 
   const queue = await listReviewQueue(reviewer);
 
+  // Flag corrections that remove a facility the public page shows today.
+  const rows = !queue.ok
+    ? []
+    : await Promise.all(
+        queue.items.map(async (item) => {
+          if (!item.listing_id) return { item, urgent: [] as FeatureKey[] };
+          const place = await getPlace(item.listing_id);
+          if (!place.ok || !place.place) return { item, urgent: [] as FeatureKey[] };
+          const current: Partial<Record<string, FeatureState>> = {};
+          for (const feature of place.place.features) {
+            current[feature.feature_key] = feature.state;
+          }
+          return { item, urgent: urgentCorrections(current, item.feature_states) };
+        }),
+      );
+
   return (
     <div>
       <header className="relative overflow-hidden border-b border-line">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(90%_80%_at_90%_-20%,var(--color-accent-soft)_0%,transparent_65%)]"
-        />
         <div className="relative mx-auto w-full max-w-5xl px-4 pb-8 pt-10 sm:px-6 sm:pb-10 sm:pt-12">
           <div className="flex flex-wrap items-start justify-between gap-6">
             <div>
@@ -46,8 +61,7 @@ export default async function ReviewQueuePage() {
 
       <div className="mx-auto w-full max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
         {reviewer.demo ? (
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-2 rounded-control border border-signal/30 bg-signal-soft px-4 py-2.5 text-sm leading-relaxed text-partial">
-            <span className="pill shrink-0 bg-signal text-ink">{t(lang, "common.demoLabel")}</span>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2 rounded-control border border-signal/60 bg-signal-soft px-4 py-2.5 text-sm leading-relaxed text-partial">                <span className="pill shrink-0 bg-signal text-ink">{t(lang, "common.demoLabel")}</span>
             <span className="min-w-0">{t(lang, "review.demoNotice")}</span>
           </div>
         ) : null}
@@ -70,7 +84,7 @@ export default async function ReviewQueuePage() {
             </p>
 
             <ol className="mt-3 list-none space-y-3">
-              {queue.items.map((item) => (
+              {rows.map(({ item, urgent }) => (
                 <li key={item.id}>
                   <Link
                     href={`/review/${item.id}`}
@@ -87,6 +101,11 @@ export default async function ReviewQueuePage() {
                               {t(lang, "review.proposedPlace")}
                             </span>
                           ) : null}
+                          {urgent.length > 0 ? (
+                            <span className="pill bg-no-soft text-no">
+                              {t(lang, "review.urgent")}
+                            </span>
+                          ) : null}
                         </div>
                         <h3 className="mt-2 text-[1.15rem] font-semibold leading-snug">
                           {item.listing_name ?? t(lang, "review.proposedPlace")}
@@ -98,8 +117,7 @@ export default async function ReviewQueuePage() {
                       </div>
 
                       <span
-                        aria-hidden="true"
-                        className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-line text-ink-faint transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-white"
+                        aria-hidden="true"                            className="grid h-8 w-8 shrink-0 place-items-center rounded-control border border-line text-ink-faint transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-white"
                       >
                         <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none">
                           <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

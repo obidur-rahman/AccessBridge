@@ -40,7 +40,7 @@ export function ResultCard({
 
           <span
             aria-hidden="true"
-            className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-line text-ink-faint transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-white"
+            className="grid h-8 w-8 shrink-0 place-items-center rounded-control border border-line text-ink-faint transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-white"
           >
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none">
               <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

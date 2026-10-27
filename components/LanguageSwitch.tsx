@@ -2,14 +2,18 @@
 
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-import { persistLang } from "@/lib/i18n/client";
-import { t } from "@/lib/i18n/core";
+import { LANG_COOKIE, t } from "@/lib/i18n/core";
 import type { Lang } from "@/lib/types";
 
 const OPTIONS: { value: Lang; labelKey: "nav.english" | "nav.bangla" }[] = [
   { value: "en", labelKey: "nav.english" },
   { value: "bn", labelKey: "nav.bangla" },
 ];
+
+/** Store the selected interface language. No search or location data is written. */
+function persistLang(lang: Lang): void {
+  document.cookie = `${LANG_COOKIE}=${lang}; path=/; max-age=31536000; samesite=lax`;
+}
 
 export function LanguageSwitch({ lang }: { lang: Lang }) {
   const router = useRouter();
@@ -23,7 +27,7 @@ export function LanguageSwitch({ lang }: { lang: Lang }) {
 
   return (
     <div
-      className="flex items-center gap-0.5 rounded-full bg-surface-muted p-1"
+      className="flex items-center gap-0.5 rounded-control border border-line bg-surface-muted p-1"
       role="group"
       aria-label={t(lang, "nav.language")}
       aria-busy={isPending}
@@ -37,14 +41,14 @@ export function LanguageSwitch({ lang }: { lang: Lang }) {
             lang={option.value}
             aria-pressed={active}
             onClick={() => select(option.value)}
-            className={`min-h-8 rounded-full px-2.5 py-1 text-[0.8125rem] font-medium transition-colors ${
+            className={`min-h-8 rounded-[2px] px-2.5 py-1 text-[0.8125rem] font-medium transition-[background-color,transform,box-shadow] duration-200 hover:-translate-y-px ${
               active
                 ? "bg-surface text-ink shadow-soft"
-                : "text-ink-faint hover:text-ink"
+                : "text-ink-faint hover:bg-surface hover:text-ink hover:shadow-soft"
             }`}
           >
             {t(lang, option.labelKey)}
-            {active ? <span className="sr-only"> — selected</span> : null}
+            {active ? <span className="sr-only"> (selected)</span> : null}
           </button>
         );
       })}

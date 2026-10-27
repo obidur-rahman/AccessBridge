@@ -4,7 +4,7 @@ import { StateBadge } from "@/components/accessibility/StateBadge";
 import { PlaceMap } from "@/components/map/PlaceMap";
 import { FEATURE_KEYS, featureLabel } from "@/lib/access-features";
 import { getPlace } from "@/lib/data/places";
-import { FRESHNESS_DAYS, observationAge } from "@/lib/freshness";
+import { observationAge } from "@/lib/freshness";
 import { formatDate, t, todayIso } from "@/lib/i18n/core";
 import { getLang } from "@/lib/i18n/server";
 import { sourceLabel } from "@/lib/source-labels";
@@ -105,12 +105,14 @@ export default async function PlacePage({
       <header className="relative overflow-hidden border-b border-line">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(90%_70%_at_90%_-20%,var(--color-accent-soft)_0%,transparent_65%)]"
-        />
+          className="arch-drift pointer-events-none absolute -right-10 -top-16 hidden h-[24rem] w-[24rem] rounded-t-full border border-accent/30 lg:block"
+        >
+          <div className="absolute inset-10 rounded-t-full border border-accent/22" />
+        </div>
         <div className="relative mx-auto w-full max-w-6xl px-4 pb-10 pt-7 sm:px-6 sm:pb-14 sm:pt-10">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 rounded-lg py-1 text-sm text-ink-faint transition-colors hover:text-ink"
+            className="-mx-2 inline-flex items-center gap-1.5 rounded-control px-2 py-1 text-sm text-ink-faint transition-[background-color,transform,box-shadow] duration-200 hover:-translate-y-px hover:bg-surface-muted hover:text-ink hover:shadow-soft"
           >
             <span aria-hidden="true">←</span>
             {t(lang, "place.backToSearch")}
@@ -124,7 +126,7 @@ export default async function PlacePage({
               <span className="pill bg-signal-soft text-partial">{t(lang, "place.demoRecord")}</span>
             ) : null}
             {latest ? (
-              <span className="pill bg-surface text-ink-faint shadow-soft">
+              <span className="pill pill-plain">
                 {t(lang, "place.lastChecked")}
                 <span className="tabular text-ink-soft">{formatDate(latest, lang)}</span>
               </span>
@@ -153,7 +155,7 @@ export default async function PlacePage({
                         {...(row.href.startsWith("http")
                           ? { target: "_blank", rel: "noreferrer noopener" }
                           : {})}
-                        className="break-words text-accent underline decoration-accent/25 underline-offset-4 transition-colors hover:text-accent-ink hover:decoration-accent"
+                        className="break-words text-accent underline decoration-accent/40 underline-offset-4 transition-colors hover:text-ink hover:decoration-accent"
                       >
                         {row.value}
                       </a>
@@ -214,11 +216,6 @@ export default async function PlacePage({
                         {feature && hasResult ? (
                           <>
                             <span className="block text-ink-soft">{evidenceText(feature, lang)}</span>
-                            {needsRecheck ? (
-                              <span className="mt-2 block max-w-[34ch] rounded-lg bg-signal-soft px-2.5 py-1.5 text-partial">
-                                {t(lang, "place.needsRecheck", { days: FRESHNESS_DAYS })}
-                              </span>
-                            ) : null}
                             {feature.source_url ? (
                               <a
                                 href={feature.source_url}

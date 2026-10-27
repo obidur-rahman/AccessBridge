@@ -22,7 +22,7 @@ function Step({ number, title }: { number: string; title: string }) {
     <div className="flex items-center gap-3">
       <span
         aria-hidden="true"
-        className="tabular grid h-7 w-7 shrink-0 place-items-center rounded-full bg-accent-soft text-xs font-medium text-accent-ink"
+        className="tabular grid h-7 w-7 shrink-0 place-items-center rounded-control bg-accent-soft text-xs font-medium text-accent-ink"
       >
         {number}
       </span>
@@ -220,7 +220,7 @@ export function ReportForm({
                 aria-invalid={Boolean(errors.newPlaceCategory)}
                 className={FIELD}
               >
-                <option value="">—</option>
+                <option value="">{t(lang, "report.chooseCategory")}</option>
                 {CATEGORIES.map((category) => (
                   <option key={category} value={category}>
                     {t(lang, `category.${category}`)}

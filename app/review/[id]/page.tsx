@@ -65,7 +65,7 @@ export default async function ReviewDetailPage({
         <div className="mx-auto w-full max-w-5xl px-4 pb-8 pt-7 sm:px-6 sm:pb-10">
           <Link
             href="/review"
-            className="inline-flex items-center gap-1.5 rounded-lg py-1 text-sm text-ink-faint transition-colors hover:text-ink"
+            className="inline-flex items-center gap-1.5 rounded-control py-1 text-sm text-ink-faint transition-colors hover:text-ink"
           >
             <span aria-hidden="true">←</span>
             {t(lang, "review.backToQueue")}
@@ -122,7 +122,7 @@ export default async function ReviewDetailPage({
                   href={item.source_url}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="mt-1 block break-all text-sm text-accent underline decoration-accent/25 underline-offset-4 hover:text-accent-ink"
+                  className="mt-1 block break-all text-sm text-accent underline decoration-accent/40 underline-offset-4 hover:text-ink"
                 >
                   {item.source_url}
                 </a>

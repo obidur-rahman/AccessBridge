@@ -19,20 +19,16 @@ export default async function HomePage() {
       <section className="relative overflow-hidden border-b border-line">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(110%_80%_at_85%_-10%,var(--color-accent-soft)_0%,transparent_60%)]"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-16 -top-10 hidden h-[30rem] w-[30rem] rounded-t-full border border-accent/15 lg:block"
+          className="arch-drift pointer-events-none absolute -right-16 -top-10 hidden h-[30rem] w-[30rem] rounded-t-full border border-accent/30 lg:block"
         >
-          <div className="absolute inset-10 rounded-t-full border border-accent/12" />
-          <div className="absolute inset-24 rounded-t-full border border-accent/10" />
+          <div className="absolute inset-10 rounded-t-full border border-accent/22" />
+          <div className="absolute inset-24 rounded-t-full border border-accent/16" />
         </div>
 
         <div className="relative mx-auto w-full max-w-6xl px-4 pb-16 pt-14 sm:px-6 sm:pb-20 sm:pt-20">
           <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center lg:gap-16">
             <div className="soft-in min-w-0">
-              <p className="pill bg-surface text-ink-soft shadow-soft">
+              <p className="pill pill-plain">
                 <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-accent" />
                 {t(lang, "app.pilot")}
               </p>
@@ -92,7 +88,7 @@ export default async function HomePage() {
             <p className="mt-1 text-sm text-ink-soft">{t(lang, "common.errorBody")}</p>
             <Link
               href="/"
-              className="mt-4 inline-flex min-h-10 items-center rounded-lg border border-no/40 px-3 text-sm font-medium text-no transition-colors hover:bg-no/5"
+              className="mt-4 inline-flex min-h-10 items-center rounded-control border border-no/40 px-3 text-sm font-medium text-no transition-colors hover:bg-no/5"
             >
               {t(lang, "common.retry")}
             </Link>
@@ -100,7 +96,7 @@ export default async function HomePage() {
         ) : (
           <>
             {directory.isDemo ? (
-              <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-control border border-signal/30 bg-signal-soft px-4 py-2.5 text-sm leading-relaxed text-partial">
+              <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-control border border-signal/60 bg-signal-soft px-4 py-2.5 text-sm leading-relaxed text-partial">
                 <span className="pill shrink-0 bg-signal text-ink">{t(lang, "common.demoLabel")}</span>
                 <span className="min-w-0">{t(lang, "home.demoBanner")}</span>
               </div>
@@ -112,7 +108,7 @@ export default async function HomePage() {
           </>
         )}
 
-        <section className="mb-20 rounded-[1.5rem] border border-line bg-surface px-6 py-10 sm:px-10 sm:py-12">
+        <section className="mb-20 rounded-card border border-line bg-surface px-6 py-10 sm:px-10 sm:py-12">
           <div className="grid gap-8 lg:grid-cols-2 lg:gap-16">
             <div>
               <p className="tag text-ink-faint">{t(lang, "nav.report")}</p>

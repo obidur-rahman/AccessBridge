@@ -29,6 +29,7 @@ export const en = {
   "home.allCategories": "All categories",
   "home.allAreas": "All areas",
   "home.moreFilters": "More filters",
+  "report.chooseCategory": "Choose a category",
   "home.fewerFilters": "Fewer filters",
   "home.reset": "Clear filters",
   "home.resultsCount": "{{count}} places",
@@ -183,6 +184,7 @@ export const en = {
   "review.save": "Save decision",
   "review.saved": "Decision saved and added to the audit log.",
   "review.decided": "This report was already decided.",
+  "review.urgent": "Urgent: facility reported gone",
   "review.notAuthorized": "You need a reviewer account to open this page.",
   "review.demoNotice":
     "Demo reviewer mode. Reports and decisions are kept in memory and are lost when the server restarts. Connect Supabase to use real accounts and row-level security.",
@@ -207,6 +209,10 @@ export const en = {
     "Use this only while Supabase is not configured. It gives access to demo reports in memory.",
 
   "footer.aboutTitle": "About",
+  "footer.blockProject": "Project",
+  "footer.blockArea": "Pilot area",
+  "footer.blockAreaValue": "Chattogram city, Bangladesh",
+  "footer.blockAccess": "Access",
   "footer.limitsTitle": "Data limits",
   "footer.privacyTitle": "Privacy",
   "footer.coverageTitle": "Coverage",
@@ -258,6 +264,7 @@ export const bn: Record<keyof typeof en, string> = {
   "home.allCategories": "সব বিভাগ",
   "home.allAreas": "সব এলাকা",
   "home.moreFilters": "আরও ফিল্টার",
+  "report.chooseCategory": "শ্রেণি বেছে নিন",
   "home.fewerFilters": "কম ফিল্টার",
   "home.reset": "ফিল্টার মুছুন",
   "home.resultsCount": "{{count}}টি স্থান",
@@ -410,6 +417,7 @@ export const bn: Record<keyof typeof en, string> = {
   "review.save": "সিদ্ধান্ত সংরক্ষণ করুন",
   "review.saved": "সিদ্ধান্ত সংরক্ষিত হয়েছে এবং অডিট লগে যোগ হয়েছে।",
   "review.decided": "এই রিপোর্টের সিদ্ধান্ত আগেই নেওয়া হয়েছে।",
+  "review.urgent": "জরুরি: সুবিধা নেই বলে জানানো হয়েছে",
   "review.notAuthorized": "এই পাতা খুলতে পর্যালোচক অ্যাকাউন্ট দরকার।",
   "review.demoNotice":
     "ডেমো পর্যালোচক মোড। রিপোর্ট ও সিদ্ধান্ত মেমোরিতে থাকে এবং সার্ভার চালু হলে মুছে যায়। আসল অ্যাকাউন্ট ও row-level security ব্যবহার করতে Supabase সংযোগ করুন।",
@@ -434,6 +442,10 @@ export const bn: Record<keyof typeof en, string> = {
     "Supabase সংযোগ না থাকলে শুধু এটি ব্যবহার করুন। এটি মেমোরির ডেমো রিপোর্টে প্রবেশ দেয়।",
 
   "footer.aboutTitle": "পরিচিতি",
+  "footer.blockProject": "প্রকল্প",
+  "footer.blockArea": "পাইলট এলাকা",
+  "footer.blockAreaValue": "চট্টগ্রাম শহর, বাংলাদেশ",
+  "footer.blockAccess": "প্রবেশ",
   "footer.limitsTitle": "তথ্যের সীমা",
   "footer.privacyTitle": "গোপনীয়তা",
   "footer.coverageTitle": "পরিধি",

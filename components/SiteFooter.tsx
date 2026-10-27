@@ -35,14 +35,35 @@ export function SiteFooter({ lang, isReviewer }: { lang: Lang; isReviewer: boole
           </dl>
         </div>
 
-        <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6">
-          <p className="tag text-ink-faint">{t(lang, "app.pilot")}</p>
-          <Link
-            href={isReviewer ? "/review" : "/login"}
-            className="text-sm font-medium text-accent underline decoration-accent/30 decoration-1 underline-offset-4 transition-colors hover:text-accent-ink hover:decoration-accent"
-          >
-            {isReviewer ? t(lang, "nav.review") : t(lang, "nav.signIn")}
-          </Link>
+        {/* Title block, as every drawing sheet carries: four cells of fact. */}
+        <div className="mt-12 grid grid-cols-2 border-l border-t border-line lg:grid-cols-4">
+          <div className="border-b border-r border-line px-4 py-4">
+            <p className="tag text-ink-faint">{t(lang, "footer.blockProject")}</p>
+            <p className="mt-1.5 text-sm text-ink">{t(lang, "app.name")}</p>
+          </div>
+          <div className="border-b border-r border-line px-4 py-4">
+            <p className="tag text-ink-faint">{t(lang, "footer.blockArea")}</p>
+            <p className="mt-1.5 text-sm text-ink">{t(lang, "footer.blockAreaValue")}</p>
+          </div>
+          <div className="border-b border-r border-line px-4 py-4">
+            <p className="tag text-ink-faint">{t(lang, "nav.language")}</p>
+            <p className="mt-1.5 text-sm text-ink">
+              {lang === "bn" ? (
+                <span lang="bn">বাংলা</span>
+              ) : (
+                "English"
+              )}
+            </p>
+          </div>
+          <div className="border-b border-r border-line px-4 py-4">
+            <p className="tag text-ink-faint">{t(lang, "footer.blockAccess")}</p>
+            <Link
+              href={isReviewer ? "/review" : "/login"}
+              className="mt-1.5 inline-flex min-h-6 items-center text-sm font-medium text-accent underline decoration-accent/40 decoration-1 underline-offset-4 transition-colors hover:text-ink hover:decoration-accent"
+            >
+              {isReviewer ? t(lang, "nav.review") : t(lang, "nav.signIn")}
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

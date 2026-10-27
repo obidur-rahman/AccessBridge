@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Hind_Siliguri, Instrument_Sans } from "next/font/google";
+import { Hind_Siliguri, Instrument_Sans, IBM_Plex_Mono } from "next/font/google";
+import { PageTransition } from "@/components/PageTransition";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { getReviewer } from "@/lib/auth";
@@ -21,6 +22,13 @@ const hindSiliguri = Hind_Siliguri({
   display: "swap",
 });
 
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-plex-mono",
+  display: "swap",
+});
+
 export async function generateMetadata(): Promise<Metadata> {
   const lang = await getLang();
   return {
@@ -37,6 +45,20 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
       locale: lang === "bn" ? "bn_BD" : "en_US",
       siteName: "AccessBridge",
+      images: [
+        {
+          url: "/og.png",
+          width: 1200,
+          height: 630,
+          alt: `${t(lang, "app.name")}: ${t(lang, "home.title")}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${t(lang, "app.name")} — ${t(lang, "app.tagline")}`,
+      description: t(lang, "home.intro"),
+      images: ["/og.png"],
     },
     alternates: { canonical: "/" },
   };
@@ -50,17 +72,17 @@ export default async function RootLayout({
   const [lang, reviewer] = await Promise.all([getLang(), getReviewer()]);
 
   return (
-    <html lang={lang} className={`${instrumentSans.variable} ${hindSiliguri.variable} h-full`}>
+    <html lang={lang} className={`${instrumentSans.variable} ${hindSiliguri.variable} ${plexMono.variable} h-full`}>
       <body className="flex min-h-full flex-col">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-lg focus:bg-accent focus:px-4 focus:py-3 focus:text-sm focus:font-medium focus:text-white"
+          className="fixed left-4 top-4 z-50 -translate-y-[300%] rounded-control bg-accent px-4 py-3 text-sm font-medium text-white shadow-lift transition-transform duration-200 focus:translate-y-0"
         >
           {t(lang, "app.skipToContent")}
         </a>
         <SiteHeader lang={lang} isReviewer={Boolean(reviewer)} />
         <main id="main" className="flex-1">
-          {children}
+          <PageTransition>{children}</PageTransition>
         </main>
         <SiteFooter lang={lang} isReviewer={Boolean(reviewer)} />
       </body>

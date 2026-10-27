@@ -5,6 +5,7 @@ import {
   isFeatureState,
   normaliseFeatureStates,
   orderedFeatures,
+  urgentCorrections,
 } from "@/lib/access-features";
 
 describe("feature vocabulary", () => {
@@ -50,5 +51,23 @@ describe("feature vocabulary", () => {
     ]).map((row) => row.feature_key);
 
     expect(ordered).toEqual(["step_free_entrance", "ramp", "accessible_toilet"]);
+  });
+
+  it("flags only a facility that is available today and reported gone", () => {
+    expect(
+      urgentCorrections(
+        { accessible_toilet: "yes", ramp: "yes", lift: "yes" },
+        { accessible_toilet: "no", ramp: "partial", lift: "not_checked" },
+      ),
+    ).toEqual(["accessible_toilet"]);
+  });
+
+  it("never treats not_checked or a new facility as urgent", () => {
+    expect(
+      urgentCorrections(
+        { ramp: "not_checked", lift: "no" },
+        { ramp: "no", lift: "no" },
+      ),
+    ).toEqual([]);
   });
 });
