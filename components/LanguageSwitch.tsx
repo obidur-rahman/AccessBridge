@@ -41,13 +41,15 @@ export function LanguageSwitch({ lang }: { lang: Lang }) {
             lang={option.value}
             aria-pressed={active}
             onClick={() => select(option.value)}
-            className={`min-h-8 rounded-[2px] px-2.5 py-1 text-[0.8125rem] font-medium transition-[background-color,transform,box-shadow] duration-200 hover:-translate-y-px ${
+            aria-label={t(lang, option.labelKey)}
+            className={`min-h-8 rounded-[2px] px-1.5 py-1 text-[0.8125rem] font-medium transition-[background-color,transform,box-shadow] duration-200 hover:-translate-y-px sm:px-2.5 ${
               active
                 ? "bg-surface text-ink shadow-soft"
                 : "text-ink-faint hover:bg-surface hover:text-ink hover:shadow-soft"
             }`}
           >
-            {t(lang, option.labelKey)}
+            <span className="sm:hidden">{option.value === "en" ? "EN" : "বাংলা"}</span>
+            <span className="hidden sm:inline">{t(lang, option.labelKey)}</span>
             {active ? <span className="sr-only"> (selected)</span> : null}
           </button>
         );

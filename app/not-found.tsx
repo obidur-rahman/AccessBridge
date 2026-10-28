@@ -13,11 +13,10 @@ export default async function NotFound() {
         className="tick-rail pointer-events-none absolute inset-x-0 top-0 h-2.5 opacity-80"
       />
       <div className="soft-in relative max-w-2xl">
-        <div className="flex items-start gap-6">
-          <Gauge state="not_checked" size={96} idle />
+        <div className="flex items-start gap-4 border-b border-line pb-6 sm:gap-6">
+          <Gauge state="not_checked" size={56} idle />
           <div>
-            <p className="tag text-ink-faint">404</p>
-            <h1 className="mt-3 max-w-[20ch] text-[clamp(2rem,5vw,3.2rem)]">
+            <h1 className="max-w-[20ch] text-[clamp(2.2rem,5vw,3.5rem)]">
               {t(lang, "common.notFoundTitle")}
             </h1>
           </div>
@@ -26,7 +25,7 @@ export default async function NotFound() {
           {t(lang, "common.notFoundBody")}
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
-          <Link href="/" className="btn btn-primary px-5">
+          <Link href="/directory" className="btn btn-primary px-5">
             {t(lang, "common.backHome")}
           </Link>
           <Link href="/report" className="btn btn-secondary px-5">

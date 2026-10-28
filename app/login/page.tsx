@@ -32,10 +32,9 @@ export default async function LoginPage({
 
   return (
     <div className="mx-auto w-full max-w-lg px-4 py-14 sm:px-6 sm:py-20">
-      <div className="soft-in card overflow-hidden p-6 shadow-soft sm:p-8">
-        <div aria-hidden="true" className="tick-rail -mx-6 -mt-6 mb-6 h-2.5 opacity-80 sm:-mx-8 sm:-mt-8" />
-        <p className="tag text-ink-faint">{t(lang, "nav.signIn")}</p>
-        <h1 className="mt-2 text-[clamp(1.6rem,4vw,2.1rem)]">{t(lang, "login.title")}</h1>
+      <div className="soft-in overflow-hidden border-y border-line bg-surface px-5 py-7 sm:px-8 sm:py-9">
+        <div aria-hidden="true" className="tick-rail -mx-5 -mt-7 mb-7 h-2.5 opacity-80 sm:-mx-8 sm:-mt-9" />
+        <h1 className="text-[clamp(1.8rem,4.5vw,2.5rem)]">{t(lang, "login.title")}</h1>
         <p className="mt-3 text-sm leading-relaxed text-ink-soft">{t(lang, "login.intro")}</p>
 
         {params.error ? (

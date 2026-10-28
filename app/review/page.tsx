@@ -47,8 +47,7 @@ export default async function ReviewQueuePage() {
         <div className="relative w-full px-4 pb-8 pt-10 sm:px-6 sm:pb-10 sm:pt-12 lg:px-8">
           <div className="flex flex-wrap items-start justify-between gap-6">
             <div>
-              <p className="tag text-ink-faint">{t(lang, "nav.review")}</p>
-              <h1 className="mt-2 text-[clamp(1.9rem,4.5vw,2.9rem)]">{t(lang, "review.title")}</h1>
+              <h1 className="text-[clamp(2.2rem,5vw,3.5rem)]">{t(lang, "review.title")}</h1>
               <p className="mt-3 max-w-[58ch] text-sm leading-relaxed text-ink-soft">
                 {t(lang, "review.intro")}
               </p>
@@ -64,7 +63,8 @@ export default async function ReviewQueuePage() {
 
       <div className="w-full px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
         {reviewer.demo ? (
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-2 rounded-control border border-signal/60 bg-signal-soft px-4 py-2.5 text-sm leading-relaxed text-partial">                <span className="pill shrink-0 bg-signal text-ink">{t(lang, "common.demoLabel")}</span>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-y border-signal/60 bg-signal-soft px-4 py-3 text-sm leading-relaxed text-partial">
+            <span className="pill shrink-0 bg-signal text-ink">{t(lang, "common.demoLabel")}</span>
             <span className="min-w-0">{t(lang, "review.demoNotice")}</span>
           </div>
         ) : null}
@@ -79,19 +79,19 @@ export default async function ReviewQueuePage() {
             {t(lang, "review.empty")}
           </p>
         ) : (
-          <section aria-labelledby="queue-heading" className="mt-8">
+          <section aria-label={t(lang, "review.title")} className="mt-8">
             <p className="tag tabular text-ink-faint">
               {queue.items.length === 1
                 ? t(lang, "review.pendingCountOne")
                 : t(lang, "review.pendingCount", { count: queue.items.length })}
             </p>
 
-            <ol className="mt-3 list-none space-y-3">
+            <ol className="mt-3 list-none divide-y divide-line border-y border-line">
               {rows.map(({ item, urgent }) => (
                 <li key={item.id}>
                   <Link
                     href={`/review/${item.id}`}
-                    className="lift group block rounded-card border border-line bg-surface p-4 sm:p-5"
+                    className="lift group block px-4 py-5 sm:px-6 sm:py-6"
                   >
                     <div className="flex items-start justify-between gap-4">
                       <div className="min-w-0">
@@ -120,7 +120,8 @@ export default async function ReviewQueuePage() {
                       </div>
 
                       <span
-                        aria-hidden="true"                            className="grid h-8 w-8 shrink-0 place-items-center rounded-control border border-line text-ink-faint transition-colors group-hover:border-accent group-hover:bg-accent group-hover:text-white"
+                        aria-hidden="true"
+                        className="grid h-9 w-9 shrink-0 place-items-center rounded-control border border-line text-ink-faint transition-[transform,background-color,color,border-color] duration-200 group-hover:translate-x-1 group-hover:border-accent group-hover:bg-accent group-hover:text-white"
                       >
                         <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none">
                           <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />

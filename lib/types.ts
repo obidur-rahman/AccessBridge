@@ -39,6 +39,26 @@ export type SourceType =
 
 export type ReviewStatus = "pending" | "accepted" | "rejected" | "needs_more_info";
 
+export type DemoStaffRole = "reviewer" | "admin";
+
+export interface DemoStaffMember {
+  id: string;
+  display_name: string;
+  role: DemoStaffRole;
+  active: boolean;
+}
+
+export interface DemoAuditEvent {
+  id: string;
+  actor_id: string;
+  actor_name: string;
+  action: string;
+  entity_type: "report" | "staff";
+  entity_id: string;
+  reason: string | null;
+  created_at: string;
+}
+
 export type PublicationStatus = "draft" | "published" | "archived";
 
 export type IngestionMethod =
@@ -107,4 +127,11 @@ export interface ReviewItem {
   public_receipt_token: string | null;
   /** Reviewer-only. Never part of a public response. */
   contact_private: string | null;
+  /** Demo prototype admin fields. They are not persisted in Supabase yet. */
+  assigned_to?: string | null;
+  assigned_to_name?: string | null;
+  escalated?: boolean;
+  escalation_reason?: string | null;
+  escalation_resolution?: string | null;
+  escalation_resolved_at?: string | null;
 }

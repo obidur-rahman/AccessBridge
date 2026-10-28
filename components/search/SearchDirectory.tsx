@@ -34,9 +34,9 @@ export function SearchDirectory({
 
   return (
     <section id="directory" aria-labelledby={`${uid}-heading`} className="scroll-mt-24">
-      <div className="flex flex-wrap items-end justify-between gap-3">
+      <div className="section-head">
         <div>
-          <h2 id={`${uid}-heading`} className="text-[clamp(1.6rem,3vw,2.1rem)]">
+          <h2 id={`${uid}-heading`} className="text-[clamp(1.8rem,3.5vw,2.6rem)]">
             {t(lang, "home.resultsTitle")}
           </h2>
           <p role="status" aria-live="polite" className="tabular mt-1 text-sm text-ink-faint">
@@ -94,7 +94,7 @@ export function SearchDirectory({
             return (
               <label
                 key={item}
-                className={`cursor-pointer rounded-control border px-3.5 py-1.5 text-sm transition-[background-color,border-color,color,transform] duration-200 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
+                className={`flex min-h-11 cursor-pointer items-center rounded-control border px-3.5 py-2 text-sm transition-[background-color,border-color,color,transform,box-shadow] duration-200 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
                   active
                     ? "border-accent bg-accent text-white"
                     : "border-line-strong bg-surface text-ink-soft hover:-translate-y-px hover:border-ink-faint hover:text-ink"
@@ -120,8 +120,8 @@ export function SearchDirectory({
           type="button"
           aria-expanded={showMoreFilters}
           aria-controls={`${uid}-more`}
-          onClick={() => setShowMoreFilters((open) => !open)}
-          className="inline-flex min-h-9 items-center gap-1.5 rounded-control px-2 text-sm text-ink-soft transition-[background-color,transform,box-shadow] duration-200 hover:-translate-y-px hover:bg-surface-muted hover:text-ink hover:shadow-soft"
+          onClick={() => setShowMoreFilters((open) => !open)}            className="inline-flex min-h-11 items-center gap-1.5 rounded-control px-2 text-sm text-ink-soft underline decoration-line-strong underline-offset-4 transition-[background-color,transform,box-shadow] duration-200 hover:-translate-y-px hover:bg-surface-muted hover:text-ink hover:shadow-soft"
+
         >
           {showMoreFilters ? t(lang, "home.fewerFilters") : t(lang, "home.moreFilters")}
           <span aria-hidden="true" className="text-ink-faint">
@@ -164,7 +164,7 @@ export function SearchDirectory({
           </div>
         ) : (
           <>
-            <ol className="list-none space-y-3">
+            <ol className="mt-5 list-none divide-y divide-line border-y border-line">
               {results.map((listing, index) => (
                 <ResultCard key={listing.id} listing={listing} lang={lang} index={index + 1} />
               ))}

@@ -80,7 +80,7 @@ export default async function ReviewDetailPage({
             ) : null}
           </div>
 
-          <h1 className="mt-4 max-w-[26ch] text-[clamp(1.8rem,4.4vw,2.7rem)]">
+          <h1 className="mt-4 max-w-[26ch] text-[clamp(2.1rem,5vw,3.5rem)]">
             {item.listing_name ?? t(lang, "review.proposedPlace")}
           </h1>
           <p className="mt-2 text-sm text-ink-faint">
@@ -94,7 +94,7 @@ export default async function ReviewDetailPage({
         <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
           <div className="min-w-0">
             <h2 className="text-[1.25rem]">{t(lang, "review.features")}</h2>
-            <dl className="card mt-3 divide-y divide-line overflow-hidden">
+            <dl className="mt-3 divide-y divide-line border-y border-line bg-surface">
               {Object.entries(item.feature_states).map(([key, state]) => (
                 <div
                   key={key}
@@ -109,7 +109,7 @@ export default async function ReviewDetailPage({
             {item.notes_public ? (
               <div className="mt-7">
                 <p className="tag text-ink-faint">{t(lang, "review.note")}</p>
-                <p className="mt-2 max-w-prose border-l-2 border-accent/40 pl-4 text-sm leading-relaxed text-ink-soft">
+                <p className="mt-2 max-w-prose border-l border-line-strong pl-4 text-sm leading-relaxed text-ink-soft">
                   {item.notes_public}
                 </p>
               </div>
@@ -130,7 +130,7 @@ export default async function ReviewDetailPage({
             ) : null}
 
             {item.contact_private ? (
-              <div className="mt-6 rounded-control border border-line bg-signal-soft px-4 py-3">
+              <div className="mt-6 border-y border-line bg-signal-soft px-4 py-3">
                 <p className="tag text-ink-faint">{t(lang, "review.contact")}</p>
                 <p className="mt-1 text-sm font-medium">{item.contact_private}</p>
               </div>
@@ -138,7 +138,7 @@ export default async function ReviewDetailPage({
           </div>
 
           <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
-            <dl className="card divide-y divide-line overflow-hidden px-4">
+            <dl className="divide-y divide-line border-y border-line bg-surface px-4">
               {facts.map((fact) => (
                 <div
                   key={fact.label}
@@ -150,7 +150,7 @@ export default async function ReviewDetailPage({
               ))}
             </dl>
 
-            <section aria-labelledby="decision-heading" className="card card-pad">
+            <section aria-labelledby="decision-heading" className="border-y border-line bg-surface px-4 py-5 sm:px-5">
               <h2 id="decision-heading" className="text-base font-semibold">
                 {t(lang, "review.decision")}
               </h2>

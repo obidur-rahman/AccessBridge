@@ -38,23 +38,19 @@ export default async function ReportPage({
           className="tick-rail pointer-events-none absolute inset-x-0 bottom-0 h-2.5 opacity-80"
         />
         <div className="relative w-full px-4 pb-10 pt-10 sm:px-6 sm:pb-12 sm:pt-14 lg:px-8">
-          <p className="pill pill-plain">
-            <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-accent" />
-            {t(lang, "nav.report")}
-          </p>
-          <h1 className="mt-5 max-w-[22ch] text-[clamp(2.1rem,5vw,3.4rem)]">
+          <h1 className="max-w-[22ch] text-[clamp(2.4rem,6vw,4rem)]">
             {t(lang, "report.title")}
           </h1>
           <p className="mt-4 max-w-[56ch] text-[1.0625rem] leading-relaxed text-ink-soft">
             {t(lang, "report.intro")}
           </p>
 
-          <ol className="mt-9 grid max-w-3xl list-none gap-3 sm:grid-cols-3">
+          <ol className="mt-9 grid max-w-5xl list-none gap-px border-y border-line bg-line sm:grid-cols-3">
             {steps.map((step, index) => (
-              <li key={step.title} className="card bg-surface/80 p-4">
-                <span className="tag tabular text-accent">{String(index + 1).padStart(2, "0")}</span>
-                <p className="mt-2 text-sm font-medium text-ink">{step.title}</p>
-                <p className="mt-1 text-sm leading-relaxed text-ink-faint">{step.body}</p>
+              <li key={step.title} className="bg-canvas px-4 py-4 sm:px-5">
+                <span className="tag tabular text-ink-faint">{String(index + 1).padStart(2, "0")}</span>
+                <p className="mt-2 text-sm font-semibold text-ink">{step.title}</p>
+                <p className="mt-1 text-sm leading-relaxed text-ink-soft">{step.body}</p>
               </li>
             ))}
           </ol>

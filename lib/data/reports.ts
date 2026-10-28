@@ -5,7 +5,9 @@ import {
   DEMO_LISTINGS,
   demoReports,
   findDemoReport,
+  getDemoAdminSnapshot,
   pushDemoReport,
+  recordDemoAudit,
 } from "@/lib/data/demo";
 import { isDemoMode } from "@/lib/demo-mode";
 import { createSupabaseAdmin } from "@/lib/supabase/admin";
@@ -296,6 +298,11 @@ export async function getReviewItem(
 
 export type DecisionResult = { ok: true } | { ok: false; error: string };
 
+/** Snapshot for the prototype admin desk. Never reads from Supabase. */
+export function getDemoAdminData() {
+  return getDemoAdminSnapshot();
+}
+
 /**
  * Record a reviewer decision. The action, the reason, and an audit event are
  * written together. Accepting a report is what makes its observation public.
@@ -346,6 +353,13 @@ export async function decideReport({
       }
     }
 
+    recordDemoAudit({
+      actor_id: reviewer.id,
+      action: hasEdits ? "observation_accept_edited" : `observation_${decision}`,
+      entity_type: "report",
+      entity_id: id,
+      reason: cleanReason || null,
+    });
     return { ok: true };
   }
 

@@ -97,11 +97,19 @@ export default async function RootLayout({
         >
           {t(lang, "app.skipToContent")}
         </a>
-        <SiteHeader lang={lang} isReviewer={Boolean(reviewer)} />
+        <SiteHeader
+          lang={lang}
+          isReviewer={Boolean(reviewer)}
+          isAdmin={reviewer?.role === "admin"}
+        />
         <main id="main" className="flex-1">
           <PageTransition>{children}</PageTransition>
         </main>
-        <SiteFooter lang={lang} isReviewer={Boolean(reviewer)} />
+        <SiteFooter
+          lang={lang}
+          isReviewer={Boolean(reviewer)}
+          isAdmin={reviewer?.role === "admin"}
+        />
       </body>
     </html>
   );

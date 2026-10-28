@@ -63,7 +63,7 @@ export default async function PlacePage({
         <p className="mt-3 max-w-prose text-sm leading-relaxed text-ink-soft">
           {t(lang, "place.notFoundHelp")}
         </p>
-        <Link href="/" className="btn btn-secondary mt-6">
+        <Link href="/directory" className="btn btn-secondary mt-6">
           {t(lang, "place.backToSearch")}
         </Link>
       </div>
@@ -138,7 +138,7 @@ export default async function PlacePage({
         />
         <div className="relative w-full px-4 pb-10 pt-7 sm:px-6 sm:pb-14 sm:pt-10 lg:px-8">
           <Link
-            href="/"
+            href="/directory"
             className="-mx-2 inline-flex items-center gap-1.5 rounded-control px-2 py-1 text-sm text-ink-faint transition-[background-color,transform,box-shadow] duration-200 hover:-translate-y-px hover:bg-surface-muted hover:text-ink hover:shadow-soft"
           >
             <span aria-hidden="true">←</span>
@@ -207,7 +207,7 @@ export default async function PlacePage({
               {t(lang, "place.featuresIntro")}
             </p>
 
-            <div className="card mt-5 overflow-hidden">
+            <div className="mt-5 border-y border-line bg-surface">
               <dl className="divide-y divide-line">
                 {FEATURE_KEYS.map((key) => {
                   const feature = byFeature.get(key);
@@ -220,7 +220,7 @@ export default async function PlacePage({
                   return (
                     <div
                       key={key}
-                      className="grid gap-x-6 gap-y-2 px-4 py-4 transition-colors hover:bg-surface-muted/60 sm:grid-cols-[1.25fr_11rem_1fr] sm:items-start sm:px-5 sm:py-5"
+                      className="instrument-row grid gap-x-6 gap-y-2 px-4 py-4 sm:grid-cols-[minmax(12rem,1fr)_11rem_minmax(11rem,0.8fr)] sm:items-start sm:px-5 sm:py-5"
                     >
                       <dt>
                         <span className="text-[1rem] font-medium leading-snug">
@@ -232,7 +232,7 @@ export default async function PlacePage({
                           </span>
                         ) : null}
                       </dt>
-                      <dd className="flex items-center gap-3">
+                      <dd className="flex flex-wrap items-center gap-2 sm:gap-3">
                         <Gauge state={feature?.state ?? "not_checked"} size={40} idle />
                         <StateBadge
                           state={feature?.state ?? "not_checked"}
@@ -267,8 +267,8 @@ export default async function PlacePage({
           </section>
 
           <aside className="space-y-4 lg:sticky lg:top-24">
-            <div className="card card-pad">
-              <p className="text-sm leading-relaxed text-ink-soft">{t(lang, "place.reminder")}</p>
+            <div className="border-y border-accent/40 bg-accent-soft px-4 py-4">
+              <p className="text-sm leading-relaxed text-accent-ink">{t(lang, "place.reminder")}</p>
               <Link
                 href={`/report?place=${listing.id}`}
                 className="btn btn-primary mt-4 w-full"
@@ -282,7 +282,7 @@ export default async function PlacePage({
               </Link>
             </div>
 
-            <div className="rounded-card bg-signal-soft px-4 py-3.5 text-xs leading-relaxed text-partial">
+            <div className="border-y border-signal/60 bg-signal-soft px-4 py-3.5 text-xs leading-relaxed text-partial">
               {t(lang, "place.mapNotice")}
             </div>
           </aside>

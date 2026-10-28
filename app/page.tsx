@@ -53,12 +53,12 @@ export default async function HomePage() {
               </p>
 
               <div className="mt-9 flex flex-wrap items-center gap-3">
-                <a href="#directory" className="btn btn-primary px-5">
+                <Link href="/directory" className="btn btn-primary px-5">
                   {t(lang, "home.searchLabel")}
                   <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" aria-hidden="true">
                     <path d="M12 5v14M6 13l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
-                </a>
+                </Link>
                 <Link href="/report" className="btn btn-secondary px-5">
                   {t(lang, "nav.report")}
                 </Link>
@@ -92,33 +92,29 @@ export default async function HomePage() {
         </dl>
       </section>
 
-      <div className="w-full px-4 sm:px-6 lg:px-8">
-        {!directory.ok ? (
-          <div role="alert" className="card card-pad mt-10 border-no/30 bg-no-soft">
-            <p className="text-base font-semibold text-no">{t(lang, "common.errorTitle")}</p>
-            <p className="mt-1 text-sm text-ink-soft">{t(lang, "common.errorBody")}</p>
-            <Link
-              href="/"
-              className="mt-4 inline-flex min-h-10 items-center rounded-control border border-no/40 px-3 text-sm font-medium text-no transition-colors hover:bg-no/5"
-            >
-              {t(lang, "common.retry")}
-            </Link>
-          </div>
-        ) : (
-          <>
-            {directory.isDemo ? (
-              <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 rounded-control border border-signal/60 bg-signal-soft px-4 py-2.5 text-sm leading-relaxed text-partial">
-                <span className="pill shrink-0 bg-signal text-ink">{t(lang, "common.demoLabel")}</span>
-                <span className="min-w-0">{t(lang, "home.demoBanner")}</span>
-              </div>
-            ) : null}
-
-            <div id="directory" className="scroll-mt-24 py-14 sm:py-16">
+      <section id="directory" aria-label={t(lang, "nav.directory")} className="border-b border-line bg-surface scroll-mt-20">
+        <div className="w-full px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+          {directory.ok ? (
+            <>
+              {directory.isDemo ? (
+                <div className="mb-8 flex flex-wrap items-center gap-3 border-y border-signal/50 bg-signal-soft px-4 py-3 text-sm leading-relaxed text-partial">
+                  <span className="pill bg-signal text-ink">{t(lang, "common.demoLabel")}</span>
+                  <span>{t(lang, "home.demoBanner")}</span>
+                </div>
+              ) : null}
               <SearchDirectory listings={listings} lang={lang} />
+            </>
+          ) : (
+            <div role="alert" className="border-y border-no/30 bg-no-soft px-4 py-5">
+              <h2 className="text-lg text-no">{t(lang, "common.errorTitle")}</h2>
+              <p className="mt-1 text-sm text-ink-soft">{t(lang, "common.errorBody")}</p>
+              <Link href="/directory" className="mt-3 inline-flex min-h-10 items-center text-sm font-semibold text-no underline underline-offset-4">
+                {t(lang, "common.retry")}
+              </Link>
             </div>
-          </>
-        )}
-      </div>
+          )}
+        </div>
+      </section>
 
       {/* How a report is checked: three stations, one row. */}
       <section id="how" aria-label={t(lang, "home.howTitle")} className="border-y border-line bg-surface">

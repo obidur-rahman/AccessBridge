@@ -111,7 +111,7 @@ export function ReportForm({
 
   if (receipt) {
     return (
-      <div className="soft-in card card-pad shadow-soft">
+      <div className="soft-in border-y border-line bg-surface px-5 py-7 sm:px-8 sm:py-9">
         <p className="pill bg-signal-soft text-partial">
           {t(lang, "status.pending")}
         </p>
@@ -122,7 +122,7 @@ export function ReportForm({
           {t(lang, "report.receiptBody")}
         </p>
 
-        <div className="mt-8 inline-block rounded-control border border-line bg-surface-muted px-5 py-4">
+        <div className="mt-8 inline-block border-y border-line bg-canvas px-5 py-4">
           <p className="tag text-ink-faint">{t(lang, "report.receiptCode")}</p>
           <p className="tabular mt-1 text-2xl font-semibold tracking-[0.2em]">{receipt}</p>
         </div>
@@ -142,7 +142,7 @@ export function ReportForm({
           >
             {t(lang, "report.another")}
           </button>
-          <Link href="/" className="btn btn-secondary px-5">
+          <Link href="/directory" className="btn btn-secondary px-5">
             {t(lang, "place.backToSearch")}
           </Link>
         </div>
@@ -159,7 +159,7 @@ export function ReportForm({
           ref={errorRef}
           role="alert"
           tabIndex={-1}
-          className="rounded-card border border-no/25 bg-no-soft px-4 py-4"
+          className="border-y border-no/25 bg-no-soft px-4 py-4"
         >
           <p className="font-medium text-no">{t(lang, "report.errorValidation")}</p>
           {errorEntries.length > 0 ? (
@@ -172,7 +172,7 @@ export function ReportForm({
         </div>
       ) : null}
 
-      <section className="card card-pad">
+      <section className="border-y border-line bg-surface px-4 py-5 sm:px-6 sm:py-6">
         <Step number="01" title={t(lang, "report.stepPlaceTitle")} />
         <div className="mt-4">
           <label htmlFor={`${uid}-place`} className={FIELD_LABEL}>
@@ -194,7 +194,7 @@ export function ReportForm({
         </div>
 
         {isNewPlace ? (
-          <div className="mt-5 grid gap-4 rounded-control bg-surface-muted p-4 sm:grid-cols-2">
+          <div className="mt-5 grid gap-4 border-y border-line bg-canvas p-4 sm:grid-cols-2">
             <div className="sm:col-span-2">
               <label htmlFor={`${uid}-new-name`} className={FIELD_LABEL}>
                 {t(lang, "report.newPlaceName")}
@@ -248,7 +248,7 @@ export function ReportForm({
         ) : null}
       </section>
 
-      <section className="card card-pad">
+      <section className="border-y border-line bg-surface px-4 py-5 sm:px-6 sm:py-6">
         <Step number="02" title={t(lang, "report.featureLegend")} />
         <p id={`${uid}-feature-help`} className="mt-3 max-w-prose text-sm leading-relaxed text-ink-soft">
           {t(lang, "report.featureHelp")}
@@ -260,7 +260,7 @@ export function ReportForm({
             {FEATURE_KEYS.map((key) => (
               <div
                 key={key}
-                className="flex flex-wrap items-center justify-between gap-3 py-3"
+                className="instrument-row flex flex-wrap items-center justify-between gap-3 py-3"
               >
                 <label htmlFor={`${uid}-${key}`} className="text-sm font-medium text-ink">
                   {featureLabel(key, lang)}
@@ -290,7 +290,7 @@ export function ReportForm({
         </fieldset>
       </section>
 
-      <section className="card card-pad">
+      <section className="border-y border-line bg-surface px-4 py-5 sm:px-6 sm:py-6">
         <Step number="03" title={t(lang, "report.stepEvidenceTitle")} />
         <div className="mt-4 grid gap-5">
           <div>
@@ -304,7 +304,8 @@ export function ReportForm({
               max={today}
               onChange={(event) => setObservedAt(event.target.value)}
               aria-describedby={`${uid}-date-help`}
-              aria-invalid={Boolean(errors.observedAt)}                className={`${FIELD} max-w-[14rem]`}
+              aria-invalid={Boolean(errors.observedAt)}
+            className={`${FIELD} max-w-[14rem]`}
             />
             <p id={`${uid}-date-help`} className="mt-1.5 text-xs text-ink-faint">
               {t(lang, "report.observedAtHelp")}
@@ -357,11 +358,11 @@ export function ReportForm({
         </div>
       </section>
 
-      <section className="card card-pad">
+      <section className="border-y border-line bg-surface px-4 py-5 sm:px-6 sm:py-6">
         <Step number="04" title={t(lang, "report.contact")} />
         <div className="mt-4">
-          <label htmlFor={`${uid}-contact`} className="sr-only">
-            {t(lang, "report.contact")}
+          <label htmlFor={`${uid}-contact`} className={FIELD_LABEL}>
+            {t(lang, "report.contact")} <span className="normal-case tracking-normal text-ink-faint">({t(lang, "common.optional")})</span>
           </label>
           <input
             id={`${uid}-contact`}
@@ -381,8 +382,8 @@ export function ReportForm({
       <div className="pt-2">
         <button type="submit" disabled={pending} className="btn btn-primary w-full px-6">
           {pending ? t(lang, "report.submitting") : t(lang, "report.submit")}
-          <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">
-            →
+          <span aria-hidden="true" className="travel">
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </span>
         </button>
         <p className="mt-3 max-w-prose text-xs leading-relaxed text-ink-faint">

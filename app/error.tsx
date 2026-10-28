@@ -12,7 +12,7 @@ export default function ErrorPage({
 }) {
   return (
     <div className="w-full px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
-      <div role="alert" className="card card-pad">
+      <div role="alert" className="border-y border-line bg-surface px-4 py-5 sm:px-6 sm:py-7">
         {/* The boundary may render before the language cookie is readable on the
             client, so it states the failure in both interface languages. */}
         {LANGS.map((lang) => (
@@ -32,7 +32,7 @@ export default function ErrorPage({
           <button type="button" onClick={reset} className="btn btn-primary px-5">
             {t("en", "common.retry")} / {t("bn", "common.retry")}
           </button>
-          <Link href="/" className="btn btn-secondary px-5">
+          <Link href="/directory" className="btn btn-secondary px-5">
             {t("en", "common.backHome")} / {t("bn", "common.backHome")}
           </Link>
         </div>

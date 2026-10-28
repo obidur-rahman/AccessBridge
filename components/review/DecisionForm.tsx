@@ -111,7 +111,7 @@ export function DecisionForm({
             return (
               <label
                 key={option.value}
-                className={`flex min-h-11 cursor-pointer items-center gap-2.5 rounded-control border px-3 py-2 text-sm transition-colors has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
+                className={`flex min-h-11 cursor-pointer items-center gap-2.5 border px-3 py-2 text-sm transition-[background-color,border-color,transform,box-shadow] has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent hover:-translate-y-px hover:shadow-soft ${
                   active
                     ? "border-accent bg-accent-soft text-accent-ink"
                     : "border-line-strong bg-surface text-ink-soft hover:border-ink-faint hover:text-ink"
