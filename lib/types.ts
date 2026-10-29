@@ -61,11 +61,6 @@ export interface DemoAuditEvent {
 
 export type PublicationStatus = "draft" | "published" | "archived";
 
-export type IngestionMethod =
-  | "manual_research"
-  | "structured_import"
-  | "user_submission";
-
 export interface Listing {
   id: string;
   name_en: string | null;

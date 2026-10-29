@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getReviewer } from "@/lib/auth";
-import { getDemoAdminData } from "@/lib/data/reports";
+import { getDemoAdminSnapshot } from "@/lib/data/demo";
 import { formatDate, t } from "@/lib/i18n/core";
 import { getLang } from "@/lib/i18n/server";
 import {
@@ -19,7 +19,7 @@ export default async function AdminPage({
   const [reviewer, lang, params] = await Promise.all([getReviewer(), getLang(), searchParams]);
   if (!reviewer || !reviewer.demo || reviewer.role !== "admin") redirect("/review");
 
-  const { reports, staff, audit } = getDemoAdminData();
+  const { reports, staff, audit } = getDemoAdminSnapshot();
   const reviewers = staff.filter((member) => member.role === "reviewer" && member.active);
   const openReports = reports.filter(
     (report) => report.review_status === "pending" || report.review_status === "needs_more_info",

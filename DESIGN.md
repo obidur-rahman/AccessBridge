@@ -1,5 +1,20 @@
 # AccessBridge — Design System
 
+## Revision (29 Oct 2026)
+
+Requested restyle, applied across the app:
+
+- **Palette:** red and white. Accent is now signal red `#c8102e` (hover `#a30c25`, ink
+  `#8c1024`, soft `#fbeaec`); ground is red-tinted white `#fbf8f8`, lines `#e7dede` /
+  `#cfc3c4`. The blue needle palette is retired.
+- **Instrument chrome removed:** no gauges, needles, tick rails or dimension-line bars
+  anywhere. `Gauge` and `CoverageBoard` were deleted; state badges carry every reading.
+- **Home page:** no stats strip, no pilot meta line, no "What we know" band. The hero is
+  headline + intro + one primary action. The landing page shows a short "Start with a few
+  places" showcase and links to `/directory` for search.
+- **Auth front end:** first-visit language prompt (bn/en modal, `ab_lang` cookie) and a
+  frontend-only `/signup` page. No backend registration yet.
+
 ## Brief (Phase 0)
 
 - **Subject:** AccessBridge, a bilingual (bn/en) public directory of per-feature accessibility

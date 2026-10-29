@@ -33,10 +33,6 @@ export default async function ReportPage({
   return (
     <div>
       <header className="relative overflow-hidden border-b border-line">
-        <div
-          aria-hidden="true"
-          className="tick-rail pointer-events-none absolute inset-x-0 bottom-0 h-2.5 opacity-80"
-        />
         <div className="relative w-full px-4 pb-10 pt-10 sm:px-6 sm:pb-12 sm:pt-14 lg:px-8">
           <h1 className="max-w-[22ch] text-[clamp(2.4rem,6vw,4rem)]">
             {t(lang, "report.title")}

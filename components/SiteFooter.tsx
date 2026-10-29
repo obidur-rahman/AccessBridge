@@ -42,8 +42,6 @@ export function SiteFooter({ lang, isReviewer, isAdmin }: { lang: Lang; isReview
           </nav>
         </div>
 
-        <div className="tick-rail mt-10 h-2.5 opacity-80" aria-hidden="true" />
-
         {/* Project details stay together as a compact drawing title block. */}
         <div className="mt-6 grid grid-cols-2 border-l border-t border-line lg:grid-cols-4">
           <div className="border-b border-r border-line px-4 py-4">

@@ -42,7 +42,3 @@ export const SOURCE_LABELS: Record<SourceType, { en: string; bn: string }> = {
 export function sourceLabel(type: SourceType, lang: "en" | "bn" = "en"): string {
   return SOURCE_LABELS[type]?.[lang] ?? SOURCE_LABELS.other[lang];
 }
-
-export function sourceLabelKey(type: SourceType): string {
-  return `source.${type}`;
-}

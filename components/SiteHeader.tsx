@@ -7,6 +7,15 @@ import { LanguageSwitch } from "@/components/LanguageSwitch";
 import { t } from "@/lib/i18n/core";
 import type { Lang } from "@/lib/types";
 
+/** Auth entry points for visitors who are not signed in. */
+function SignUpLink({ lang, className }: { lang: Lang; className: string }) {
+  return (
+    <Link href="/signup" className={className}>
+      {t(lang, "nav.signUp")}
+    </Link>
+  );
+}
+
 export function SiteHeader({
   lang,
   isReviewer,
@@ -48,13 +57,13 @@ export function SiteHeader({
           <Link
             href="/directory"
             aria-current={current("/directory")}
-            className="nav-link hidden rounded-control px-3 py-2 text-sm font-medium text-ink-soft hover:text-ink sm:inline-flex"
+            className="nav-link hidden rounded-control px-3 py-2 text-sm font-medium text-ink-soft hover:text-ink lg:inline-flex"
           >
             {t(lang, "nav.directory")}
           </Link>
           <Link
             href="/#how"
-            className="nav-link hidden rounded-control px-3 py-2 text-sm font-medium text-ink-soft hover:text-ink sm:inline-flex"
+            className="nav-link hidden rounded-control px-3 py-2 text-sm font-medium text-ink-soft hover:text-ink lg:inline-flex"
           >
             {t(lang, "nav.how")}
           </Link>
@@ -64,7 +73,7 @@ export function SiteHeader({
               <Link
                 href="/review"
                 aria-current={current("/review")}
-                className="nav-link hidden rounded-control px-3 py-2 text-sm font-medium text-ink-soft hover:text-ink sm:inline-flex"
+                className="nav-link hidden rounded-control px-3 py-2 text-sm font-medium text-ink-soft hover:text-ink lg:inline-flex"
               >
                 {t(lang, "nav.review")}
               </Link>
@@ -72,23 +81,29 @@ export function SiteHeader({
                 <Link
                   href="/admin"
                   aria-current={current("/admin")}
-                  className="nav-link hidden rounded-control px-3 py-2 text-sm font-medium text-ink-soft hover:text-ink sm:inline-flex"
+                  className="nav-link hidden rounded-control px-3 py-2 text-sm font-medium text-ink-soft hover:text-ink lg:inline-flex"
                 >
                   {t(lang, "nav.admin")}
                 </Link>
               ) : null}
             </>
           ) : (
-            <Link
-              href="/login"
-              aria-current={current("/login")}
-              className="nav-link hidden rounded-control px-3 py-2 text-sm font-medium text-ink-soft hover:text-ink sm:inline-flex"
-            >
-              {t(lang, "nav.signIn")}
-            </Link>
+            <>
+              <Link
+                href="/login"
+                aria-current={current("/login")}
+                className="nav-link hidden rounded-control px-3 py-2 text-sm font-medium text-ink-soft hover:text-ink lg:inline-flex"
+              >
+                {t(lang, "nav.signIn")}
+              </Link>
+              <SignUpLink
+                lang={lang}
+                className="hidden rounded-control border border-line-strong px-3 py-2 text-sm font-medium text-ink transition-colors hover:border-accent hover:text-accent lg:inline-flex min-h-9 items-center"
+              />
+            </>
           )}
 
-          <details className="relative sm:hidden">
+          <details className="relative lg:hidden">
             <summary className="flex min-h-10 cursor-pointer list-none items-center gap-1 rounded-control border border-line px-2.5 text-sm font-medium text-ink [&::-webkit-details-marker]:hidden">
               {t(lang, "nav.menu")}
               <svg aria-hidden="true" viewBox="0 0 16 16" className="menu-chevron h-3.5 w-3.5 text-ink-faint" fill="none"><path d="m3.5 6 4.5 4 4.5-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
@@ -97,6 +112,7 @@ export function SiteHeader({
               <Link href="/directory" className="min-h-11 rounded-control px-3 py-2 text-sm hover:bg-surface-muted" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>{t(lang, "nav.directory")}</Link>
               <Link href="/#how" className="min-h-11 rounded-control px-3 py-2 text-sm hover:bg-surface-muted" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>{t(lang, "nav.how")}</Link>
               {isReviewer ? <Link href="/review" className="min-h-11 rounded-control px-3 py-2 text-sm hover:bg-surface-muted" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>{t(lang, "nav.review")}</Link> : <Link href="/login" className="min-h-11 rounded-control px-3 py-2 text-sm hover:bg-surface-muted" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>{t(lang, "nav.signIn")}</Link>}
+              {!isReviewer ? <SignUpLink lang={lang} className="min-h-11 rounded-control px-3 py-2 text-sm font-medium text-accent hover:bg-surface-muted" /> : null}
               {isAdmin ? <Link href="/admin" className="min-h-11 rounded-control px-3 py-2 text-sm hover:bg-surface-muted" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>{t(lang, "nav.admin")}</Link> : null}
             </div>
           </details>
@@ -116,9 +132,6 @@ export function SiteHeader({
           </Link>
         </nav>
       </div>
-
-      {/* The header's own measuring edge. */}
-      <div aria-hidden="true" className="tick-rail h-1.5 opacity-70" />
     </header>
   );
 }

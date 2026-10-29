@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Archivo, Hind_Siliguri, IBM_Plex_Mono } from "next/font/google";
+import { LanguagePrompt } from "@/components/LanguagePrompt";
 import { PageTransition } from "@/components/PageTransition";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -102,6 +103,7 @@ export default async function RootLayout({
           isReviewer={Boolean(reviewer)}
           isAdmin={reviewer?.role === "admin"}
         />
+        <LanguagePrompt lang={lang} />
         <main id="main" className="flex-1">
           <PageTransition>{children}</PageTransition>
         </main>

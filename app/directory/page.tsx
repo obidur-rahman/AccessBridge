@@ -20,10 +20,6 @@ export default async function DirectoryPage() {
   return (
     <div>
       <header className="relative border-b border-line">
-        <div
-          aria-hidden="true"
-          className="tick-rail pointer-events-none absolute inset-x-0 bottom-0 h-2.5 opacity-80"
-        />
         <div className="relative w-full px-4 pb-9 pt-10 sm:px-6 sm:pb-11 sm:pt-12 lg:px-8">
           <h1 className="max-w-[20ch] text-[clamp(2.4rem,6vw,4rem)]">
             {t(lang, "home.resultsTitle")}

@@ -33,13 +33,10 @@ export function SearchDirectory({
       : t(lang, "home.resultsCount", { count: results.length });
 
   return (
-    <section id="directory" aria-labelledby={`${uid}-heading`} className="scroll-mt-24">
+    <section id="directory" aria-label={t(lang, "home.resultsTitle")} className="scroll-mt-24">
       <div className="section-head">
         <div>
-          <h2 id={`${uid}-heading`} className="text-[clamp(1.8rem,3.5vw,2.6rem)]">
-            {t(lang, "home.resultsTitle")}
-          </h2>
-          <p role="status" aria-live="polite" className="tabular mt-1 text-sm text-ink-faint">
+          <p role="status" aria-live="polite" className="tabular text-sm text-ink-faint">
             {countLabel}
           </p>
         </div>

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Gauge } from "@/components/accessibility/Gauge";
 import { StateBadge } from "@/components/accessibility/StateBadge";
 import { PlaceMap } from "@/components/map/PlaceMap";
 import { FEATURE_KEYS, featureLabel } from "@/lib/access-features";
@@ -132,10 +131,6 @@ export default async function PlacePage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(placeJsonLd) }}
       />
       <header className="relative overflow-hidden border-b border-line">
-        <div
-          aria-hidden="true"
-          className="tick-rail pointer-events-none absolute inset-x-0 bottom-0 h-2.5 opacity-80"
-        />
         <div className="relative w-full px-4 pb-10 pt-7 sm:px-6 sm:pb-14 sm:pt-10 lg:px-8">
           <Link
             href="/directory"
@@ -233,7 +228,6 @@ export default async function PlacePage({
                         ) : null}
                       </dt>
                       <dd className="flex flex-wrap items-center gap-2 sm:gap-3">
-                        <Gauge state={feature?.state ?? "not_checked"} size={40} idle />
                         <StateBadge
                           state={feature?.state ?? "not_checked"}
                           lang={lang}

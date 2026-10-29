@@ -632,11 +632,6 @@ export function getDemoAdminSnapshot() {
   };
 }
 
-export function getDemoReport(id: string): ReviewItem | null {
-  const report = findDemoReport(id);
-  return report ? { ...report, feature_states: { ...report.feature_states } } : null;
-}
-
 export function createDemoStaff(
   displayName: string,
   role: DemoStaffRole,

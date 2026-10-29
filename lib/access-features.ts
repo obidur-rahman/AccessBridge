@@ -41,10 +41,6 @@ export function isFeatureState(value: unknown): value is FeatureState {
   return typeof value === "string" && (FEATURE_STATES as readonly string[]).includes(value);
 }
 
-export function featureLabelKey(key: FeatureKey): string {
-  return `feature.${key}`;
-}
-
 /** Human-readable label, used in reviewer summaries and audit reasons. */
 export function featureLabel(key: string, lang: "en" | "bn" = "en"): string {
   const labels: Record<string, { en: string; bn: string }> = {

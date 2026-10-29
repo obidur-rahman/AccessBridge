@@ -5,7 +5,6 @@ import {
   DEMO_LISTINGS,
   demoReports,
   findDemoReport,
-  getDemoAdminSnapshot,
   pushDemoReport,
   recordDemoAudit,
 } from "@/lib/data/demo";
@@ -297,11 +296,6 @@ export async function getReviewItem(
 }
 
 export type DecisionResult = { ok: true } | { ok: false; error: string };
-
-/** Snapshot for the prototype admin desk. Never reads from Supabase. */
-export function getDemoAdminData() {
-  return getDemoAdminSnapshot();
-}
 
 /**
  * Record a reviewer decision. The action, the reason, and an audit event are
