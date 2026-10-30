@@ -4,25 +4,18 @@ import { t } from "@/lib/i18n/core";
 import { getLang } from "@/lib/i18n/server";
 import { ROADMAP, type RoadmapStatus } from "@/lib/roadmap";
 
-const STATUS_KEY: Record<
-  RoadmapStatus,
-  "roadmap.statusNow" | "roadmap.statusNext" | "roadmap.statusLater" | "roadmap.statusNot"
-> = {
-  now: "roadmap.statusNow",
-  next: "roadmap.statusNext",
-  later: "roadmap.statusLater",
-  not: "roadmap.statusNot",
-};
+const GROUPS: {
+  status: RoadmapStatus;
+  key: "roadmap.statusNow" | "roadmap.statusNext" | "roadmap.statusLater" | "roadmap.statusNot";
+}[] = [
+  { status: "now", key: "roadmap.statusNow" },
+  { status: "next", key: "roadmap.statusNext" },
+  { status: "later", key: "roadmap.statusLater" },
+  { status: "not", key: "roadmap.statusNot" },
+];
 
-const STATUS_TONE: Record<RoadmapStatus, string> = {
-  now: "bg-yes-soft text-yes",
-  next: "bg-accent-soft text-accent-ink",
-  later: "bg-accent-2-soft text-accent-2-ink",
-  not: "bg-unknown-soft text-unknown",
-};
-
-/** A thin coloured edge on each phase card. The pill still carries the word. */
-const STATUS_EDGE: Record<RoadmapStatus, string> = {
+/** A thin coloured dot on each card. The group heading carries the word. */
+const STATUS_DOT: Record<RoadmapStatus, string> = {
   now: "bg-yes",
   next: "bg-accent",
   later: "bg-accent-2",
@@ -40,110 +33,75 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function RoadmapPage() {
   const lang = await getLang();
-  const statuses: RoadmapStatus[] = ["now", "next", "later", "not"];
-  const total = String(ROADMAP.length).padStart(2, "0");
 
   return (
     <div>
-      <header className="sheet pb-5 pt-3 sm:pt-4">
+      <header className="sheet pb-2 pt-3 sm:pt-4">
         <h1 className="text-[clamp(1.9rem,4.5vw,2.8rem)]">{t(lang, "roadmap.title")}</h1>
         <span
           aria-hidden="true"
           className="mt-3 block h-1 w-12 rounded-full bg-[linear-gradient(90deg,var(--color-accent),var(--color-accent-2))]"
         />
-
-        <div className="mt-4 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-          <p className="max-w-[66ch] text-[0.9375rem] leading-relaxed text-ink-soft sm:text-base">
-            {t(lang, "roadmap.intro")}
-          </p>
-          <ul className="flex list-none flex-wrap gap-1.5" aria-label={t(lang, "roadmap.title")}>
-            {statuses.map((status) => (
-              <li key={status}>
-                <span className={`pill ${STATUS_TONE[status]}`}>{t(lang, STATUS_KEY[status])}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <p className="mt-3 max-w-[66ch] text-[0.9375rem] leading-relaxed text-ink-soft sm:text-base">
+          {t(lang, "roadmap.intro")}
+        </p>
       </header>
 
       <div className="sheet pb-12">
-        {/* The whole plan at a glance: one line of phases, nothing to click. */}
-        <ol
-          className="stagger grid list-none gap-2 sm:grid-cols-2 lg:grid-cols-5"
-          aria-label={t(lang, "roadmap.title")}
-        >
-          {ROADMAP.map((phase, index) => (
-            <li
-              key={phase.id}
-              className="flex flex-col rounded-[var(--radius-card)] border border-line bg-surface px-3.5 py-3"
-            >
-              <span className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1">
-                <span className="tabular text-xs text-ink-faint">
-                  {String(index + 1).padStart(2, "0")}
-                  <span className="text-ink-faint/60"> / {total}</span>
-                </span>
-                <span className={`pill ${STATUS_TONE[phase.status]}`}>
-                  {t(lang, STATUS_KEY[phase.status])}
-                </span>
-              </span>
-              <span className="mt-1.5 text-sm font-bold leading-snug text-ink">
-                {phase.title[lang]}
-              </span>
-            </li>
-          ))}
-        </ol>
+        {GROUPS.map(({ status, key }) => {
+          const phases = ROADMAP.filter((phase) => phase.status === status);
+          if (phases.length === 0) return null;
 
-        <div className="stagger mt-4 grid gap-4 lg:grid-cols-2">
-          {ROADMAP.map((phase, index) => {
-            const wide = phase.status === "not";
-            return (
-              <article
-                key={phase.id}
-                className={`card relative overflow-hidden p-5 sm:p-6 ${wide ? "lg:col-span-2" : ""}`}
-              >
+          return (
+            <section
+              key={status}
+              aria-labelledby={`phase-${status}`}
+              className="mt-7 first:mt-4"
+            >
+              <div className="flex items-center gap-3">
                 <span
                   aria-hidden="true"
-                  className={`absolute inset-y-0 left-0 w-[3px] ${STATUS_EDGE[phase.status]}`}
+                  className={`h-2 w-2 shrink-0 rounded-full ${STATUS_DOT[status]}`}
                 />
-
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <span className="tabular text-xs text-ink-faint">
-                    {String(index + 1).padStart(2, "0")}
-                    <span className="text-ink-faint/60"> / {total}</span>
-                  </span>
-                  <span className={`pill ${STATUS_TONE[phase.status]}`}>
-                    {t(lang, STATUS_KEY[phase.status])}
-                  </span>
-                </div>
-
-                <h2 className="mt-2 text-[1.3rem] leading-snug sm:text-[1.45rem]">
-                  {phase.title[lang]}
+                <h2 id={`phase-${status}`} className="text-[1.15rem] leading-none">
+                  {t(lang, key)}
                 </h2>
-                <p className="mt-1.5 max-w-[62ch] text-sm leading-relaxed text-ink-soft">
-                  {phase.summary[lang]}
-                </p>
+                <span aria-hidden="true" className="h-px min-w-6 flex-1 bg-line" />
+              </div>
 
-                <ul
-                  className={`mt-4 grid list-none gap-2 border-t border-line pt-4 sm:grid-cols-2 sm:gap-x-8 ${
-                    wide ? "xl:grid-cols-4" : ""
-                  }`}
-                >
-                  {phase.items.map((item) => (
-                    <li key={item.en} className="flex gap-2.5">
-                      <span
-                        aria-hidden="true"
-                        className={`mt-[0.45rem] h-1.5 w-1.5 shrink-0 rounded-full ${STATUS_EDGE[phase.status]}`}
-                      />
-                      <span className="text-sm leading-relaxed text-ink-soft">{item[lang]}</span>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            );
-          })}
-        </div>
+              <div
+                className={`stagger mt-3 grid gap-4 ${phases.length > 1 ? "lg:grid-cols-2" : ""}`}
+              >
+                {phases.map((phase) => (
+                  <article key={phase.id} className="card p-5 sm:p-6">
+                    <h3 className="text-[1.25rem] leading-snug sm:text-[1.35rem]">
+                      {phase.title[lang]}
+                    </h3>
+                    <p className="mt-1.5 max-w-[62ch] text-sm leading-relaxed text-ink-soft">
+                      {phase.summary[lang]}
+                    </p>
 
-        <aside className="relative mt-4 overflow-hidden rounded-[var(--radius-card)] bg-[linear-gradient(135deg,var(--color-accent)_0%,var(--color-accent-2)_100%)] px-5 py-6 text-white sm:px-8 sm:py-7">
+                    <ul className="mt-4 grid list-none gap-2 border-t border-line pt-4 sm:grid-cols-2 sm:gap-x-8">
+                      {phase.items.map((item) => (
+                        <li key={item.en} className="flex gap-2.5">
+                          <span
+                            aria-hidden="true"
+                            className={`mt-[0.45rem] h-1.5 w-1.5 shrink-0 rounded-full ${STATUS_DOT[status]}`}
+                          />
+                          <span className="text-sm leading-relaxed text-ink-soft">
+                            {item[lang]}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </article>
+                ))}
+              </div>
+            </section>
+          );
+        })}
+
+        <aside className="relative mt-8 overflow-hidden rounded-[var(--radius-card)] bg-[linear-gradient(135deg,var(--color-accent)_0%,var(--color-accent-2)_100%)] px-5 py-6 text-white sm:px-8 sm:py-7">
           <span
             aria-hidden="true"
             className="pointer-events-none absolute -right-14 -top-20 h-52 w-52 rounded-full bg-white/15 blur-2xl"

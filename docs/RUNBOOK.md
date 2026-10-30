@@ -10,11 +10,13 @@ single maintainer with access to the Supabase project and the deployment.
 | `NEXT_PUBLIC_SUPABASE_URL` | build + server | Supabase project URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | build + server | Publishable key; safe to ship |
 | `SUPABASE_SERVICE_ROLE_KEY` | server only | Bypasses RLS for report submission and imports. Never expose to the browser |
-| `NEXT_PUBLIC_DEMO_MODE` | build | `1` uses labelled demo data and an in-memory reviewer |
+| `NEXT_PUBLIC_DEMO_MODE` | build | `0` reads and writes Supabase; unset or any other value keeps the labelled demo data |
 | `NEXT_PUBLIC_SITE_URL` | build | Canonical URL for metadata, sitemap, robots |
 
-Demo mode is also on automatically when the Supabase variables are missing, and
-it is never mixed with a configured dataset. Keep `.env.local` out of git.
+Demo mode is the default, including in the deployment: it serves the labelled
+demo records and an in-memory reviewer even when Supabase is configured. It is
+never mixed into a database dataset, so setting `NEXT_PUBLIC_DEMO_MODE=0` is
+what switches every read and write to Supabase. Keep `.env.local` out of git.
 
 ## 2. First database setup
 
@@ -141,7 +143,7 @@ database, in the pilot notes.
 
 | Symptom | Check |
 |---|---|
-| Home shows the demo banner in production | `NEXT_PUBLIC_DEMO_MODE` and the two public Supabase variables; redeploy after changing them |
+| Home shows the demo banner in production | Expected until the database is ready: set `NEXT_PUBLIC_DEMO_MODE=0` and redeploy |
 | Reports fail with `not_configured` | Server env missing in the deployment platform |
 | Reports fail with `insert_failed` | Migration not applied, RLS policy changed, or `SUPABASE_SERVICE_ROLE_KEY` belongs to another project |
 | Reviewer sees an empty queue but reports were submitted | Reports are pending in another project, or `profiles.active` is false |

@@ -126,7 +126,7 @@ export default async function RootLayout({
         <WelcomePrompt lang={lang} />
         <main
           id="main"
-          className="flex-1 pt-[4.5rem] pb-[calc(4.5rem+env(safe-area-inset-bottom))] sm:pt-[5rem] lg:pb-0"
+          className="flex-1 pt-[5rem] pb-[calc(4.5rem+env(safe-area-inset-bottom))] sm:pt-[5.5rem] lg:pb-0"
         >
           <PageTransition>{children}</PageTransition>
         </main>

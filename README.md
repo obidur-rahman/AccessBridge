@@ -19,7 +19,9 @@ Open http://localhost:3000. Environment values come from `.env.local`, which is 
 
 ## Demo mode and the database
 
-The pilot Supabase project is connected in `.env.local`, but **the schema has not been applied yet**, so `NEXT_PUBLIC_DEMO_MODE=1` keeps the app on the labelled demo records in `lib/data/demo.ts`. Reports and reviewer decisions are kept in memory and are lost when the server restarts. `/login` offers **Continue as demo reviewer** so the pending → accepted flow can be followed end to end.
+Demo mode is **on by default, in every environment, including the deployment**. The app serves the labelled demo records in `lib/data/demo.ts`, keeps reports and reviewer decisions in memory, and offers **Continue as demo reviewer** on `/login`, so the pending → accepted flow can be followed end to end. Nothing held in memory survives a server restart.
+
+The pilot Supabase project is connected in `.env.local`, but the schema is not applied yet, so the deployment stays on demo records until `NEXT_PUBLIC_DEMO_MODE=0` is set.
 
 To switch to the real database:
 

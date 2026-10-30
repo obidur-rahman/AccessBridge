@@ -6,9 +6,9 @@ export default async function NotFound() {
   const lang = await getLang();
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative -mt-[5rem] overflow-hidden sm:-mt-[5.5rem]">
       <div className="aurora" aria-hidden="true" />
-      <div className="sheet relative max-w-xl py-14 sm:py-20">
+      <div className="sheet relative max-w-xl pb-14 pt-[7rem] sm:pb-20 sm:pt-[7.5rem]">
         <div className="card p-6">
           <p className="tag text-ink-faint">404</p>
           <h1 className="mt-1 text-[clamp(1.8rem,4.4vw,2.4rem)]">

@@ -241,7 +241,7 @@ export const en = {
   "login.error": "The email or password is not correct.",
   "login.demo": "Continue as demo reviewer",
   "login.demoHelp":
-    "Use this only while Supabase is not configured. It gives access to demo reports in memory.",
+    "Open the demo review queue. Decisions are kept in memory and reset when the server restarts.",
 
   "auth.signUpTitle": "Create an account",
   "auth.signUpIntro": "Register with your name, email and password.",
@@ -532,7 +532,7 @@ export const bn: Record<keyof typeof en, string> = {
   "login.error": "ইমেইল বা পাসওয়ার্ড সঠিক নয়।",
   "login.demo": "ডেমো পর্যালোচক হিসেবে চালিয়ে যান",
   "login.demoHelp":
-    "Supabase সংযোগ না থাকলে শুধু এটি ব্যবহার করুন। এটি মেমোরির ডেমো রিপোর্টে প্রবেশ দেয়।",
+    "ডেমো পর্যালোচনা তালিকা খুলুন। সিদ্ধান্ত মেমোরিতে থাকে এবং সার্ভার চালু হলে মুছে যায়।",
 
   "auth.signUpTitle": "অ্যাকাউন্ট খুলুন",
   "auth.signUpIntro": "নাম, ইমেইল ও পাসওয়ার্ড দিয়ে নিবন্ধন করুন।",

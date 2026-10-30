@@ -32,9 +32,9 @@ export default async function LoginPage({
   const demo = isDemoMode();
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative -mt-[5rem] overflow-hidden sm:-mt-[5.5rem]">
       <div className="aurora" aria-hidden="true" />
-      <div className="sheet relative max-w-md py-10 sm:py-14">
+      <div className="sheet relative max-w-md pb-10 pt-[7rem] sm:pb-14 sm:pt-[7.5rem]">
         <div className="soft-in card p-5 sm:p-6">
           <h1 className="text-[clamp(1.7rem,4vw,2.1rem)]">{t(lang, "login.title")}</h1>
           <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">{t(lang, "login.intro")}</p>

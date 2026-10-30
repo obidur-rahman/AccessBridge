@@ -14,8 +14,22 @@ function hasLangCookie(): boolean {
   return document.cookie.split("; ").some((part) => part.startsWith(`${LANG_COOKIE}=`));
 }
 
+function hasStoredTheme(): boolean {
+  try {
+    const value = localStorage.getItem(THEME_KEY);
+    return value === "light" || value === "dark";
+  } catch {
+    return false;
+  }
+}
+
+/** The dialog stays away only when both answers are already on this device. */
+function hasBothChoices(): boolean {
+  return hasLangCookie() && hasStoredTheme();
+}
+
 const subscribe = () => () => {};
-const readStoredChoice = () => hasLangCookie();
+const readStoredChoice = hasBothChoices;
 const readServerChoice = () => true;
 
 /** The inline layout script has already applied a stored dark choice. */
@@ -80,6 +94,11 @@ export function WelcomePrompt({ lang }: { lang: Lang }) {
 
   function start(): void {
     document.cookie = `${LANG_COOKIE}=${chosenLang}; path=/; max-age=31536000; samesite=lax`;
+    try {
+      localStorage.setItem(THEME_KEY, chosenTheme);
+    } catch {
+      // A blocked storage must not block the choice.
+    }
     setDismissed(true);
     if (chosenLang !== lang) router.refresh();
   }

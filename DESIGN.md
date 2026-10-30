@@ -72,9 +72,10 @@ preference, not a media query: light is the default until the visitor asks for d
 - **Cards:** 14px radius, 1px hairline, 1px shadow. Controls 10px radius, status and filter
   chips fully rounded. No pills used as decoration.
 - **Spacing:** 8px rhythm; page sections 28 to 44px apart. Cards sit in 2 or 4 column grids
-  on desktop, one column on phones. The bar floats: `main` reserves 72px on phones and 80px
-  above 640px so every page head clears it, and the home hero pulls up under the bar with
-  its own larger top padding.
+  on desktop, one column on phones. The bar floats: `main` reserves 80px on phones and 88px
+  above 640px so every page head clears it. The home hero, sign in, sign up and 404 screens
+  pull up under the bar so their light wash reaches the top edge, and pad their own content
+  clear of it.
 
 ## Motion
 
@@ -112,10 +113,10 @@ preference, not a media query: light is the default until the visitor asks for d
   right, with the row filled in `accent-soft` and `aria-current`. Below that, a row is a normal
   link to the place page.
 - **Roadmap:** the full plan from `docs/06_IMPLEMENTATION_PLAN.md`, across the whole page.
-  A strip of five phase tiles runs over the top, then a two column board of phase cards:
-  number and status pill, title, summary, bullet list. Every phase stays open, and the last
-  card spans both columns. No controls to click; it is the one page where a numbered
-  sequence carries meaning.
+  Phases are grouped by status, in the order live now, next, later, not planned. Each group
+  has a heading, a coloured dot and a hairline rule, then its phase cards: title, summary
+  and bullet list. Nothing repeats and nothing is numbered; the plan is one read from top to
+  bottom, with no controls to click.
 
 ## Surfaces
 

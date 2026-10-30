@@ -36,9 +36,9 @@ export default async function HomePage() {
 
   return (
     <div>
-      <section className="relative -mt-[4.5rem] overflow-hidden border-b border-line sm:-mt-[5rem]">
+      <section className="relative -mt-[5rem] overflow-hidden border-b border-line sm:-mt-[5.5rem]">
         <div className="aurora" aria-hidden="true" />
-        <div className="sheet relative pb-8 pt-[6.5rem] sm:pb-11 sm:pt-[6.75rem]">
+        <div className="sheet relative pb-8 pt-[7rem] sm:pb-11 sm:pt-[7.25rem]">
           <div className="stagger grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-center lg:gap-12">
             <div className="min-w-0">
               <h1 className="hero-title max-w-[14ch] text-[clamp(2.2rem,5vw,3.6rem)]">
