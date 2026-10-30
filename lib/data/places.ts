@@ -1,5 +1,5 @@
 import { isFeatureState } from "@/lib/access-features";
-import { DEMO_LISTINGS, demoFeaturesFor, demoReports } from "@/lib/data/demo";
+import { demoFeaturesFor, demoListings, demoReports } from "@/lib/data/demo";
 import { SOURCE_LABEL_REVIEWED } from "@/lib/data/reports";
 import { isDemoMode } from "@/lib/demo-mode";
 import { displayName, type SearchableListing } from "@/lib/search";
@@ -9,7 +9,6 @@ import {
   CATEGORIES,
   type Category,
   type CurrentFeature,
-  type FeatureState,
   type Listing,
   type PlaceDetail,
 } from "@/lib/types";
@@ -81,15 +80,6 @@ function toFeature(row: Record<string, unknown>): CurrentFeature | null {
   };
 }
 
-/** The two features shown on a result card, when they have a real result. */
-const HIGHLIGHT_KEYS = ["step_free_entrance", "accessible_toilet"];
-
-function toHighlights(features: CurrentFeature[]) {
-  return features
-    .filter((feature) => HIGHLIGHT_KEYS.includes(feature.feature_key))
-    .map((feature) => ({ feature_key: feature.feature_key, state: feature.state }));
-}
-
 /** A feature counts as known when a reviewer accepted a yes, no, or partial. */
 function toCheckedFeatures(features: CurrentFeature[]): string[] {
   return features
@@ -140,29 +130,28 @@ function demoFeatures(listingId: string): CurrentFeature[] {
 }
 
 function demoDirectory(): SearchableListing[] {
-  return DEMO_LISTINGS.filter(
-    (listing) => (listing.publication_status ?? "published") === "published",
-  ).map((listing) => {
-    const features = demoFeatures(listing.id);
-    return {
-      id: listing.id,
-      name_en: listing.name_en,
-      name_bn: listing.name_bn,
-      category: listing.category,
-      place_type: listing.place_type,
-      summary_en: listing.summary_en,
-      summary_bn: listing.summary_bn,
-      area_name: listing.area_name,
-      has_observation: features.length > 0,
-      last_checked: features.reduce<string | null>(
-        (latest, feature) =>
-          !latest || feature.observed_at > latest ? feature.observed_at : latest,
-        null,
-      ),
-      highlights: toHighlights(features),
-      checked_features: toCheckedFeatures(features),
-    };
-  });
+  return demoListings()
+    .filter((listing) => (listing.publication_status ?? "published") === "published")
+    .map((listing) => {
+      const features = demoFeatures(listing.id);
+      return {
+        id: listing.id,
+        name_en: listing.name_en,
+        name_bn: listing.name_bn,
+        category: listing.category,
+        place_type: listing.place_type,
+        summary_en: listing.summary_en,
+        summary_bn: listing.summary_bn,
+        area_name: listing.area_name,
+        has_observation: features.length > 0,
+        last_checked: features.reduce<string | null>(
+          (latest, feature) =>
+            !latest || feature.observed_at > latest ? feature.observed_at : latest,
+          null,
+        ),
+        checked_features: toCheckedFeatures(features),
+      };
+    });
 }
 
 /** Everything the search page needs: published places only. */
@@ -186,7 +175,6 @@ export async function getDirectory(): Promise<DirectoryResult> {
   }
 
   const lastChecked = new Map<string, string>();
-  const highlights = new Map<string, { feature_key: string; state: FeatureState }[]>();
   const checked = new Map<string, string[]>();
 
   for (const row of (featuresResponse.data ?? []) as Record<string, unknown>[]) {
@@ -205,11 +193,6 @@ export async function getDirectory(): Promise<DirectoryResult> {
         checked.set(listingId, known);
       }
 
-      if (HIGHLIGHT_KEYS.includes(featureKey)) {
-        const list = highlights.get(listingId) ?? [];
-        list.push({ feature_key: featureKey, state: row.state });
-        highlights.set(listingId, list);
-      }
     }
   }
 
@@ -226,7 +209,6 @@ export async function getDirectory(): Promise<DirectoryResult> {
       area_name: listing.area_name,
       has_observation: lastChecked.has(listing.id),
       last_checked: lastChecked.get(listing.id) ?? null,
-      highlights: highlights.get(listing.id) ?? [],
       checked_features: checked.get(listing.id) ?? [],
     } satisfies SearchableListing;
   });
@@ -239,7 +221,7 @@ export async function getPlace(id: string): Promise<PlaceResult> {
   const supabase = await createSupabaseServer();
 
   if (isDemoMode() || !supabase) {
-    const listing = DEMO_LISTINGS.find((item) => item.id === id);
+    const listing = demoListings().find((item) => item.id === id);
     if (!listing || (listing.publication_status ?? "published") !== "published") {
       return { ok: true, place: null };
     }

@@ -4,17 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LanguageSwitch } from "@/components/LanguageSwitch";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { t } from "@/lib/i18n/core";
 import type { Lang } from "@/lib/types";
-
-/** Auth entry points for visitors who are not signed in. */
-function SignUpLink({ lang, className }: { lang: Lang; className: string }) {
-  return (
-    <Link href="/signup" className={className}>
-      {t(lang, "nav.signUp")}
-    </Link>
-  );
-}
 
 export function SiteHeader({
   lang,
@@ -26,111 +18,95 @@ export function SiteHeader({
   isAdmin: boolean;
 }) {
   const pathname = usePathname();
-  const onHome = pathname === "/";
 
   const current = (href: string) =>
     pathname === href || (href !== "/" && pathname.startsWith(`${href}/`)) ? "page" : undefined;
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-surface">
-      <div className="flex w-full items-center justify-between gap-1 px-3 py-2.5 sm:gap-3 sm:px-6 sm:py-3 lg:px-8">
-        <Link
-          href="/"
-          aria-current={onHome ? "page" : undefined}
-          className="flex items-center gap-2.5 rounded-control py-1 transition-transform duration-200 hover:-translate-y-px"
-        >
-          {/* The wordmark is the home link, so the nav carries the other destinations. */}
-          <Image
-            src="/logo.png"
-            alt=""
-            width={32}
-            height={32}
-            priority
-            className="hidden h-8 w-8 shrink-0 rounded-control shadow-soft min-[360px]:block"
-          />
-          <span className="text-[1.0625rem] font-semibold tracking-[-0.02em] sm:text-[1.125rem]">
-            {t(lang, "app.name")}
-          </span>
-        </Link>
-
-        <nav aria-label={t(lang, "nav.home")} className="flex items-center gap-0.5 sm:gap-1">
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-40">
+      <div className="sheet pb-1.5 pt-1.5">
+        <div className="appbar-inner pointer-events-auto flex h-11 items-center gap-2 rounded-[0.95rem] border border-line px-3 sm:h-12 sm:gap-2.5 sm:px-4">
           <Link
-            href="/directory"
-            aria-current={current("/directory")}
-            className="nav-link hidden rounded-control px-3 py-2 text-sm font-medium text-ink-soft hover:text-ink lg:inline-flex"
+            href="/"
+            aria-current={current("/")}
+            aria-label={t(lang, "app.name")}
+            className="group flex shrink-0 items-center"
           >
-            {t(lang, "nav.directory")}
-          </Link>
-          <Link
-            href="/#how"
-            className="nav-link hidden rounded-control px-3 py-2 text-sm font-medium text-ink-soft hover:text-ink lg:inline-flex"
-          >
-            {t(lang, "nav.how")}
+            <Image
+              src="/logo.png"
+              alt=""
+              width={316}
+              height={67}
+              priority
+              unoptimized
+              className="logo-on-light h-[1.35rem] w-auto transition-opacity duration-200 group-hover:opacity-80 sm:h-6"
+            />
+            <Image
+              src="/logo-on-dark.png"
+              alt=""
+              width={316}
+              height={67}
+              priority
+              unoptimized
+              className="logo-on-dark h-[1.35rem] w-auto transition-opacity duration-200 group-hover:opacity-80 sm:h-6"
+            />
           </Link>
 
-          {isReviewer ? (
-            <>
-              <Link
-                href="/review"
-                aria-current={current("/review")}
-                className="nav-link hidden rounded-control px-3 py-2 text-sm font-medium text-ink-soft hover:text-ink lg:inline-flex"
-              >
-                {t(lang, "nav.review")}
-              </Link>
-              {isAdmin ? (
-                <Link
-                  href="/admin"
-                  aria-current={current("/admin")}
-                  className="nav-link hidden rounded-control px-3 py-2 text-sm font-medium text-ink-soft hover:text-ink lg:inline-flex"
-                >
-                  {t(lang, "nav.admin")}
+          <nav
+            aria-label={t(lang, "nav.primary")}
+            className="ml-1.5 hidden items-center gap-0.5 lg:flex"
+          >
+            <Link href="/directory" aria-current={current("/directory")} className="nav-pill">
+              {t(lang, "nav.directory")}
+            </Link>
+            <Link href="/roadmap" aria-current={current("/roadmap")} className="nav-pill">
+              {t(lang, "nav.roadmap")}
+            </Link>
+
+            {isReviewer ? (
+              <>
+                <Link href="/review" aria-current={current("/review")} className="nav-pill">
+                  {t(lang, "nav.review")}
                 </Link>
-              ) : null}
-            </>
-          ) : (
-            <>
-              <Link
-                href="/login"
-                aria-current={current("/login")}
-                className="nav-link hidden rounded-control px-3 py-2 text-sm font-medium text-ink-soft hover:text-ink lg:inline-flex"
-              >
-                {t(lang, "nav.signIn")}
-              </Link>
-              <SignUpLink
-                lang={lang}
-                className="hidden rounded-control border border-line-strong px-3 py-2 text-sm font-medium text-ink transition-colors hover:border-accent hover:text-accent lg:inline-flex min-h-9 items-center"
-              />
-            </>
-          )}
+                {isAdmin ? (
+                  <Link href="/admin" aria-current={current("/admin")} className="nav-pill">
+                    {t(lang, "nav.admin")}
+                  </Link>
+                ) : null}
+              </>
+            ) : (
+              <>
+                <Link href="/login" aria-current={current("/login")} className="nav-pill">
+                  {t(lang, "nav.signIn")}
+                </Link>
+                <Link
+                  href="/signup"
+                  aria-current={current("/signup")}
+                  className="nav-pill hidden xl:inline-flex"
+                >
+                  {t(lang, "nav.signUp")}
+                </Link>
+              </>
+            )}
+          </nav>
 
-          <details className="relative lg:hidden">
-            <summary className="flex min-h-10 cursor-pointer list-none items-center gap-1 rounded-control border border-line px-2.5 text-sm font-medium text-ink [&::-webkit-details-marker]:hidden">
-              {t(lang, "nav.menu")}
-              <svg aria-hidden="true" viewBox="0 0 16 16" className="menu-chevron h-3.5 w-3.5 text-ink-faint" fill="none"><path d="m3.5 6 4.5 4 4.5-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
-            </summary>
-            <div className="absolute right-0 top-full z-50 mt-2 grid min-w-52 gap-1 border border-line bg-surface p-2 shadow-lift">
-              <Link href="/directory" className="min-h-11 rounded-control px-3 py-2 text-sm hover:bg-surface-muted" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>{t(lang, "nav.directory")}</Link>
-              <Link href="/#how" className="min-h-11 rounded-control px-3 py-2 text-sm hover:bg-surface-muted" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>{t(lang, "nav.how")}</Link>
-              {isReviewer ? <Link href="/review" className="min-h-11 rounded-control px-3 py-2 text-sm hover:bg-surface-muted" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>{t(lang, "nav.review")}</Link> : <Link href="/login" className="min-h-11 rounded-control px-3 py-2 text-sm hover:bg-surface-muted" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>{t(lang, "nav.signIn")}</Link>}
-              {!isReviewer ? <SignUpLink lang={lang} className="min-h-11 rounded-control px-3 py-2 text-sm font-medium text-accent hover:bg-surface-muted" /> : null}
-              {isAdmin ? <Link href="/admin" className="min-h-11 rounded-control px-3 py-2 text-sm hover:bg-surface-muted" onClick={(event) => event.currentTarget.closest("details")?.removeAttribute("open")}>{t(lang, "nav.admin")}</Link> : null}
-            </div>
-          </details>
-
-          <LanguageSwitch lang={lang} />
-
-          <Link
-            href="/report"
-            aria-label={t(lang, "nav.report")}
-            aria-current={current("/report")}
-            className="ml-0.5 inline-flex h-11 w-11 shrink-0 items-center justify-center gap-1.5 rounded-control bg-accent text-sm font-medium text-white transition-[background-color,transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:bg-accent-hover hover:shadow-lift active:translate-y-0 sm:ml-1 sm:w-auto sm:px-3.5"
-          >
-            <span className="hidden sm:inline">{t(lang, "nav.report")}</span>
-            <span aria-hidden="true" className="text-base leading-none sm:text-[0.95em]">
-              +
-            </span>
-          </Link>
-        </nav>
+          <div className="ml-auto flex items-center gap-1 sm:gap-1.5">
+            <ThemeToggle lang={lang} />
+            <LanguageSwitch lang={lang} />
+            <span aria-hidden="true" className="mx-0.5 hidden h-5 w-px bg-line sm:block" />
+            <Link
+              href="/report"
+              aria-label={t(lang, "nav.report")}
+              aria-current={current("/report")}
+              className="report-cta ml-0.5 inline-flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-[0.625rem] px-3 text-sm font-bold text-white shadow-soft transition-[filter,transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:brightness-110 hover:shadow-lift active:translate-y-0 sm:ml-1 sm:h-10"
+            >
+              <span className="hidden sm:inline">{t(lang, "nav.report")}</span>
+              <span aria-hidden="true" className="text-base leading-none">
+                +
+              </span>
+            </Link>
+          </div>
+        </div>
       </div>
     </header>
   );

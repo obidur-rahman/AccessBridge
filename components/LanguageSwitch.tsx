@@ -27,7 +27,7 @@ export function LanguageSwitch({ lang }: { lang: Lang }) {
 
   return (
     <div
-      className="flex items-center gap-0.5 rounded-control border border-line bg-surface-muted p-1"
+      className="flex items-center rounded-full bg-surface-muted p-0.5"
       role="group"
       aria-label={t(lang, "nav.language")}
       aria-busy={isPending}
@@ -42,10 +42,10 @@ export function LanguageSwitch({ lang }: { lang: Lang }) {
             aria-pressed={active}
             onClick={() => select(option.value)}
             aria-label={t(lang, option.labelKey)}
-            className={`min-h-8 rounded-[2px] px-1.5 py-1 text-[0.8125rem] font-medium transition-[background-color,transform,box-shadow] duration-200 hover:-translate-y-px sm:px-2.5 ${
+            className={`min-h-9 rounded-full px-2 text-[0.75rem] transition-[background-color,color,box-shadow] duration-200 sm:px-2.5 ${
               active
-                ? "bg-surface text-ink shadow-soft"
-                : "text-ink-faint hover:bg-surface hover:text-ink hover:shadow-soft"
+                ? "bg-surface text-accent-ink shadow-soft"
+                : "text-ink-faint hover:text-ink"
             }`}
           >
             <span className="sm:hidden">{option.value === "en" ? "EN" : "বাংলা"}</span>

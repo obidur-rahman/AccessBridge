@@ -16,25 +16,27 @@ export default async function SignUpPage() {
   const lang = await getLang();
 
   return (
-    <div className="mx-auto w-full max-w-lg px-4 py-14 sm:px-6 sm:py-20">
-      <div className="soft-in overflow-hidden border-y border-line bg-surface px-5 py-7 sm:px-8 sm:py-9">
-        <h1 className="text-[clamp(1.8rem,4.5vw,2.5rem)]">{t(lang, "auth.signUpTitle")}</h1>
-        <p className="mt-3 text-sm leading-relaxed text-ink-soft">{t(lang, "auth.signUpIntro")}</p>
+    <div className="relative overflow-hidden">
+      <div className="aurora" aria-hidden="true" />
+      <div className="sheet relative max-w-md py-10 sm:py-14">
+        <div className="soft-in card p-5 sm:p-6">
+          <h1 className="text-[clamp(1.7rem,4vw,2.1rem)]">{t(lang, "auth.signUpTitle")}</h1>
+          <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">{t(lang, "auth.signUpIntro")}</p>
 
-        <SignUpForm lang={lang} />
+          <SignUpForm lang={lang} />
 
-        <p className="mt-7 border-t border-line pt-6 text-sm text-ink-soft">
-          {t(lang, "auth.haveAccount")}{" "}
-          <Link
-            href="/login"
-            className="nav-link font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:text-accent"
-          >
-            {t(lang, "nav.signIn")}
-          </Link>
-        </p>
+          <p className="mt-5 border-t border-line pt-4 text-sm text-ink-soft">
+            {t(lang, "auth.haveAccount")}{" "}
+            <Link
+              href="/login"
+              className="font-bold text-accent-ink underline decoration-accent/30 underline-offset-4 hover:text-accent"
+            >
+              {t(lang, "nav.signIn")}
+            </Link>
+          </p>
+        </div>
+
       </div>
-
-      <p className="mt-6 text-center text-xs text-ink-faint">{t(lang, "app.pilot")}</p>
     </div>
   );
 }

@@ -20,7 +20,6 @@ const listings: SearchableListing[] = [
     area_name: "Panchlaish",
     has_observation: true,
     last_checked: "2026-10-01",
-    highlights: [],
     checked_features: [],
   },
   {
@@ -34,7 +33,6 @@ const listings: SearchableListing[] = [
     area_name: "Kotwali",
     has_observation: true,
     last_checked: "2026-10-10",
-    highlights: [],
     checked_features: [],
   },
   {
@@ -48,7 +46,6 @@ const listings: SearchableListing[] = [
     area_name: "Agrabad",
     has_observation: false,
     last_checked: null,
-    highlights: [],
     checked_features: [],
   },
 ];

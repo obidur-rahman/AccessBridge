@@ -45,10 +45,10 @@ export default async function PlacePage({
 
   if (!result.ok) {
     return (
-      <div className="mx-auto w-full max-w-3xl px-4 py-20 sm:px-6">
-        <div role="alert" className="card card-pad border-no/30 bg-no-soft">
-          <h1 className="text-2xl text-no">{t(lang, "common.errorTitle")}</h1>
-          <p className="mt-2 text-sm text-ink-soft">{t(lang, "common.errorBody")}</p>
+      <div className="sheet max-w-2xl py-16">
+        <div role="alert" className="card border-no/30 bg-no-soft p-5">
+          <h1 className="text-xl text-no">{t(lang, "common.errorTitle")}</h1>
+          <p className="mt-1.5 text-sm text-ink-soft">{t(lang, "common.errorBody")}</p>
         </div>
       </div>
     );
@@ -56,15 +56,17 @@ export default async function PlacePage({
 
   if (!result.place) {
     return (
-      <div className="mx-auto w-full max-w-3xl px-4 py-20 sm:px-6">
-        <p className="tag text-ink-faint">404</p>
-        <h1 className="mt-3 text-[clamp(2rem,5vw,3rem)]">{t(lang, "place.notFound")}</h1>
-        <p className="mt-3 max-w-prose text-sm leading-relaxed text-ink-soft">
-          {t(lang, "place.notFoundHelp")}
-        </p>
-        <Link href="/directory" className="btn btn-secondary mt-6">
-          {t(lang, "place.backToSearch")}
-        </Link>
+      <div className="sheet max-w-2xl py-16">
+        <div className="card p-6">
+          <p className="tag text-ink-faint">404</p>
+          <h1 className="mt-1 text-[clamp(1.8rem,4.5vw,2.4rem)]">{t(lang, "place.notFound")}</h1>
+          <p className="mt-2 max-w-prose text-sm leading-relaxed text-ink-soft">
+            {t(lang, "place.notFoundHelp")}
+          </p>
+          <Link href="/directory" className="btn btn-secondary mt-5">
+            {t(lang, "place.backToSearch")}
+          </Link>
+        </div>
       </div>
     );
   }
@@ -130,170 +132,162 @@ export default async function PlacePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(placeJsonLd) }}
       />
-      <header className="relative overflow-hidden border-b border-line">
-        <div className="relative w-full px-4 pb-10 pt-7 sm:px-6 sm:pb-14 sm:pt-10 lg:px-8">
-          <Link
-            href="/directory"
-            className="-mx-2 inline-flex items-center gap-1.5 rounded-control px-2 py-1 text-sm text-ink-faint transition-[background-color,transform,box-shadow] duration-200 hover:-translate-y-px hover:bg-surface-muted hover:text-ink hover:shadow-soft"
-          >
-            <span aria-hidden="true">←</span>
-            {t(lang, "place.backToSearch")}
-          </Link>
 
-          <div className="mt-6 flex flex-wrap items-center gap-2">
-            <span className="pill bg-accent-soft text-accent-ink">
-              {t(lang, `category.${listing.category}`)}
+      <header className="sheet pb-4 pt-2 sm:pt-3">
+        <Link
+          href="/directory"
+          className="inline-flex min-h-9 items-center gap-2 rounded-full border border-line-strong bg-surface px-3.5 text-sm font-bold text-accent-ink shadow-soft transition-[background-color,border-color,transform] duration-200 hover:-translate-y-px hover:border-accent hover:bg-accent-soft"
+        >
+          <span aria-hidden="true">←</span>
+          {t(lang, "place.backToSearch")}
+        </Link>
+
+        <div className="mt-3 flex flex-wrap items-center gap-1.5">
+          <span className="pill bg-accent-soft text-accent-ink">
+            {t(lang, `category.${listing.category}`)}
+          </span>
+          {result.isDemo ? (
+            <span className="pill bg-signal-soft text-signal">{t(lang, "common.demoLabel")}</span>
+          ) : null}
+          {latest ? (
+            <span className="pill pill-plain">
+              {t(lang, "place.lastChecked")}
+              <span className="tabular">{formatDate(latest, lang)}</span>
             </span>
-            {result.isDemo ? (
-              <span className="pill bg-signal-soft text-partial">{t(lang, "place.demoRecord")}</span>
-            ) : null}
-            {latest ? (
-              <span className="pill pill-plain">
-                {t(lang, "place.lastChecked")}
-                <span className="tabular text-ink-soft">{formatDate(latest, lang)}</span>
-              </span>
-            ) : null}
-          </div>
-
-          <h1 className="mt-5 max-w-[24ch] text-[clamp(2.1rem,5.6vw,3.6rem)] font-semibold leading-[1.05] tracking-[-0.03em]">
-            {name}
-          </h1>
-
-          {summary ? (
-            <p className="mt-4 max-w-[58ch] text-[1.0625rem] leading-relaxed text-ink-soft">
-              {summary}
-            </p>
           ) : null}
+        </div>
 
-          {meta.length > 0 ? (
-            <dl className="mt-8 grid gap-x-8 gap-y-4 border-t border-line pt-6 sm:grid-cols-2 lg:grid-cols-4">
-              {meta.map((row) => (
-                <div key={row.label}>
-                  <dt className="tag text-ink-faint">{row.label}</dt>
-                  <dd className="mt-1 text-sm leading-relaxed text-ink">
-                    {row.href ? (
-                      <a
-                        href={row.href}
-                        {...(row.href.startsWith("http")
-                          ? { target: "_blank", rel: "noreferrer noopener" }
-                          : {})}
-                        className="break-words text-accent underline decoration-accent/40 underline-offset-4 transition-colors hover:text-ink hover:decoration-accent"
-                      >
-                        {row.value}
-                      </a>
-                    ) : (
-                      row.value
-                    )}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          ) : null}
+        <h1 className="mt-2 max-w-[24ch] text-[clamp(1.9rem,4.4vw,2.6rem)]">{name}</h1>
+
+        {summary ? (
+          <p className="mt-2 max-w-[58ch] text-[0.9375rem] leading-relaxed text-ink-soft sm:text-base">
+            {summary}
+          </p>
+        ) : null}
+
+        {meta.length > 0 ? (
+          <dl className="card mt-4 grid grid-cols-2 gap-x-5 gap-y-4 p-4 sm:grid-cols-4">
+            {meta.map((row) => (
+              <div key={row.label} className="min-w-0">
+                <dt className="tag text-ink-faint">{row.label}</dt>
+                <dd className="mt-0.5 break-words text-sm leading-relaxed text-ink">
+                  {row.href ? (
+                    <a
+                      href={row.href}
+                      {...(row.href.startsWith("http")
+                        ? { target: "_blank", rel: "noreferrer noopener" }
+                        : {})}
+                      className="text-accent-ink underline decoration-accent/30 underline-offset-4 transition-colors hover:text-ink"
+                    >
+                      {row.value}
+                    </a>
+                  ) : (
+                    row.value
+                  )}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        ) : null}
+
+        <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center lg:hidden">
+          <Link href={`/report?place=${listing.id}`} className="btn btn-primary flex-1">
+            {t(lang, "place.reportUpdate")}
+          </Link>
+          <p className="text-xs leading-relaxed text-ink-soft">{t(lang, "place.reminder")}</p>
         </div>
       </header>
 
-      <div className="w-full px-4 pb-20 pt-10 sm:px-6 sm:pt-12 lg:px-8">
-        <div className="grid gap-8 lg:grid-cols-[1fr_19rem] lg:items-start lg:gap-10">
-          <section aria-labelledby="features-heading" className="min-w-0">
-            <h2 id="features-heading" className="text-[clamp(1.5rem,3vw,1.9rem)]">
-              {t(lang, "place.featuresTitle")}
-            </h2>
-            <p className="mt-2 max-w-[62ch] text-sm leading-relaxed text-ink-soft">
-              {t(lang, "place.featuresIntro")}
-            </p>
+      <div className="sheet grid gap-6 pb-12 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start">
+        <section aria-labelledby="features-heading" className="min-w-0">
+          <h2 id="features-heading" className="text-[1.35rem]">
+            {t(lang, "place.featuresTitle")}
+          </h2>
+          <p className="mt-1 max-w-[62ch] text-sm leading-relaxed text-ink-soft">
+            {t(lang, "place.featuresIntro")}
+          </p>
 
-            <div className="mt-5 border-y border-line bg-surface">
-              <dl className="divide-y divide-line">
-                {FEATURE_KEYS.map((key) => {
-                  const feature = byFeature.get(key);
-                  const hasResult = Boolean(feature && feature.state !== "not_checked");
-                  const needsRecheck =
-                    hasResult && feature
-                      ? observationAge(feature.observed_at, today) === "needs_recheck"
-                      : false;
+          <div className="stagger card mt-3 divide-y divide-line">
+            {FEATURE_KEYS.map((key) => {
+              const feature = byFeature.get(key);
+              const hasResult = Boolean(feature && feature.state !== "not_checked");
+              const needsRecheck =
+                hasResult && feature
+                  ? observationAge(feature.observed_at, today) === "needs_recheck"
+                  : false;
 
-                  return (
-                    <div
-                      key={key}
-                      className="instrument-row grid gap-x-6 gap-y-2 px-4 py-4 sm:grid-cols-[minmax(12rem,1fr)_11rem_minmax(11rem,0.8fr)] sm:items-start sm:px-5 sm:py-5"
-                    >
-                      <dt>
-                        <span className="text-[1rem] font-medium leading-snug">
-                          {featureLabel(key, lang)}
-                        </span>
-                        {feature?.notes_public ? (
-                          <span className="mt-1 block max-w-[46ch] text-sm leading-relaxed text-ink-soft">
-                            {feature.notes_public}
-                          </span>
-                        ) : null}
-                      </dt>
-                      <dd className="flex flex-wrap items-center gap-2 sm:gap-3">
-                        <StateBadge
-                          state={feature?.state ?? "not_checked"}
-                          lang={lang}
-                          needsRecheck={needsRecheck}
-                        />
-                      </dd>
-                      <dd className="text-xs leading-relaxed">
-                        {feature && hasResult ? (
+              return (
+                <div
+                  key={key}
+                  className="flex flex-col gap-2 p-4 transition-colors duration-150 hover:bg-surface-sunk sm:flex-row sm:items-start sm:justify-between sm:gap-5"
+                >
+                  <div className="min-w-0">
+                    <p className="text-sm font-bold leading-snug">{featureLabel(key, lang)}</p>
+                    {feature?.notes_public ? (
+                      <p className="mt-1 max-w-[48ch] text-sm leading-relaxed text-ink-soft">
+                        {feature.notes_public}
+                      </p>
+                    ) : null}
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 sm:shrink-0 sm:flex-col sm:items-end sm:gap-1 sm:text-right">
+                    <StateBadge
+                      state={feature?.state ?? "not_checked"}
+                      lang={lang}
+                      needsRecheck={needsRecheck}
+                    />
+                    {feature && hasResult ? (
+                      <span className="text-xs text-ink-faint">
+                        {evidenceText(feature, lang)}
+                        {feature.source_url ? (
                           <>
-                            <span className="block text-ink-soft">{evidenceText(feature, lang)}</span>
-                            {feature.source_url ? (
-                              <a
-                                href={feature.source_url}
-                                target="_blank"
-                                rel="noreferrer noopener"
-                                className="mt-1 inline-block text-ink-faint underline decoration-line-strong underline-offset-4 hover:text-accent hover:decoration-accent"
-                              >
-                                {t(lang, "review.source")}
-                              </a>
-                            ) : null}
+                            {" · "}
+                            <a
+                              href={feature.source_url}
+                              target="_blank"
+                              rel="noreferrer noopener"
+                              className="underline decoration-line-strong underline-offset-2 hover:text-accent"
+                            >
+                              {t(lang, "review.source")}
+                            </a>
                           </>
-                        ) : (
-                          <span className="text-ink-faint">{t(lang, "place.noObservation")}</span>
-                        )}
-                      </dd>
-                    </div>
-                  );
-                })}
-              </dl>
-            </div>
-          </section>
+                        ) : null}
+                      </span>
+                    ) : (
+                      <span className="text-xs text-ink-faint">
+                        {t(lang, "place.noObservation")}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
 
-          <aside className="space-y-4 lg:sticky lg:top-24">
-            <div className="border-y border-accent/40 bg-accent-soft px-4 py-4">
-              <p className="text-sm leading-relaxed text-accent-ink">{t(lang, "place.reminder")}</p>
-              <Link
-                href={`/report?place=${listing.id}`}
-                className="btn btn-primary mt-4 w-full"
-              >
-                {t(lang, "place.reportUpdate")}
-                <span className="travel" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none">
-                    <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </span>
-              </Link>
-            </div>
+        <aside className="hidden space-y-3 lg:sticky lg:top-[4.5rem] lg:block">
+          <div className="card p-4">
+            <p className="text-sm leading-relaxed text-ink-soft">{t(lang, "place.reminder")}</p>
+            <Link href={`/report?place=${listing.id}`} className="btn btn-primary mt-3 w-full">
+              {t(lang, "place.reportUpdate")}
+            </Link>
+          </div>
 
-            <div className="border-y border-signal/60 bg-signal-soft px-4 py-3.5 text-xs leading-relaxed text-partial">
-              {t(lang, "place.mapNotice")}
-            </div>
-          </aside>
-        </div>
-
-        {listing.latitude !== null && listing.longitude !== null ? (
-          <section className="mt-12">
-            <PlaceMap
-              latitude={listing.latitude}
-              longitude={listing.longitude}
-              label={name}
-              lang={lang}
-              approximate={listing.location_precision !== "verified"}
-            />
-          </section>
-        ) : null}
+          <p className="px-1 text-xs leading-relaxed text-ink-faint">{t(lang, "place.mapNotice")}</p>
+        </aside>
       </div>
+
+      {listing.latitude !== null && listing.longitude !== null ? (
+        <section className="sheet pb-10">
+          <PlaceMap
+            latitude={listing.latitude}
+            longitude={listing.longitude}
+            label={name}
+            lang={lang}
+            approximate={listing.location_precision !== "verified"}
+          />
+        </section>
+      ) : null}
     </article>
   );
 }

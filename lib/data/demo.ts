@@ -568,17 +568,24 @@ const DEMO_OFFICE_FEATURES: CurrentFeature[] = [
 ];
 
 /**
- * In-memory report store for demo mode. Kept on globalThis so a dev-server
- * reload does not lose pending reports. Nothing is persisted; restarting the
- * server clears every demo report.
+ * In-memory store for demo mode. Kept on globalThis so a dev-server reload
+ * does not lose pending reports, and so route handlers and server components
+ * (which Next.js compiles as separate module layers) share one copy. Nothing
+ * is persisted; restarting the server clears every demo change.
  */
 const DEMO_STORE = Symbol.for("accessbridge.demoReports");
 
 type DemoStore = {
+  listings: Listing[];
   reports: ReviewItem[];
   staff: DemoStaffMember[];
   audit: DemoAuditEvent[];
 };
+
+/** A writable copy of the seeded listings, so no store mutation touches the seed. */
+function initialListings(): Listing[] {
+  return DEMO_LISTINGS.map((listing) => ({ ...listing }));
+}
 
 function initialStaff(): DemoStaffMember[] {
   return [
@@ -591,12 +598,31 @@ function initialStaff(): DemoStaffMember[] {
 function store(): DemoStore {
   const holder = globalThis as unknown as Record<symbol, DemoStore | undefined>;
   if (!holder[DEMO_STORE]) {
-    holder[DEMO_STORE] = { reports: [], staff: initialStaff(), audit: [] };
+    holder[DEMO_STORE] = {
+      listings: initialListings(),
+      reports: [],
+      staff: initialStaff(),
+      audit: [],
+    };
   }
   const value = holder[DEMO_STORE] as DemoStore;
+  value.listings ??= initialListings();
   value.staff ??= initialStaff();
   value.audit ??= [];
   return value;
+}
+
+/** Every demo listing, including drafts proposed by a pending report. */
+export function demoListings(): Listing[] {
+  return store().listings;
+}
+
+export function findDemoListing(id: string): Listing | undefined {
+  return store().listings.find((listing) => listing.id === id);
+}
+
+export function pushDemoListing(listing: Listing): void {
+  store().listings.push(listing);
 }
 
 export function demoReports(): ReviewItem[] {
@@ -780,16 +806,11 @@ export function recordDemoAudit(input: {
   });
 }
 
-const SEEDED_LISTING_IDS = new Set(DEMO_LISTINGS.map((listing) => listing.id));
-
-/** Test helper: restore seeded demo data and drop every in-memory admin change. */
+/** Test helper: restore seeded demo data and drop every in-memory change. */
 export function resetDemoData(): void {
-  store().reports.length = 0;
-  store().staff = initialStaff();
-  store().audit.length = 0;
-  for (let index = DEMO_LISTINGS.length - 1; index >= 0; index -= 1) {
-    if (!SEEDED_LISTING_IDS.has(DEMO_LISTINGS[index].id)) {
-      DEMO_LISTINGS.splice(index, 1);
-    }
-  }
+  const state = store();
+  state.listings = initialListings();
+  state.reports.length = 0;
+  state.staff = initialStaff();
+  state.audit.length = 0;
 }

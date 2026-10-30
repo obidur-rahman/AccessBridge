@@ -43,60 +43,57 @@ export default async function ReviewQueuePage() {
 
   return (
     <div>
-      <header className="relative overflow-hidden border-b border-line">
-        <div className="relative w-full px-4 pb-8 pt-10 sm:px-6 sm:pb-10 sm:pt-12 lg:px-8">
-          <div className="flex flex-wrap items-start justify-between gap-6">
-            <div>
-              <h1 className="text-[clamp(2.2rem,5vw,3.5rem)]">{t(lang, "review.title")}</h1>
-              <p className="mt-3 max-w-[58ch] text-sm leading-relaxed text-ink-soft">
-                {t(lang, "review.intro")}
-              </p>
-            </div>
-            <form action={signOutAction}>
-              <button type="submit" className="btn btn-secondary min-h-10 px-3.5 text-sm">
-                {t(lang, "nav.signOut")}
-              </button>
-            </form>
+      <header className="sheet pb-4 pt-3 sm:pt-4">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <h1 className="text-[clamp(1.9rem,4.4vw,2.7rem)]">{t(lang, "review.title")}</h1>
+            <p className="mt-2 max-w-[58ch] text-sm leading-relaxed text-ink-soft">
+              {t(lang, "review.intro")}
+            </p>
           </div>
+          <form action={signOutAction}>
+            <button type="submit" className="btn btn-secondary min-h-9 px-3 text-sm">
+              {t(lang, "nav.signOut")}
+            </button>
+          </form>
         </div>
       </header>
 
-      <div className="w-full px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
+      <div className="sheet pb-10">
         {reviewer.demo ? (
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-y border-signal/60 bg-signal-soft px-4 py-3 text-sm leading-relaxed text-partial">
-            <span className="pill shrink-0 bg-signal text-ink">{t(lang, "common.demoLabel")}</span>
+          <div className="mb-4 flex flex-wrap items-center gap-2 border-y border-signal/25 bg-signal-soft px-3 py-2.5 text-xs leading-relaxed text-signal">
+            <span className="pill shrink-0 bg-signal-soft text-signal">
+              {t(lang, "common.demoLabel")}
+            </span>
             <span className="min-w-0">{t(lang, "review.demoNotice")}</span>
           </div>
         ) : null}
 
         {!queue.ok ? (
-          <div role="alert" className="card card-pad mt-6 border-no/30 bg-no-soft">
-            <p className="text-base font-semibold text-no">{t(lang, "common.errorTitle")}</p>
+          <div role="alert" className="card border-no/30 bg-no-soft p-5">
+            <p className="text-base font-bold text-no">{t(lang, "common.errorTitle")}</p>
             <p className="mt-1 text-sm text-ink-soft">{t(lang, "common.errorBody")}</p>
           </div>
         ) : queue.items.length === 0 ? (
-          <p className="mt-10 rounded-card border border-dashed border-line-strong bg-surface px-6 py-12 text-center text-ink-faint">
-            {t(lang, "review.empty")}
-          </p>
+          <p className="card p-8 text-center text-sm text-ink-faint">{t(lang, "review.empty")}</p>
         ) : (
-          <section aria-label={t(lang, "review.title")} className="mt-8">
-            <p className="tag tabular text-ink-faint">
-              {queue.items.length === 1
-                ? t(lang, "review.pendingCountOne")
-                : t(lang, "review.pendingCount", { count: queue.items.length })}
-            </p>
+          <section aria-label={t(lang, "review.title")}>
+            <div className="flex items-center justify-between gap-3">
+              <p className="tag tabular text-ink-faint">
+                {queue.items.length === 1
+                  ? t(lang, "review.pendingCountOne")
+                  : t(lang, "review.pendingCount", { count: queue.items.length })}
+              </p>
+            </div>
 
-            <ol className="mt-3 list-none divide-y divide-line border-y border-line">
+            <ol className="mt-2 grid list-none gap-2.5">
               {rows.map(({ item, urgent }) => (
                 <li key={item.id}>
-                  <Link
-                    href={`/review/${item.id}`}
-                    className="lift group block px-4 py-5 sm:px-6 sm:py-6"
-                  >
-                    <div className="flex items-start justify-between gap-4">
+                  <Link href={`/review/${item.id}`} className="card card-hover group block p-4">
+                    <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0">
-                        <div className="flex flex-wrap items-center gap-2">
-                          <span className="pill bg-signal-soft text-partial">
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          <span className="pill bg-signal-soft text-signal">
                             {t(lang, "status.pending")}
                           </span>
                           {item.is_new_place ? (
@@ -105,15 +102,13 @@ export default async function ReviewQueuePage() {
                             </span>
                           ) : null}
                           {urgent.length > 0 ? (
-                            <span className="pill bg-no-soft text-no">
-                              {t(lang, "review.urgent")}
-                            </span>
+                            <span className="pill bg-no-soft text-no">{t(lang, "review.urgent")}</span>
                           ) : null}
                         </div>
-                        <h3 className="mt-2 text-[1.15rem] font-semibold leading-snug">
+                        <h2 className="mt-1.5 font-display text-[1.2rem] font-medium leading-snug transition-colors group-hover:text-accent-ink">
                           {item.listing_name ?? t(lang, "review.proposedPlace")}
-                        </h3>
-                        <p className="mt-1 text-sm text-ink-faint">
+                        </h2>
+                        <p className="mt-0.5 text-sm text-ink-soft">
                           {item.listing_category ? t(lang, `category.${item.listing_category}`) : ""}
                           {item.listing_address ? ` · ${item.listing_address}` : ""}
                         </p>
@@ -121,20 +116,26 @@ export default async function ReviewQueuePage() {
 
                       <span
                         aria-hidden="true"
-                        className="grid h-9 w-9 shrink-0 place-items-center rounded-control border border-line text-ink-faint transition-[transform,background-color,color,border-color] duration-200 group-hover:translate-x-1 group-hover:border-accent group-hover:bg-accent group-hover:text-white"
+                        className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-line-strong text-ink-faint transition-[transform,background-color,color,border-color] duration-200 group-hover:translate-x-0.5 group-hover:border-accent group-hover:bg-accent group-hover:text-white"
                       >
                         <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none">
-                          <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                          <path
+                            d="M7 17 17 7M9 7h8v8"
+                            stroke="currentColor"
+                            strokeWidth="1.8"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
                         </svg>
                       </span>
                     </div>
 
-                    <dl className="mt-4 flex flex-wrap gap-x-8 gap-y-2 border-t border-line pt-3 text-xs">
-                      <div className="flex gap-2">
+                    <dl className="mt-3 flex flex-wrap gap-x-6 gap-y-1 border-t border-line pt-2.5 text-xs">
+                      <div className="flex gap-1.5">
                         <dt className="text-ink-faint">{t(lang, "review.observedAt")}</dt>
                         <dd className="tabular text-ink-soft">{formatDate(item.observed_at, lang)}</dd>
                       </div>
-                      <div className="flex gap-2">
+                      <div className="flex gap-1.5">
                         <dt className="text-ink-faint">{t(lang, "review.submitted")}</dt>
                         <dd className="tabular text-ink-soft">{formatDate(item.submitted_at, lang)}</dd>
                       </div>

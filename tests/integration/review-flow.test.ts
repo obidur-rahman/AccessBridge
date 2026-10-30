@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { Reviewer } from "@/lib/auth";
 import { resetDemoData } from "@/lib/data/demo";
 import { getDirectory, getPlace } from "@/lib/data/places";
@@ -181,6 +181,34 @@ describe("report → review → public", () => {
     expect(stateOf(await place(OFFICE), "ramp")).toBe("partial");
     const queue = await listReviewQueue(reviewer);
     expect(queue.ok && queue.items.find((entry) => entry.id === item.id)).toBeFalsy();
+  });
+
+  it("shows a published proposed place to server modules in another bundle layer", async () => {
+    const result = await submitReport(
+      validated({
+        listingId: "new",
+        newPlaceName: "Layered Bundle Library",
+        newPlaceCategory: "accessibility",
+        newPlaceAddress: "Test Road, Chattogram",
+        featureStates: { ramp: "yes" },
+        observedAt: todayIso(),
+      }),
+    );
+    if (!result.ok) throw new Error("Submit failed");
+
+    const item = await pendingItem(result.receipt);
+    await decideReport({ id: item.id, reviewer, decision: "accept", reason: "" });
+
+    // Next.js serves route handlers and server components from separate module
+    // layers, so a fresh module instance must still see the published listing.
+    vi.resetModules();
+    const freshPlaces = await import("@/lib/data/places");
+    const directory = await freshPlaces.getDirectory();
+
+    expect(
+      directory.ok &&
+        directory.listings.some((listing) => listing.name_en === "Layered Bundle Library"),
+    ).toBe(true);
   });
 
   it("does not touch public data when a different listing is reported", async () => {

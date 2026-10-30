@@ -30,7 +30,7 @@ export function PlaceMap({
   return (
     <div className="card card-pad">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-[1.25rem]">{t(lang, "place.mapTitle")}</h2>
+        <h2 className="font-display text-[1.3rem] font-medium">{t(lang, "place.mapTitle")}</h2>
         <button
           type="button"
           aria-expanded={showMap}

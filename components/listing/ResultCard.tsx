@@ -1,6 +1,5 @@
 import Link from "next/link";
-import { StateBadge } from "@/components/accessibility/StateBadge";
-import { featureLabel } from "@/lib/access-features";
+import { FEATURE_KEYS } from "@/lib/access-features";
 import { formatDate, t } from "@/lib/i18n/core";
 import { displayName, type SearchableListing } from "@/lib/search";
 import type { Lang } from "@/lib/types";
@@ -8,68 +7,85 @@ import type { Lang } from "@/lib/types";
 export function ResultCard({
   listing,
   lang,
-  index,
+  selected = false,
+  compact = false,
+  onSelect,
 }: {
   listing: SearchableListing;
   lang: Lang;
-  index: number;
+  selected?: boolean;
+  /** A narrower card for the split view list. */
+  compact?: boolean;
+  /** Set only in the desktop split view; without it the card navigates. */
+  onSelect?: (id: string) => void;
 }) {
   const name = displayName(listing, lang);
-  const checkedDate = listing.last_checked ? formatDate(listing.last_checked, lang) : null;
+  const checked = listing.last_checked ? formatDate(listing.last_checked, lang) : null;
 
   return (
     <li>
       <Link
         href={`/places/${listing.id}`}
-        className="lift group block bg-surface px-4 py-5 sm:grid sm:grid-cols-[minmax(12rem,0.85fr)_minmax(0,1.4fr)_auto] sm:items-start sm:gap-6 sm:px-6 sm:py-6"
+        aria-current={selected ? "true" : undefined}
+        onClick={
+          onSelect
+            ? (event) => {
+                event.preventDefault();
+                onSelect(listing.id);
+              }
+            : undefined
+        }
+        className={`card card-hover group block p-4 sm:p-5 ${
+          compact ? "lg:p-3.5" : ""
+        } ${selected ? "result-selected" : ""}`}
       >
-        <div className="flex items-start justify-between gap-4">
-          <div className="min-w-0">
-            <p className="tag flex items-center gap-2 text-ink-faint">
-              <span className="tabular">{String(index).padStart(2, "0")}</span>
-              <span aria-hidden="true" className="h-px w-3 bg-line-strong" />
-              <span>{t(lang, `category.${listing.category}`)}</span>
-            </p>
-            <h3 className="mt-2 text-[1.25rem] font-semibold leading-snug tracking-[-0.02em] sm:text-[1.4rem]">
-              {name}
-            </h3>
-          </div>
+        <p className="flex flex-wrap items-center gap-x-1.5 text-xs text-ink-faint">
+          <span>{t(lang, `category.${listing.category}`)}</span>
+          {listing.area_name ? (
+            <>
+              <span aria-hidden="true">·</span>
+              <span>{listing.area_name}</span>
+            </>
+          ) : null}
+        </p>
 
+        <h2
+          className={`mt-1 font-display font-medium leading-snug tracking-[-0.01em] transition-colors group-hover:text-accent-ink ${
+            compact ? "text-[1.05rem]" : "text-[1.2rem] sm:text-[1.3rem]"
+          }`}
+        >
+          {name}
+        </h2>
+
+        <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
+          {listing.checked_features.length > 0
+            ? t(lang, "place.featuresChecked", {
+                count: listing.checked_features.length,
+                total: FEATURE_KEYS.length,
+              })
+            : t(lang, "place.noObservation")}
+        </p>
+
+        <div className="mt-3 flex items-center justify-between gap-3 border-t border-line pt-2.5 text-xs">
+          <span className="flex flex-wrap items-baseline gap-1.5">
+            <span className="text-ink-faint">{t(lang, "place.lastChecked")}</span>
+            <span className="tabular text-ink-soft">{checked ?? "—"}</span>
+          </span>
           <span
             aria-hidden="true"
-            className="grid h-9 w-9 shrink-0 place-items-center rounded-control border border-line text-ink-faint transition-[transform,background-color,color,border-color] duration-200 group-hover:translate-x-1 group-hover:border-accent group-hover:bg-accent group-hover:text-white"
+            className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-line-strong text-ink-faint transition-[transform,background-color,color,border-color] duration-200 group-hover:translate-x-0.5 group-hover:border-accent group-hover:bg-accent group-hover:text-white"
           >
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none">
-              <path d="M7 17 17 7M9 7h8v8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M7 17 17 7M9 7h8v8"
+                stroke="currentColor"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </span>
         </div>
-
-        <div className="mt-3 flex min-w-0 flex-col gap-1 sm:mt-0">
-          {listing.area_name ? <p className="text-sm text-ink-soft">{listing.area_name}</p> : null}
-          {listing.highlights.length > 0 ? (
-            <dl className="flex flex-wrap items-center gap-x-4 gap-y-2 sm:mt-1">
-              {listing.highlights.map((highlight) => (
-                <div key={highlight.feature_key} className="flex items-center gap-2">
-                  <dt className="text-[0.8125rem] text-ink-soft">
-                    {featureLabel(highlight.feature_key, lang)}
-                  </dt>
-                  <dd>
-                    <StateBadge state={highlight.state} lang={lang} />
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          ) : (
-            <p className="text-sm text-ink-faint">{t(lang, "place.noObservation")}</p>
-          )}
-        </div>
-
-        <div className="mt-4 flex items-center justify-between gap-4 border-t border-line pt-3 text-xs text-ink-faint sm:mt-0 sm:border-0 sm:pt-0 sm:text-right">
-          <span className="min-w-0">{checkedDate ? t(lang, "place.lastChecked") : t(lang, "place.noObservation")}</span>
-          {checkedDate ? <span className="tabular shrink-0 text-ink-soft">{checkedDate}</span> : null}
-        </div>
-
       </Link>
     </li>
   );

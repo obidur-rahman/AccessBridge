@@ -55,8 +55,8 @@ export default function MapView({
 
       leaflet.circleMarker([latitude, longitude], {
         radius: 9,
-        color: "#0d5d55",
-        fillColor: "#0d5d55",
+        color: "#17405f",
+        fillColor: "#17405f",
         fillOpacity: 0.85,
         weight: 2,
       })

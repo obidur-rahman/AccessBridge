@@ -2,9 +2,10 @@ import { randomUUID } from "node:crypto";
 import { normaliseFeatureStates } from "@/lib/access-features";
 import type { Reviewer } from "@/lib/auth";
 import {
-  DEMO_LISTINGS,
   demoReports,
+  findDemoListing,
   findDemoReport,
+  pushDemoListing,
   pushDemoReport,
   recordDemoAudit,
 } from "@/lib/data/demo";
@@ -118,9 +119,7 @@ export async function submitReport(value: ValidatedReport): Promise<SubmitResult
     // Demo mode mirrors the database: a proposed place is stored as a draft
     // listing and only becomes public when a reviewer accepts the report.
     let listingId = value.listing_id;
-    let listing = listingId
-      ? (DEMO_LISTINGS.find((item) => item.id === listingId) ?? null)
-      : null;
+    let listing = listingId ? (findDemoListing(listingId) ?? null) : null;
 
     if (!listingId && value.proposed_place) {
       const draft: Listing = {
@@ -144,7 +143,7 @@ export async function submitReport(value: ValidatedReport): Promise<SubmitResult
         source_checked_at: new Date().toISOString(),
         publication_status: "draft",
       };
-      DEMO_LISTINGS.push(draft);
+      pushDemoListing(draft);
       listingId = draft.id;
       listing = draft;
     }
@@ -339,7 +338,7 @@ export async function decideReport({
     report.review_reason = cleanReason || null;
 
     if (decision === "accept" && report.listing_id) {
-      const listing = DEMO_LISTINGS.find((item) => item.id === report.listing_id);
+      const listing = findDemoListing(report.listing_id);
       if (listing && listing.publication_status === "draft") {
         listing.publication_status = "published";
         listing.source_label = SOURCE_LABEL_REVIEWED;

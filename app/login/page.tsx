@@ -32,79 +32,81 @@ export default async function LoginPage({
   const demo = isDemoMode();
 
   return (
-    <div className="mx-auto w-full max-w-lg px-4 py-14 sm:px-6 sm:py-20">
-      <div className="soft-in overflow-hidden border-y border-line bg-surface px-5 py-7 sm:px-8 sm:py-9">
-        <h1 className="text-[clamp(1.8rem,4.5vw,2.5rem)]">{t(lang, "login.title")}</h1>
-        <p className="mt-3 text-sm leading-relaxed text-ink-soft">{t(lang, "login.intro")}</p>
+    <div className="relative overflow-hidden">
+      <div className="aurora" aria-hidden="true" />
+      <div className="sheet relative max-w-md py-10 sm:py-14">
+        <div className="soft-in card p-5 sm:p-6">
+          <h1 className="text-[clamp(1.7rem,4vw,2.1rem)]">{t(lang, "login.title")}</h1>
+          <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">{t(lang, "login.intro")}</p>
 
-        {params.error ? (
-          <p
-            role="alert"
-            className="mt-5 rounded-control border border-no/25 bg-no-soft px-3.5 py-2.5 text-sm text-no"
-          >
-            {t(lang, "login.error")}
-          </p>
-        ) : null}
-
-        <form action={signInAction} className="mt-6 flex flex-col gap-4">
-          <div>
-            <label htmlFor="email" className="tag mb-1.5 block text-ink-soft">
-              {t(lang, "login.email")}
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              autoComplete="username"
-              className="field"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password" className="tag mb-1.5 block text-ink-soft">
-              {t(lang, "login.password")}
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              required
-              autoComplete="current-password"
-              className="field"
-            />
-          </div>
-
-          <button type="submit" className="btn btn-primary mt-1 w-full">
-            {t(lang, "login.submit")}
-          </button>
-        </form>
-
-        {demo ? (
-          <div className="mt-7 border-t border-line pt-6">
-            <p className="tag text-ink-faint">
-              {t(lang, "common.or")} · {t(lang, "common.demoLabel")}
+          {params.error ? (
+            <p
+              role="alert"
+              className="mt-4 rounded-[0.625rem] border border-no/30 bg-no-soft px-3.5 py-2.5 text-sm text-no"
+            >
+              {t(lang, "login.error")}
             </p>
-            <p className="mt-2 text-sm leading-relaxed text-ink-soft">{t(lang, "login.demoHelp")}</p>
-            <form action={demoSignInAction} className="mt-3">
-              <button type="submit" className="btn btn-secondary w-full">
-                {t(lang, "login.demo")}
-              </button>
-            </form>
-          </div>
-        ) : null}
+          ) : null}
+
+          <form action={signInAction} className="mt-5 flex flex-col gap-4">
+            <div>
+              <label htmlFor="email" className="tag mb-1.5 block text-ink-soft">
+                {t(lang, "login.email")}
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                autoComplete="username"
+                className="field"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="password" className="tag mb-1.5 block text-ink-soft">
+                {t(lang, "login.password")}
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                required
+                autoComplete="current-password"
+                className="field"
+              />
+            </div>
+
+            <button type="submit" className="btn btn-primary mt-1 w-full">
+              {t(lang, "login.submit")}
+            </button>
+          </form>
+
+          {demo ? (
+            <div className="mt-5 border-t border-line pt-4">
+              <p className="tag text-ink-faint">
+                {t(lang, "common.or")} · {t(lang, "common.demoLabel")}
+              </p>
+              <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">{t(lang, "login.demoHelp")}</p>
+              <form action={demoSignInAction} className="mt-2.5">
+                <button type="submit" className="btn btn-secondary w-full">
+                  {t(lang, "login.demo")}
+                </button>
+              </form>
+            </div>
+          ) : null}
+        </div>
+
+
+        <p className="mt-3 text-center text-sm text-ink-soft">
+          <Link
+            href="/signup"
+            className="font-bold text-accent-ink underline decoration-accent/30 underline-offset-4 hover:text-accent"
+          >
+            {t(lang, "auth.signUpTitle")}
+          </Link>
+        </p>
       </div>
-
-      <p className="mt-6 text-center text-xs text-ink-faint">{t(lang, "app.pilot")}</p>
-
-      <p className="mt-4 text-center text-sm text-ink-soft">
-        <Link
-          href="/signup"
-          className="nav-link font-semibold text-ink underline decoration-line-strong underline-offset-4 hover:text-accent"
-        >
-          {t(lang, "auth.signUpTitle")}
-        </Link>
-      </p>
     </div>
   );
 }

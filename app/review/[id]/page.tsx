@@ -22,9 +22,9 @@ export default async function ReviewDetailPage({
 
   if (!result.ok) {
     return (
-      <div className="mx-auto w-full max-w-3xl px-4 py-16 sm:px-6">
-        <div role="alert" className="card card-pad border-no/30 bg-no-soft">
-          <p className="font-semibold text-no">{t(lang, "common.errorTitle")}</p>
+      <div className="sheet max-w-2xl py-14">
+        <div role="alert" className="card border-no/30 bg-no-soft p-5">
+          <p className="font-bold text-no">{t(lang, "common.errorTitle")}</p>
           <p className="mt-1 text-sm text-ink-soft">{t(lang, "common.errorBody")}</p>
         </div>
       </div>
@@ -41,10 +41,10 @@ export default async function ReviewDetailPage({
   );
   const statusTone =
     item.review_status === "accepted"
-      ? "bg-accent-soft text-accent-ink"
+      ? "bg-yes-soft text-yes"
       : item.review_status === "rejected"
         ? "bg-no-soft text-no"
-        : "bg-signal-soft text-partial";
+        : "bg-signal-soft text-signal";
 
   const facts: { label: string; value: string }[] = [
     { label: t(lang, "review.observedAt"), value: formatDate(item.observed_at, lang) },
@@ -61,123 +61,114 @@ export default async function ReviewDetailPage({
 
   return (
     <div>
-      <header className="border-b border-line">
-        <div className="w-full px-4 pb-8 pt-7 sm:px-6 sm:pb-10 lg:px-8">
-          <Link
-            href="/review"
-            className="inline-flex items-center gap-1.5 rounded-control py-1 text-sm text-ink-faint transition-colors hover:text-ink"
-          >
-            <span aria-hidden="true">←</span>
-            {t(lang, "review.backToQueue")}
-          </Link>
+      <header className="sheet pb-4 pt-2 sm:pt-3">
+        <Link
+          href="/review"
+          className="inline-flex min-h-9 items-center gap-1.5 text-sm text-ink-faint transition-colors hover:text-ink"
+        >
+          <span aria-hidden="true">←</span>
+          {t(lang, "review.backToQueue")}
+        </Link>
 
-          <div className="mt-6 flex flex-wrap items-center gap-2">
-            <span className={`pill ${statusTone}`}>{statusLabel}</span>
-            {item.is_new_place ? (
-              <span className="pill bg-accent-soft text-accent-ink">
-                {t(lang, "review.proposedPlace")}
-              </span>
-            ) : null}
-          </div>
-
-          <h1 className="mt-4 max-w-[26ch] text-[clamp(2.1rem,5vw,3.5rem)]">
-            {item.listing_name ?? t(lang, "review.proposedPlace")}
-          </h1>
-          <p className="mt-2 text-sm text-ink-faint">
-            {item.listing_category ? t(lang, `category.${item.listing_category}`) : ""}
-            {item.listing_address ? ` · ${item.listing_address}` : ""}
-          </p>
+        <div className="mt-3 flex flex-wrap items-center gap-1.5">
+          <span className={`pill ${statusTone}`}>{statusLabel}</span>
+          {item.is_new_place ? (
+            <span className="pill bg-accent-soft text-accent-ink">
+              {t(lang, "review.proposedPlace")}
+            </span>
+          ) : null}
         </div>
+
+        <h1 className="mt-2 max-w-[26ch] text-[clamp(1.8rem,4.2vw,2.5rem)]">
+          {item.listing_name ?? t(lang, "review.proposedPlace")}
+        </h1>
+        <p className="mt-1 text-sm text-ink-soft">
+          {item.listing_category ? t(lang, `category.${item.listing_category}`) : ""}
+          {item.listing_address ? ` · ${item.listing_address}` : ""}
+        </p>
       </header>
 
-      <div className="w-full px-4 py-8 sm:px-6 sm:py-10 lg:px-8">
-        <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
-          <div className="min-w-0">
+      <div className="sheet grid gap-5 pb-10 lg:grid-cols-[minmax(0,1fr)_20rem] lg:items-start">
+        <div className="min-w-0 space-y-5">
+          <section>
             <h2 className="text-[1.25rem]">{t(lang, "review.features")}</h2>
-            <dl className="mt-3 divide-y divide-line border-y border-line bg-surface">
+            <dl className="card mt-2 divide-y divide-line">
               {Object.entries(item.feature_states).map(([key, state]) => (
                 <div
                   key={key}
                   className="flex flex-wrap items-center justify-between gap-3 px-4 py-3"
                 >
-                  <dt className="text-sm font-medium">{featureLabel(key, lang)}</dt>
+                  <dt className="text-sm font-bold">{featureLabel(key, lang)}</dt>
                   <dd>{state ? <StateBadge state={state as FeatureState} lang={lang} /> : null}</dd>
                 </div>
               ))}
             </dl>
+          </section>
 
-            {item.notes_public ? (
-              <div className="mt-7">
-                <p className="tag text-ink-faint">{t(lang, "review.note")}</p>
-                <p className="mt-2 max-w-prose border-l border-line-strong pl-4 text-sm leading-relaxed text-ink-soft">
-                  {item.notes_public}
-                </p>
-              </div>
-            ) : null}
-
-            {item.source_url ? (
-              <div className="mt-6">
-                <p className="tag text-ink-faint">{t(lang, "review.source")}</p>
-                <a
-                  href={item.source_url}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="mt-1 block break-all text-sm text-accent underline decoration-accent/40 underline-offset-4 hover:text-ink"
-                >
-                  {item.source_url}
-                </a>
-              </div>
-            ) : null}
-
-            {item.contact_private ? (
-              <div className="mt-6 border-y border-line bg-signal-soft px-4 py-3">
-                <p className="tag text-ink-faint">{t(lang, "review.contact")}</p>
-                <p className="mt-1 text-sm font-medium">{item.contact_private}</p>
-              </div>
-            ) : null}
-          </div>
-
-          <aside className="space-y-4 lg:sticky lg:top-24 lg:self-start">
-            <dl className="divide-y divide-line border-y border-line bg-surface px-4">
-              {facts.map((fact) => (
-                <div
-                  key={fact.label}
-                  className="flex items-baseline justify-between gap-4 py-3"
-                >
-                  <dt className="tag text-ink-faint">{fact.label}</dt>
-                  <dd className="tabular text-sm text-ink-soft">{fact.value}</dd>
-                </div>
-              ))}
-            </dl>
-
-            <section aria-labelledby="decision-heading" className="border-y border-line bg-surface px-4 py-5 sm:px-5">
-              <h2 id="decision-heading" className="text-base font-semibold">
-                {t(lang, "review.decision")}
-              </h2>
-
-              <div className="mt-4">
-                {decided ? (
-                  <div>
-                    <p className="tag text-ink-faint">{t(lang, "review.status")}</p>
-                    <p className="mt-1 text-base font-medium">{statusLabel}</p>
-                    {item.review_reason ? (
-                      <p className="mt-2 text-sm leading-relaxed text-ink-soft">
-                        {item.review_reason}
-                      </p>
-                    ) : null}
-                    <p className="mt-3 text-xs text-ink-faint">{t(lang, "review.decided")}</p>
-                  </div>
-                ) : (
-                  <DecisionForm
-                    reportId={item.id}
-                    features={item.feature_states}
-                    lang={lang}
-                  />
-                )}
-              </div>
+          {item.notes_public ? (
+            <section>
+              <h2 className="text-[1.15rem]">{t(lang, "review.note")}</h2>
+              <p className="mt-2 max-w-prose text-sm leading-relaxed text-ink-soft">
+                {item.notes_public}
+              </p>
             </section>
-          </aside>
+          ) : null}
+
+          {item.source_url ? (
+            <section>
+              <h2 className="text-[1.15rem]">{t(lang, "review.source")}</h2>
+              <a
+                href={item.source_url}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="mt-1 block break-all text-sm text-accent-ink underline decoration-accent/30 underline-offset-4 hover:text-ink"
+              >
+                {item.source_url}
+              </a>
+            </section>
+          ) : null}
+
+          {item.contact_private ? (
+            <section className="card border-signal/40 bg-signal-soft p-4">
+              <p className="tag text-signal">{t(lang, "review.contact")}</p>
+              <p className="mt-1 text-sm font-bold text-ink">{item.contact_private}</p>
+            </section>
+          ) : null}
         </div>
+
+        <aside className="space-y-3 lg:sticky lg:top-20 lg:block">
+          <dl className="card divide-y divide-line px-4">
+            {facts.map((fact) => (
+              <div key={fact.label} className="flex items-baseline justify-between gap-4 py-2.5">
+                <dt className="tag text-ink-faint">{fact.label}</dt>
+                <dd className="tabular text-right text-xs text-ink-soft">{fact.value}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <section aria-labelledby="decision-heading" className="card p-4">
+            <h2 id="decision-heading" className="text-[1.15rem]">
+              {t(lang, "review.decision")}
+            </h2>
+
+            <div className="mt-3">
+              {decided ? (
+                <div>
+                  <p className="tag text-ink-faint">{t(lang, "review.status")}</p>
+                  <p className="mt-1 text-sm font-bold">{statusLabel}</p>
+                  {item.review_reason ? (
+                    <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
+                      {item.review_reason}
+                    </p>
+                  ) : null}
+                  <p className="mt-2 text-xs text-ink-faint">{t(lang, "review.decided")}</p>
+                </div>
+              ) : (
+                <DecisionForm reportId={item.id} features={item.feature_states} lang={lang} />
+              )}
+            </div>
+          </section>
+        </aside>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import type { Category, FeatureState, Lang } from "@/lib/types";
+import type { Category, Lang } from "@/lib/types";
 
 /** The public fields the search page needs. No private data is included. */
 export interface SearchableListing {
@@ -12,11 +12,6 @@ export interface SearchableListing {
   area_name: string | null;
   has_observation: boolean;
   last_checked: string | null;
-  /**
-   * One or two feature states for the result card. These are real accepted
-   * observations, never a summary of the whole venue.
-   */
-  highlights: { feature_key: string; state: FeatureState }[];
   /** Feature keys with a real reviewed result (yes, no, or partial). */
   checked_features: string[];
 }

@@ -19,22 +19,22 @@ export default async function DirectoryPage() {
 
   return (
     <div>
-      <header className="relative border-b border-line">
-        <div className="relative w-full px-4 pb-9 pt-10 sm:px-6 sm:pb-11 sm:pt-12 lg:px-8">
-          <h1 className="max-w-[20ch] text-[clamp(2.4rem,6vw,4rem)]">
-            {t(lang, "home.resultsTitle")}
-          </h1>
-        </div>
+      <header className="sheet pb-4 pt-3 sm:pt-4">
+        <h1 className="text-[clamp(1.9rem,4.5vw,2.8rem)]">{t(lang, "home.resultsTitle")}</h1>
+        <span
+          aria-hidden="true"
+          className="mt-3 block h-1 w-12 rounded-full bg-[linear-gradient(90deg,var(--color-accent),var(--color-accent-2))]"
+        />
       </header>
 
-      <div className="w-full px-4 sm:px-6 lg:px-8">
+      <div className="sheet pb-9">
         {!directory.ok ? (
-          <div role="alert" className="card card-pad mt-10 border-no/30 bg-no-soft">
-            <p className="text-base font-semibold text-no">{t(lang, "common.errorTitle")}</p>
+          <div role="alert" className="card border-no/30 bg-no-soft p-5">
+            <p className="text-base font-bold text-no">{t(lang, "common.errorTitle")}</p>
             <p className="mt-1 text-sm text-ink-soft">{t(lang, "common.errorBody")}</p>
             <Link
               href="/directory"
-              className="mt-4 inline-flex min-h-10 items-center rounded-control border border-no/40 px-3 text-sm font-medium text-no transition-colors hover:bg-no/5"
+              className="mt-4 inline-flex min-h-10 items-center rounded-[0.625rem] border border-no/40 px-3 text-sm font-bold text-no transition-colors hover:bg-no/5"
             >
               {t(lang, "common.retry")}
             </Link>
@@ -42,15 +42,15 @@ export default async function DirectoryPage() {
         ) : (
           <>
             {directory.isDemo ? (
-              <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2 border-y border-signal/60 bg-signal-soft px-4 py-3 text-sm leading-relaxed text-partial">
-                <span className="pill shrink-0 bg-signal text-ink">{t(lang, "common.demoLabel")}</span>
+              <div className="mb-4 flex flex-wrap items-center gap-2 border-y border-signal/25 bg-signal-soft px-3 py-2.5 text-xs leading-relaxed text-signal">
+                <span className="pill shrink-0 bg-signal-soft text-signal">
+                  {t(lang, "common.demoLabel")}
+                </span>
                 <span className="min-w-0">{t(lang, "home.demoBanner")}</span>
               </div>
             ) : null}
 
-            <div className="py-10 sm:py-12">
-              <SearchDirectory listings={listings} lang={lang} />
-            </div>
+            <SearchDirectory listings={listings} lang={lang} />
           </>
         )}
       </div>

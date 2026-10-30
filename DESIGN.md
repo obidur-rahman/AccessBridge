@@ -2,126 +2,140 @@
 
 ## Revision (29 Oct 2026)
 
-Requested restyle, applied across the app:
+**Final direction: a calm civic app.** The field-notebook pass (paper margin rules, folios,
+numbered stations, stamped frames) is retired. The app now uses a compact shell, rounded
+cards, one accent colour and an ambient light wash. It is an app, not a brochure: no page
+numbers, no numbered sections, no oversized gutters, no marketing steps.
 
-- **Palette:** red and white. Accent is now signal red `#c8102e` (hover `#a30c25`, ink
-  `#8c1024`, soft `#fbeaec`); ground is red-tinted white `#fbf8f8`, lines `#e7dede` /
-  `#cfc3c4`. The blue needle palette is retired.
-- **Instrument chrome removed:** no gauges, needles, tick rails or dimension-line bars
-  anywhere. `Gauge` and `CoverageBoard` were deleted; state badges carry every reading.
-- **Home page:** no stats strip, no pilot meta line, no "What we know" band. The hero is
-  headline + intro + one primary action. The landing page shows a short "Start with a few
-  places" showcase and links to `/directory` for search.
-- **Auth front end:** first-visit language prompt (bn/en modal, `ab_lang` cookie) and a
-  frontend-only `/signup` page. No backend registration yet.
-
-## Brief (Phase 0)
-
-- **Subject:** AccessBridge, a bilingual (bn/en) public directory of per-feature accessibility
-  observations for Chattogram, Bangladesh. Community reports pass one reviewer desk before
-  anything public changes.
-- **Audience:** disabled people and caregivers checking a venue before they travel; reviewers
-  working a queue.
-- **Job:** answer "can I use this place?" in three seconds with evidence, and make contributing
-  one observation feel safe and quick.
-- **Constraints:** light mode only, proper webapp (not a showreel), AA contrast, works on a
-  390 px phone, Bengali parity, demo data must stay labelled.
-
-## Concepts (Phase 1)
-
-1. **The reading bench (material: measurement instruments).** Every access feature is a reading
-   taken with an instrument: a needle, a tick scale, a date stamp. The site is a bench of
-   calibrated panels. *Anchor:* AccessBridge's core rule — each feature carries its own result,
-   source and date, never one score for the place. O4 / F5 / Fe4 / P3.
-2. **Enamel signboards of Chattogram (place & culture).** The site is a hand-painted enamel
-   signboard: heavy color fields, Bengali display lettering, rickshaw-shaw energy. O4 / F3 /
-   Fe3 / P2 — webapp fit is shaky, and heavy local color fights the light-mode brief.
-3. **The docket (process).** Every report is a docket sheet that slides across one reviewer
-   desk: in-tray, stamp, out-tray. O3 / F5 / Fe5 / P2 — strongest feasibility, but it covers
-   only the review half of the product.
-
-**Pick: 1, the reading bench.** It is the only concept whose anchor is the product's own rule
-(a reading per feature, no verdicts), and it covers both halves: the public panels read like
-instruments, and the reviewer desk is the bench everything passes over. Runner-up 3 lends its
-one detail: the receipt code stamps itself onto a slip after submit.
-
-### Concept card
+## Concept card
 
 ```
-Idea:        Every access feature is a calibrated reading — needle, ticks, date, source —
-             on a light instrument bench. No score for the whole place, ever.
-Metaphor:    A metrology bench: panels, dials, tick rails, stamped slips.
-Signature:   Needles sweep from rest and settle with one small overshoot when a reading
-             scrolls into view; at rest every needle drifts a degree and comes back.
-Emotion:     Precise and calm — "this was measured, here is by whom and when."
-Motion verb: settle like a needle (one damped sweep, then still).
-Screenshot:  The full-width instrument strip under the hero: four readings, edge to edge.
+Idea:        A small civic tool that answers one question fast: can I use this place?
+Metaphor:    A calm front desk: soft daylight, a clear search, short records on cards.
+Signature:   Type a place on the home screen and matching records appear in place, filtered
+             in the browser. No page change, no query sent to the server.
+Emotion:     Quick, quiet, trustworthy.
+Motion verb: settle: results rise and cards lift, nothing flies or bounces.
 ```
 
-## Art direction system (Phase 2)
+## Palette
 
-### Palette (6 roles + data bands)
-
-| Role | Hex | Source |
+| Role | Hex | Use |
 |---|---|---|
-| ground (paper) | `#f5f6f4` | bench paper, cool-white not cream |
-| surface (panel face) | `#ffffff` | instrument faceplate |
-| ink | `#0e1319` | blue-black drafting ink |
-| muted | `#56606b` | stamped secondary ink (AA on ground) |
-| line | `#d9dcd8` | hairline = ink at ~13% |
-| accent | `#14539a` | signal blue (existing brand; the needle) |
-| curtain | `#0e1319` | page-transition veil, used once |
+| canvas | `#f4f2ec` | app background, warm paper |
+| surface | `#fffefb` | cards, fields, sheets |
+| surface-muted | `#edebe4` | quiet fills, segmented controls |
+| surface-sunk | `#f8f6f1` | inset rows inside cards |
+| ink | `#161a16` | text and the brand mark |
+| ink-soft | `#4e554e` | body copy, secondary facts |
+| ink-faint | `#626a61` | labels, dates, hints |
+| line | `#e3dfd5` | card borders and dividers |
+| line-strong | `#c9c4b8` | field borders and outlines |
+| accent | `#17405f` | actions, links, focus, active tabs |
+| accent-hover | `#0f2f47` | hover and pressed actions |
+| accent-soft | `#e4edf3` | washes and selected chips |
+| accent-2 | `#0d6b5b` | report action gradient, current-page dot, teal wash |
+| accent-2-ink | `#085044` | teal figures and links |
+| accent-2-soft | `#dcefe8` | teal washes and step markers |
+| warm | `#94560f` | third figure tone and small warm accents |
+| warm-soft | `#f7e8d0` | warm step marker |
+| focus | `#17405f` | focus ring, `#8ec5e2` in dark |
+| signal | `#7a5008` | demo labels and recheck notes |
+| yes | `#116b45` | accepted observation |
+| no | `#a9342a` | observed barrier |
+| partial | `#7d560c` | partly usable |
+| unknown | `#5a6364` | not checked, not applicable |
 
-Data bands (state colors) are data, not decoration, and only ever appear inside a reading:
-`yes #1f7a5c`, `partial #9a6b14`, `no #b3372f`, `not-checked #6b7580`.
+Status colours appear only inside a status chip. Each chip carries a symbol and a word, so
+colour is never the only signal.
 
-### Type
+Dark theme keeps the same five status hues at lighter tones on dark washes. It is a
+preference, not a media query: light is the default until the visitor asks for dark.
 
-- **Display + UI:** Archivo (Google, variable) — a civic grotesk with signage bones; weights
-  500/600/700. Display tracking −0.03em, leading 0.92. Not Inter, not Instrument Serif.
-- **Data + labels:** IBM Plex Mono 400/500 for readings, ticks, dates, receipt codes.
-- **Bangla:** Hind Siliguri 400/500/600 (unchanged, the standard).
-- Fluid scale `clamp()`; body 16–17px at 1.55; small UI 12–14px, tabular numerals everywhere
-  numbers are compared.
+## Type
 
-### Grid, rhythm, shape
+- **Display:** Newsreader 400/500/600. Serif headings give the tool a voice without weight.
+- **Body and UI:** Atkinson Hyperlegible 400/700. Chosen for low-vision legibility.
+- **Metadata:** DM Mono 400. Dates, counts and tiny labels only. No uppercase.
+- **Bangla:** Hind Siliguri 400/500/600/700 for every role, same sizes and hierarchy.
+- Hero `clamp(2.2rem, 5vw, 3.6rem)`, page titles `clamp(1.9rem, 4.4vw, 2.7rem)`, body 16px,
+  small 12 to 14px, annotations 12px.
 
-- Full-bleed: every section runs edge to edge with 1/1.5/2rem gutters; only prose keeps a
-  measure (46 to 58ch). Stat strips and step rows are gap-px hairline grids on line color.
-- Navbar: wordmark is home; Directory and How it works anchor the page; reviewer link,
-  language toggle, then the report CTA. Links draw their underline; the header wears a
-  tick-rail edge.
-- **One radius rule:** drawings have corners — 4px controls, 6px cards. No pills except
-  state badges and the language toggle.
-- **Motion:** one easing family (cubic-bezier(0.22, 1, 0.36, 1) for settles,
-  0.2s for hovers). Reveals wipe along a tick rail; buttons lean −1px and flood; arrows travel;
-  nav links draw their underline. No GSAP/Lenis: this is a webapp — native scroll,
-  IntersectionObserver reveals, CSS needle drift, all disabled under reduced motion.
-- **Idle, recorded:** the bench is deliberately still under a resting pointer. Needles drift
-  1.5° over 4s as a small pulse of life, but the page does not perform while you read.
-  Stillness is the decision for a utility webapp, written down here on purpose.
-- **Idle state:** needles drift ±0.4° over 6s while the pointer is still (bench is alive).
+## Layout and shape
 
-### Signature moment
+- **Shell:** content up to 84rem with 1 / 1.25 / 1.5rem gutters. No margin columns, no folios.
+- **App bar:** fixed over the page, 44px on phones and 48px above. Brand left; directory,
+  staff entry and language right; one accent action for reporting. No "How it works" link.
+  Only the pill paints a surface, so nothing sits between the page and the bar.
+- **Bottom tabs (phones):** Home, Directory, Report, and Review or Account. Fixed, 56px,
+  safe-area aware, hidden at 1024px and above.
+- **Cards:** 14px radius, 1px hairline, 1px shadow. Controls 10px radius, status and filter
+  chips fully rounded. No pills used as decoration.
+- **Spacing:** 8px rhythm; page sections 28 to 44px apart. Cards sit in 2 or 4 column grids
+  on desktop, one column on phones. The bar floats: `main` reserves 72px on phones and 80px
+  above 640px so every page head clears it, and the home hero pulls up under the bar with
+  its own larger top padding.
 
-The **index gauge** in the hero and the per-feature dial rows: needle sweeps from a parked
-position and settles on the reading as the row enters view. One overshoot, then still.
+## Motion
 
-### Explainer figure
+- One easing family: `cubic-bezier(0.22, 1, 0.36, 1)`. Hovers 160 to 220ms, page entry 420ms.
+- Staggered rise: lists and card grids use `.stagger`, 45ms steps, mount only. The theme icon
+  turns 18 degrees on hover, the current nav dot scales in, chips compress on press.
+- Cards lift 2px and take a soft shadow on hover; arrows travel 3px; primary buttons press
+  in 1px.
+- **Ambient light:** two slow, blurred washes (cool blue, warm sand) drift behind the top of
+  the home, auth and 404 screens. 22 to 26s, alternate, `prefers-reduced-motion` removes it.
+- Instant search results and the area filter drop in (`.pop-in`, 220ms). The split-view
+  place panel slides in from the list (`.slide-in`, 300ms). Footer links grow a rule on
+  hover (`.foot-link`). No scroll hijacking, no parallax, no autoplay media.
+- The app is otherwise still at rest.
 
-Cut by decision: an isometric figure was built and removed in review. The three-step
-process story lives as a full-width hairline band instead; the gauges carry the craft.
+## Theme, brand and app bar
 
-### Genericness test
+- **Light is the default.** The toggle writes `data-theme="dark"` on the root and stores the
+  choice in this browser only. An inline script applies a stored dark choice before paint.
+- **Dark tokens:** canvas `#101519`, surface `#171d22`, ink `#f0eee7`, accent `#2a6e96`,
+  accent-2 `#1c8574`, focus `#8ec5e2`. The warm paper tone becomes slate; teal and warm stay,
+  so the app never turns monochrome.
+- **Brand:** `logo.png` keeps the transparent plate. The ink wordmark is used on light, and
+  `logo-light.png` swaps the ink for paper on dark while the red figure stays. No white tile.
+- **App bar:** a floating pill, 44px on phones and 48px above, rounded at 15px, with a
+  translucent surface, blur and lift shadow. Only the pill paints a surface; the page scrolls
+  behind it with no band, so the top of the page is not a strip of page colour.
+- **Logo assets:** served directly with `unoptimized`. The Next image pipeline re-encodes the
+  transparent PNG and paints a dark plate behind the wordmark on high-DPI screens. Desktop links are pills; the current page fills with `accent-soft`
+  and takes a teal dot. The right cluster holds the theme toggle, the language switch and the
+  gradient report action.
+- **First visit:** a dialog asks for both Bangla or English and light or dark, previewing the
+  theme as it is chosen. The answers use the language cookie and the theme storage.
+- **Directory:** from 1024px the list narrows to the left and the chosen place opens on the
+  right, with the row filled in `accent-soft` and `aria-current`. Below that, a row is a normal
+  link to the place page.
+- **Roadmap:** the full plan from `docs/06_IMPLEMENTATION_PLAN.md`, across the whole page.
+  A strip of five phase tiles runs over the top, then a two column board of phase cards:
+  number and status pill, title, summary, bullet list. Every phase stays open, and the last
+  card spans both columns. No controls to click; it is the one page where a numbered
+  sequence carries meaning.
 
-"If a generic model designed this site, would it land here?" — replaced: soft SaaS cards →
-ticked instrument strips; centered gradient hero → asymmetric bench composition with a real
-gauge; Inter → Archivo; evenly spaced feature columns → ruled ledger rows with readings;
-generic "How it works 01/02/03" cards → one full-width hairline band; centered 72rem
-column → edge-to-edge sections with real measures on prose only.
+## Surfaces
 
-### Copy rules (humanize pass)
+| Screen | App role |
+|---|---|
+| Home | Hero title, instant search with category chips, real counts, four recent cards, compact trust card, report card |
+| Directory | Search field, scrollable category chips, area filter, and a desktop split view: result list left, open place right |
+| Roadmap | Phase strip, two column phase board with status pills and bullet lists, one report action |
+| Place | Title and chips, facts card, feature list on one card, mobile report action, map on request |
+| Report | Four short cards, boxed fields, receipt card with a copyable code |
+| Review | Queue of intake cards, detail with feature list, sticky decision card |
+| Admin | Report cards, audit list, staff card |
+| Auth / 404 | Single centered card under the ambient light |
 
-Sentence case, no em dashes in visible text, no filler verbs (seamless, empower, elevate,
-cutting-edge), no repeated sentences across sections, numbers only when true, contractions
-where a person would use them. Both languages get the same pass.
+## Rules kept from the product brief
+
+- No overall accessible verdict. Each feature keeps its own word, source and date.
+- `Not checked` is never shown as `No`.
+- Pending reports never change public data.
+- Search, filters and location logic stay in the browser.
+- Demo labels stay visible; the venue reminder stays on place pages.
+- Map loads only on request, with the provider notice.
+- WCAG 2.2 AA target: visible focus, 24px+ targets, no colour-only status, reduced motion.

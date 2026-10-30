@@ -94,7 +94,7 @@ export function DecisionForm({
     return (
       <p
         role="status"
-        className="rounded-control border border-yes/20 bg-yes-soft px-3.5 py-2.5 text-sm text-yes"
+        className="rounded-[0.625rem] border border-yes/30 bg-yes-soft px-3.5 py-2.5 text-sm text-yes"
       >
         {t(lang, "review.saved")}
       </p>
@@ -111,7 +111,7 @@ export function DecisionForm({
             return (
               <label
                 key={option.value}
-                className={`flex min-h-11 cursor-pointer items-center gap-2.5 border px-3 py-2 text-sm transition-[background-color,border-color,transform,box-shadow] has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent hover:-translate-y-px hover:shadow-soft ${
+                className={`flex min-h-11 cursor-pointer items-center gap-2.5 rounded-[0.625rem] border px-3 py-2.5 text-sm transition-[background-color,border-color] duration-150 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-accent ${
                   active
                     ? "border-accent bg-accent-soft text-accent-ink"
                     : "border-line-strong bg-surface text-ink-soft hover:border-ink-faint hover:text-ink"
@@ -141,7 +141,7 @@ export function DecisionForm({
       </fieldset>
 
       {decision === "accept" && editableKeys.length > 0 ? (
-        <div className="rounded-control border border-line bg-surface-muted/70 p-3">
+        <div className="rounded-[0.625rem] border border-line bg-surface-sunk p-3">
           <p className="text-sm font-medium text-ink">{t(lang, "review.correctionsTitle")}</p>
           <p className="mt-1 text-xs leading-relaxed text-ink-faint">
             {t(lang, "review.correctionsHelp")}
@@ -199,7 +199,7 @@ export function DecisionForm({
       {error ? (
         <p
           role="alert"
-          className="rounded-control border border-no/25 bg-no-soft px-3.5 py-2.5 text-sm text-no"
+          className="rounded-[0.625rem] border border-no/30 bg-no-soft px-3.5 py-2.5 text-sm text-no"
         >
           {error}
         </p>

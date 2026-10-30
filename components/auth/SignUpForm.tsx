@@ -93,7 +93,7 @@ export function SignUpForm({ lang }: { lang: Lang }) {
       {notice ? (
         <p
           role="status"
-          className="rounded-control border border-signal/60 bg-signal-soft px-3.5 py-2.5 text-sm leading-relaxed text-partial"
+          className="border border-signal/40 bg-signal-soft px-3.5 py-2.5 text-sm leading-relaxed text-signal"
         >
           {t(lang, "auth.notice")}
         </p>

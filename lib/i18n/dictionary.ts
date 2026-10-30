@@ -5,22 +5,28 @@
 export const en = {
   "app.name": "AccessBridge",
   "app.tagline": "Check accessibility before you visit.",
-  "app.pilot": "Pilot: Chattogram city, Bangladesh",
   "app.skipToContent": "Skip to main content",
 
   "nav.home": "Home",
   "nav.directory": "Directory",
+  "nav.roadmap": "Roadmap",
   "nav.how": "How it works",
   "nav.report": "Report an update",
   "nav.review": "Review queue",
+  "nav.reviewShort": "Review",
+  "nav.reportShort": "Report",
+  "nav.account": "Account",
   "nav.signIn": "Reviewer sign in",
   "nav.signUp": "Sign up",
   "nav.signOut": "Sign out",
   "nav.admin": "Admin desk",
   "nav.menu": "Menu",
+  "nav.primary": "Primary navigation",
   "nav.language": "Language",
   "nav.english": "English",
   "nav.bangla": "বাংলা",
+  "theme.switchToDark": "Switch to dark theme",
+  "theme.switchToLight": "Switch to light theme",
 
   "home.title": "Check a place, feature by feature",
   "home.intro":
@@ -46,6 +52,7 @@ export const en = {
     "Demo data. These records exist only for development. They are not real Chattogram venue data.",
   "home.resultsTitle": "Directory",
   "home.showcaseTitle": "Start with a few places",
+  "home.recent": "Recently checked",
   "home.openDirectory": "Open the full directory",
   "home.sortNote":
     "Order does not mean one place is more accessible than another. Check each feature you need.",
@@ -93,6 +100,10 @@ export const en = {
   "place.notFoundHelp": "It may have been removed, or the link may be wrong.",
   "place.backToSearch": "Back to search",
   "place.demoRecord": "Demo record. Not real venue data.",
+  "place.featuresChecked": "{{count}} of {{total}} features checked",
+  "directory.selectPrompt": "Choose a place from the list to read its feature checks.",
+  "directory.loading": "Loading place details…",
+  "directory.openFull": "Open the full page",
 
   "report.title": "Report an accessibility update",
   "report.intro":
@@ -244,14 +255,14 @@ export const en = {
   "auth.notice":
     "Accounts open in the next release. For now, you can report an update without an account.",
 
-  "lang.promptEn": "Choose your language",
-  "lang.promptBn": "ভাষা বেছে নিন",
-  "lang.promptHelp": "You can change the language any time from the top of every page.",
+  "welcome.title": "Welcome",
+  "welcome.intro": "Choose a language and a look. You can change both later from the top bar.",
+  "welcome.language": "Language",
+  "welcome.theme": "Appearance",
+  "welcome.light": "Light",
+  "welcome.dark": "Dark",
+  "welcome.start": "Start",
 
-  "footer.blockProject": "Project",
-  "footer.blockArea": "Pilot area",
-  "footer.blockAreaValue": "Chattogram city, Bangladesh",
-  "footer.blockAccess": "Access",
   "footer.limitsTitle": "Data limits",
   "footer.privacyTitle": "Privacy",
   "footer.coverageTitle": "Coverage",
@@ -261,6 +272,16 @@ export const en = {
     "We do not ask for your disability, and we do not send your search terms or location to the server.",
   "footer.pilotCoverage":
     "Pilot coverage is limited to listed places in Chattogram. Absence of a record does not mean a place is inaccessible.",
+
+  "roadmap.title": "Roadmap",
+  "roadmap.intro": "What the pilot runs today, what comes next, and what we will not build.",
+  "roadmap.statusNow": "Live now",
+  "roadmap.statusNext": "Next",
+  "roadmap.statusLater": "Later",
+  "roadmap.statusNot": "Not planned",
+  "roadmap.helpTitle": "Help shape the next release",
+  "roadmap.helpBody": "Add a missing place or correct a record. Every accepted report makes the directory more useful.",
+  "roadmap.helpReport": "Add or update a place",
 
   "common.optional": "Optional",
   "common.retry": "Try again",
@@ -277,22 +298,28 @@ export const en = {
 export const bn: Record<keyof typeof en, string> = {
   "app.name": "AccessBridge",
   "app.tagline": "যাওয়ার আগে প্রবেশগম্যতা যাচাই করুন।",
-  "app.pilot": "পাইলট: চট্টগ্রাম শহর, বাংলাদেশ",
   "app.skipToContent": "মূল বিষয়বস্তুতে যান",
 
   "nav.home": "প্রথম পাতা",
   "nav.directory": "তালিকা",
+  "nav.roadmap": "রোডম্যাপ",
   "nav.how": "কীভাবে কাজ করে",
   "nav.report": "হালনাগাদ জানান",
   "nav.review": "পর্যালোচনা তালিকা",
+  "nav.reviewShort": "পর্যালোচনা",
+  "nav.reportShort": "জানান",
+  "nav.account": "অ্যাকাউন্ট",
   "nav.signIn": "পর্যালোচক প্রবেশ",
   "nav.signUp": "নিবন্ধন",
   "nav.signOut": "প্রস্থান",
   "nav.admin": "প্রশাসন ডেস্ক",
   "nav.menu": "মেনু",
+  "nav.primary": "প্রধান নেভিগেশন",
   "nav.language": "ভাষা",
   "nav.english": "English",
   "nav.bangla": "বাংলা",
+  "theme.switchToDark": "গাঢ় থিম চালু করুন",
+  "theme.switchToLight": "হালকা থিম চালু করুন",
 
   "home.title": "প্রতিটি সুবিধা দেখে স্থান যাচাই করুন",
   "home.intro":
@@ -318,6 +345,7 @@ export const bn: Record<keyof typeof en, string> = {
     "ডেমো তথ্য। এই রেকর্ডগুলো শুধু ডেভেলপমেন্টের জন্য। এগুলো চট্টগ্রামের বাস্তব স্থানের তথ্য নয়।",
   "home.resultsTitle": "তালিকা",
   "home.showcaseTitle": "কয়েকটি স্থান দিয়ে শুরু করুন",
+  "home.recent": "সম্প্রতি যাচাই করা",
   "home.openDirectory": "পুরো ডিরেক্টরি খুলুন",
   "home.sortNote":
     "ক্রমের অর্থ এই নয় যে এক স্থান অন্য স্থানের চেয়ে বেশি প্রবেশগম্য। আপনার প্রয়োজনীয় প্রতিটি সুবিধা দেখুন।",
@@ -363,6 +391,10 @@ export const bn: Record<keyof typeof en, string> = {
   "place.notFoundHelp": "সম্ভবত এটি সরানো হয়েছে, অথবা লিংকটি ভুল।",
   "place.backToSearch": "অনুসন্ধানে ফিরে যান",
   "place.demoRecord": "ডেমো রেকর্ড। বাস্তব স্থানের তথ্য নয়।",
+  "place.featuresChecked": "{{total}}টির মধ্যে {{count}}টি সুবিধা যাচাই করা হয়েছে",
+  "directory.selectPrompt": "তালিকা থেকে একটি স্থান বেছে নিন, তার সুবিধার ফলাফল দেখুন।",
+  "directory.loading": "স্থানের তথ্য লোড হচ্ছে…",
+  "directory.openFull": "পুরো পৃষ্ঠা খুলুন",
 
   "report.title": "প্রবেশগম্যতার হালনাগাদ জানান",
   "report.intro":
@@ -513,14 +545,14 @@ export const bn: Record<keyof typeof en, string> = {
   "auth.passwordMismatch": "পাসওয়ার্ড দুটি মিলছে না।",
   "auth.notice": "অ্যাকাউন্ট পরবর্তী রিলিজে খোলা হবে। এখন অ্যাকাউন্ট ছাড়াই হালনাগাদ জানানো যায়।",
 
-  "lang.promptEn": "Choose your language",
-  "lang.promptBn": "ভাষা বেছে নিন",
-  "lang.promptHelp": "প্রতিটি পাতার উপরের অংশ থেকে যেকোনো সময় ভাষা বদলানো যাবে।",
+  "welcome.title": "স্বাগতম",
+  "welcome.intro": "ভাষা ও রূপ বেছে নিন। দুটোই পরে উপরের বার থেকে বদলানো যাবে।",
+  "welcome.language": "ভাষা",
+  "welcome.theme": "রূপ",
+  "welcome.light": "হালকা",
+  "welcome.dark": "গাঢ়",
+  "welcome.start": "শুরু করুন",
 
-  "footer.blockProject": "প্রকল্প",
-  "footer.blockArea": "পাইলট এলাকা",
-  "footer.blockAreaValue": "চট্টগ্রাম শহর, বাংলাদেশ",
-  "footer.blockAccess": "প্রবেশ",
   "footer.limitsTitle": "তথ্যের সীমা",
   "footer.privacyTitle": "গোপনীয়তা",
   "footer.coverageTitle": "পরিধি",
@@ -530,6 +562,16 @@ export const bn: Record<keyof typeof en, string> = {
     "আমরা আপনার প্রতিবন্ধকতা জানতে চাই না, এবং আপনার অনুসন্ধান বা অবস্থান সার্ভারে পাঠাই না।",
   "footer.pilotCoverage":
     "পাইলট শুধু চট্টগ্রামের তালিকাভুক্ত স্থানে সীমিত। রেকর্ড না থাকা মানে স্থানটি প্রবেশগম্য নয় এমন নয়।",
+
+  "roadmap.title": "রোডম্যাপ",
+  "roadmap.intro": "পাইলটে এখন যা চলে, এরপর কী আসছে, আর কী আমরা বানাব না।",
+  "roadmap.statusNow": "এখন চালু",
+  "roadmap.statusNext": "পরবর্তী",
+  "roadmap.statusLater": "পরে",
+  "roadmap.statusNot": "পরিকল্পনায় নেই",
+  "roadmap.helpTitle": "পরবর্তী রিলিজ গড়তে সাহায্য করুন",
+  "roadmap.helpBody": "নতুন স্থান যোগ করুন বা রেকর্ড সংশোধন করুন। প্রতিটি গৃহীত রিপোর্ট তালিকাকে আরও কাজে লাগায়।",
+  "roadmap.helpReport": "স্থান যোগ বা হালনাগাদ করুন",
 
   "common.optional": "ঐচ্ছিক",
   "common.retry": "আবার চেষ্টা করুন",
