@@ -18,6 +18,19 @@ demo records and an in-memory reviewer even when Supabase is configured. It is
 never mixed into a database dataset, so setting `NEXT_PUBLIC_DEMO_MODE=0` is
 what switches every read and write to Supabase. Keep `.env.local` out of git.
 
+### Demo mode on more than one server instance
+
+Demo reports, decisions, staff entries and audit events live in the memory of
+the Node process that handled the request. One long-running server (`next start`
+on a single machine) keeps them until it restarts. A serverless host such as
+Vercel can serve `POST /api/reports` and `GET /review` from different instances,
+so a report accepted by one instance is missing from the queue rendered by
+another. The browser is not the cause; the store is simply per process.
+
+A durable review queue therefore needs the database: apply the migration,
+create a staff user, set `NEXT_PUBLIC_DEMO_MODE=0`, and redeploy. Keep demo mode
+for showing the interface, not for collecting reports.
+
 ## 2. First database setup
 
 1. Create the project, then open **SQL Editor** and run

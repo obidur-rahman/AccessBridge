@@ -152,6 +152,8 @@ export const en = {
   "review.pendingCount": "{{count}} pending reports",
   "review.pendingCountOne": "1 pending report",
   "review.empty": "No pending reports.",
+  "review.demoEmptyHint":
+    "A demo report lives in the memory of the server that took it. On a deployment with several server instances, a new report can land in another one and not appear here.",
   "review.submitted": "Submitted",
   "review.proposedPlace": "Proposed new place",
   "review.features": "Proposed feature states",
@@ -443,6 +445,8 @@ export const bn: Record<keyof typeof en, string> = {
   "review.pendingCount": "{{count}}টি অপেক্ষমাণ রিপোর্ট",
   "review.pendingCountOne": "১টি অপেক্ষমাণ রিপোর্ট",
   "review.empty": "কোনো অপেক্ষমাণ রিপোর্ট নেই।",
+  "review.demoEmptyHint":
+    "ডেমো রিপোর্ট যে সার্ভার গ্রহণ করে তার মেমোরিতে থাকে। কয়েকটি সার্ভার ইনস্ট্যান্স থাকা ডিপ্লয়মেন্টে নতুন রিপোর্ট অন্য ইনস্ট্যান্সে যেতে পারে, তাই এটি এখানে নাও দেখাতে পারে।",
   "review.submitted": "জমা দেওয়া হয়েছে",
   "review.proposedPlace": "প্রস্তাবিত নতুন স্থান",
   "review.features": "প্রস্তাবিত সুবিধার অবস্থা",

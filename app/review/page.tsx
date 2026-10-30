@@ -75,7 +75,14 @@ export default async function ReviewQueuePage() {
             <p className="mt-1 text-sm text-ink-soft">{t(lang, "common.errorBody")}</p>
           </div>
         ) : queue.items.length === 0 ? (
-          <p className="card p-8 text-center text-sm text-ink-faint">{t(lang, "review.empty")}</p>
+          <div className="card px-5 py-8 text-center">
+            <p className="text-sm text-ink-faint">{t(lang, "review.empty")}</p>
+            {reviewer.demo ? (
+              <p className="mx-auto mt-2 max-w-[54ch] text-xs leading-relaxed text-ink-faint">
+                {t(lang, "review.demoEmptyHint")}
+              </p>
+            ) : null}
+          </div>
         ) : (
           <section aria-label={t(lang, "review.title")}>
             <div className="flex items-center justify-between gap-3">

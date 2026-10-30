@@ -62,5 +62,5 @@ Structured batches use the same rule: `scripts/import-listings.mjs` writes draft
 - The OpenStreetMap tile usage policy and attribution need confirmation (`TO VERIFY` in `docs/02_TRD.md`).
 - Supabase, Vercel, and tile-provider free-tier terms, backups, and data-retention rules are unchecked.
 - The 180-day re-check period in `lib/freshness.ts` is a proposal awaiting approval.
-- Rate limiting on report submission is per server instance only.
+- Demo reports live in server memory. On a serverless host the submission and the review queue can run in different instances, so a report made in the deployment may not appear in the queue. The Supabase path is the durable one.
 - Duplicate warnings, AI features, trust scores, and email or SMS receipts are out of scope for this release.
