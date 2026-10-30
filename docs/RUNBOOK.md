@@ -13,10 +13,11 @@ single maintainer with access to the Supabase project and the deployment.
 | `NEXT_PUBLIC_DEMO_MODE` | build | `0` reads and writes Supabase; unset or any other value keeps the labelled demo data |
 | `NEXT_PUBLIC_SITE_URL` | build | Canonical URL for metadata, sitemap, robots |
 
-Demo mode is the default, including in the deployment: it serves the labelled
-demo records and an in-memory reviewer even when Supabase is configured. It is
-never mixed into a database dataset, so setting `NEXT_PUBLIC_DEMO_MODE=0` is
-what switches every read and write to Supabase. Keep `.env.local` out of git.
+Demo mode is on unless `NEXT_PUBLIC_DEMO_MODE=0`: it serves the labelled demo
+records and an in-memory reviewer even when Supabase is configured. The pilot
+deployment sets `0` and runs on the database once the migration is applied;
+demo records are never mixed into a database dataset. Keep `.env.local` out of
+git.
 
 ### Demo mode on more than one server instance
 

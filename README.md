@@ -21,7 +21,7 @@ Open http://localhost:3000. Environment values come from `.env.local`, which is 
 
 Demo mode is **on by default, in every environment, including the deployment**. The app serves the labelled demo records in `lib/data/demo.ts`, keeps reports and reviewer decisions in memory, and offers **Continue as demo reviewer** on `/login`, so the pending → accepted flow can be followed end to end. Nothing held in memory survives a server restart.
 
-The pilot Supabase project is connected in `.env.local`, but the schema is not applied yet, so the deployment stays on demo records until `NEXT_PUBLIC_DEMO_MODE=0` is set.
+The pilot now runs on Supabase: the migration is applied and `NEXT_PUBLIC_DEMO_MODE=0` is set in `.env.local` and in the deployment, so reads and writes go to the database. Remove that value to fall back to the demo records without touching data.
 
 To switch to the real database:
 
