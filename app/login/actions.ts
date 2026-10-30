@@ -18,8 +18,24 @@ export async function signInAction(formData: FormData) {
   const supabase = await createSupabaseServer();
   if (!supabase) redirect("/login?error=1");
 
-  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) redirect("/login?error=1");
+
+  // An auth user without a staff profile can sign in, but cannot review. Sign it
+  // out and say why, instead of bouncing back to this page without a message.
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("role, active")
+    .eq("user_id", data.user.id)
+    .maybeSingle();
+
+  const isStaff =
+    profile?.active === true && (profile.role === "reviewer" || profile.role === "admin");
+
+  if (!isStaff) {
+    await supabase.auth.signOut();
+    redirect("/login?error=no_staff_profile");
+  }
 
   redirect("/review");
 }

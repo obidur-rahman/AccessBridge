@@ -241,6 +241,8 @@ export const en = {
   "login.password": "Password",
   "login.submit": "Sign in",
   "login.error": "The email or password is not correct.",
+  "login.errorNoProfile":
+    "Signed in, but this account has no staff profile yet. Ask an admin to add your role, then try again.",
   "login.demo": "Continue as demo reviewer",
   "login.demoHelp":
     "Open the demo review queue. Decisions are kept in memory and reset when the server restarts.",
@@ -534,6 +536,8 @@ export const bn: Record<keyof typeof en, string> = {
   "login.password": "পাসওয়ার্ড",
   "login.submit": "প্রবেশ করুন",
   "login.error": "ইমেইল বা পাসওয়ার্ড সঠিক নয়।",
+  "login.errorNoProfile":
+    "প্রবেশ হয়েছে, কিন্তু এই অ্যাকাউন্টে এখনো স্টাফ প্রোফাইল নেই। একজন অ্যাডমিনকে আপনার ভূমিকা যোগ করতে বলুন, তারপর আবার চেষ্টা করুন।",
   "login.demo": "ডেমো পর্যালোচক হিসেবে চালিয়ে যান",
   "login.demoHelp":
     "ডেমো পর্যালোচনা তালিকা খুলুন। সিদ্ধান্ত মেমোরিতে থাকে এবং সার্ভার চালু হলে মুছে যায়।",

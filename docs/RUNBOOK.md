@@ -75,6 +75,10 @@ by hand.
   should be recorded with an `audit_log` row where practical.
 - Every decision writes `observation_accept`, `observation_accept_edited`,
   `observation_reject`, or `observation_need_info` to `audit_log`.
+- An auth user with no `profiles` row can still authenticate, but it cannot
+  review. The sign-in action signs it out again and says the profile is
+  missing, so a silent bounce back to `/login` means the row is absent or
+  `active` is false.
 
 ## 4. Structured import
 

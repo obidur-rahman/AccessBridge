@@ -42,9 +42,11 @@ export default async function LoginPage({
           {params.error ? (
             <p
               role="alert"
-              className="mt-4 rounded-[0.625rem] border border-no/30 bg-no-soft px-3.5 py-2.5 text-sm text-no"
+              className="mt-4 rounded-[0.625rem] border border-no/30 bg-no-soft px-3.5 py-2.5 text-sm leading-relaxed text-no"
             >
-              {t(lang, "login.error")}
+              {params.error === "no_staff_profile"
+                ? t(lang, "login.errorNoProfile")
+                : t(lang, "login.error")}
             </p>
           ) : null}
 
